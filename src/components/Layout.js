@@ -4,7 +4,8 @@ import styled from "@emotion/styled"
 import Navbar from "./Navbar"
 
 const Wrapper = styled("main")`
-  
+    font-size: clamp(1.2rem, .5vw, 1.5rem);
+    color: black;
 `
 
 export default function Layout({ children }) {
@@ -13,10 +14,7 @@ export default function Layout({ children }) {
       <Global
         styles={css`
           div {
-            font-size: clamp(1.2rem, .5vw, 1.5rem);
-            max-width: 1020px;
-            margin: 0 auto;
-            color: black;
+            
           }
         `}
       />
