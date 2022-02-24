@@ -2,13 +2,16 @@ import React, { useEffect } from "react"
 import styled from "@emotion/styled"
 
 const NavbarContainer = styled.nav`
-  display:block;
-  background-color: green;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  height:15vh;
+  font-size: 2.5rem;
 `
 function Navbar() {
   return (
     <NavbarContainer>
-      <p>navbar</p>
+      <p>Jobz</p>
     </NavbarContainer>
   )
 }
