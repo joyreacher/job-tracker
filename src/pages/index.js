@@ -1,5 +1,11 @@
 import React from "react"
+import { Helmet } from 'react-helmet'
 
 export default function Home() {
-  return <div>Hello world!</div>
+  return(
+    <>
+      <Helmet title="Home"/>
+      <p>hello</p>
+    </>
+  )
 }
