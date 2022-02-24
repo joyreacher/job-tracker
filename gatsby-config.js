@@ -5,25 +5,30 @@
  */
 
 module.exports = {
+  pathPrefix: `projects/Gatsby-test/`,
   /* Your site config here */
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
+        name: `Job Tracker`,
+        short_name: `Jobz`,
+        start_url: `https://joyreacher.com/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
         display: `standalone`,
-        icon:`src/images/icon.png`
+        icon:`src/images/icon.png`,
+        caches_busting_mode: `none`
       },
     },
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        precachePages: [`/index/*`],
+        precachePages: [`/index/`],
+        workboxConfig: {
+          globPatterns: ['**/*.{js,jpg,png,html,css,icon-path}']
+        }
       },
     },
   ],
