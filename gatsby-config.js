@@ -8,6 +8,7 @@ module.exports = {
   pathPrefix: `projects/Gatsby-test/`,
   /* Your site config here */
   plugins: [
+    `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-manifest`,
