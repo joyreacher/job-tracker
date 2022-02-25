@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
+import { Link } from 'gatsby'
 import axios from 'axios'
 import styled from "@emotion/styled"
+import { css, jsx } from '@emotion/react'
 const FormContainer = styled.form`
   display:flex;
   flex-direction: column;
@@ -64,6 +66,19 @@ function LoginForm() {
       </FormCell>
       <FormCell>
         <FormSubmit type='submit'>Login</FormSubmit>
+        <Link 
+          css={css`
+              max-width: fit-content;
+              text-decoration:none;
+              color:var(--color-main-link);
+              margin-top:3em;
+              &:hover{
+                color:var(--color-main-link-hover);
+              }
+            `}
+          to='/register/'>
+            No account? Register here.
+        </Link>
       </FormCell>
     </FormContainer>
   )
