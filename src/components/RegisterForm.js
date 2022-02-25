@@ -25,6 +25,30 @@ const FormInput = styled.input`
   font-size: 2rem;
 `
 function RegisterForm() {
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+    console.log(e)
+    axios({
+      url: 'https://jobz-api.herokuapp.com/users',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json;charset=UTF-8'
+      },
+      data: {
+        Username: e.target[0].value,
+        Password: e.target[1].value
+      }
+    })
+      .then(response => {
+        if(response.status === 200){
+          console.log('route to login')
+        }
+      })
+      .catch((error) =>{
+        console.log(error)
+      })
+  }
   return (
     <FormContainer>
       <FormCell>  
