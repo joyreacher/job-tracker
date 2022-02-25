@@ -1,6 +1,8 @@
 import React from "react"
+import { Link } from 'gatsby'
 import axios from 'axios'
 import styled from "@emotion/styled"
+import { css, jsx } from '@emotion/react'
 const FormContainer = styled.form`
   display:flex;
   flex-direction:column;
@@ -58,10 +60,24 @@ function RegisterForm() {
       <FormCell>
         <FormLabel htmlFor="username">Password</FormLabel>
         <FormInput  name="password" type="password" />
-      </FormCell>
+      </FormCell> 
       <FormCell>
         <FormSubmit type='submit'>Register</FormSubmit>
+        <Link 
+          css={css`
+              max-width: fit-content;
+              text-decoration:none;
+              color:var(--color-main-link);
+              margin-top:3em;
+              &:hover{
+                color:var(--color-main-link-hover);
+              }
+            `}
+          to='/login/'>
+            Have an account? Login here.
+        </Link>
       </FormCell>
+      
     </FormContainer>
   )
 }
