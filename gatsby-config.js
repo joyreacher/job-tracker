@@ -16,8 +16,8 @@ module.exports = {
         name: `Job Tracker`,
         short_name: `Jobz`,
         start_url: `https://joyreacher.com/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
+        background_color: `#1A181B`,
+        theme_color: `#F7F4F3`,
         display: `standalone`,
         icon:`src/images/icon.png`,
         caches_busting_mode: `none`
@@ -30,6 +30,15 @@ module.exports = {
         workboxConfig: {
           globPatterns: ['**/*.{js,jpg,png,html,css,icon-path}']
         }
+      },
+    },
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        // Setting a color is optional.
+        color: ` #F7F4F3`,
+        // Disable the loading spinner.
+        showSpinner: false,
       },
     },
   ],

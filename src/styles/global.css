@@ -1,0 +1,16 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+:root{
+  /* Main 🎨  */
+  --color-main-dark: #1A181B;
+  --color-main-light: #F7F4F3;
+  --color-main-danger: #D52941;
+  --color-main-success: #0CCE6B;
+  /* Link colors */
+  --color-main-link: hsl(15, 20%, 76%);
+  --color-main-link-hover: hsl(15, 20%, 100%);
+}
