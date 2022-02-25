@@ -3,6 +3,8 @@ import { Link } from 'gatsby'
 import axios from 'axios'
 import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
+import { trackPromise} from 'react-promise-tracker';
+import { LoadingSpinnerComponent } from "./Spinner"
 import toast from "react-hot-toast"
 const FormContainer = styled.form`
   display:flex;
@@ -30,30 +32,36 @@ const FormInput = styled.input`
 function RegisterForm() {
   const handleSubmit = (e) =>{
     e.preventDefault()
-    console.log(e)
-    axios({
-      url: 'https://jobz-api.herokuapp.com/users',
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json;charset=UTF-8'
-      },
-      data: {
-        Username: e.target[0].value,
-        Password: e.target[1].value
-      }
-    })
-      .then(response => {
-        if(response.status === 200){
-          console.log('route to login')
-            toast.success('You may login')
+    trackPromise(
+      axios({
+        url: 'https://jobz-api.herokuapp.com/users',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: {
+          Username: e.target[0].value,
+          Password: e.target[1].value
         }
       })
-      .catch((error) =>{
+        .then(response => {
+          console.log(response)
+          if(response.status === 201){
+            console.log('route to login')
+            toast.success('You may login')
+          }
+        })
+        .catch((error) =>{
+          console.log(error.response.data)
           toast.error(error.response.data)
+        })
+    )
+    
   }
   return (
     <FormContainer onSubmit={handleSubmit}>
+      <LoadingSpinnerComponent />
       <FormCell>  
         <FormLabel htmlFor="username">Username</FormLabel>
         <FormInput  name="username" type="text" />
