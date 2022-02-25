@@ -1,9 +1,9 @@
-import React, { useEffect } from "react"
+import React from "react"
+import axios from 'axios'
 import styled from "@emotion/styled"
 const FormContainer = styled.form`
   display:flex;
-  flex-direction: column;
-  align-items:center;
+  flex-direction:column;
 `
 const FormCell = styled.div`
   width:50%;

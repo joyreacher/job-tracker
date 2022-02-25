@@ -6,7 +6,8 @@ import Layout from "../components/Layout"
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
 import RegisterForm from "../components/RegisterForm"
-const Container = styled.section`
+const Section = styled.section`
+  margin:0 auto;
   height:100%;
   max-width:1020px;
 `
@@ -14,9 +15,9 @@ function Register() {
   return (
     <Layout>
       <Helmet title="Register" />
-      <Container>
+      <Section>
         <RegisterForm />
-      </Container>
+      </Section>
     </Layout>
   )
 }
