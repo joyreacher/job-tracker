@@ -5,16 +5,17 @@ import Layout from "../components/Layout"
 // styles
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
+import RegisterForm from "../components/RegisterForm"
 const Container = styled.section`
+  height:100%;
   max-width:1020px;
-  margin:0 auto;
 `
 function Register() {
   return (
     <Layout>
       <Helmet title="Register" />
       <Container>
-        register
+        <RegisterForm />
       </Container>
     </Layout>
   )

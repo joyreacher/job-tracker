@@ -7,6 +7,7 @@ const NavbarContainer = styled.nav`
   align-items:center;
   height:15vh;
   font-size: 2.5rem;
+  margin-bottom: 3rem;
 `
 function Navbar() {
   return (
