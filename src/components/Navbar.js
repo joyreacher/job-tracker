@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import styled from "@emotion/styled"
+import { Toaster } from "react-hot-toast"
 
 const NavbarContainer = styled.nav`
   display:flex;
@@ -12,6 +13,7 @@ const NavbarContainer = styled.nav`
 function Navbar() {
   return (
     <NavbarContainer>
+      <Toaster />
       <p>Jobz</p>
     </NavbarContainer>
   )

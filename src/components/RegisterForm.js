@@ -3,6 +3,7 @@ import { Link } from 'gatsby'
 import axios from 'axios'
 import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
+import toast from "react-hot-toast"
 const FormContainer = styled.form`
   display:flex;
   flex-direction:column;
@@ -45,11 +46,11 @@ function RegisterForm() {
       .then(response => {
         if(response.status === 200){
           console.log('route to login')
+            toast.success('You may login')
         }
       })
       .catch((error) =>{
-        console.log(error)
-      })
+          toast.error(error.response.data)
   }
   return (
     <FormContainer onSubmit={handleSubmit}>
