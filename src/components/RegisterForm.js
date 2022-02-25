@@ -50,14 +50,14 @@ function RegisterForm() {
       })
   }
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleSubmit}>
       <FormCell>  
-        <FormLabel for="username">Username</FormLabel>
-        <FormInput name="username" type="text" />
+        <FormLabel htmlFor="username">Username</FormLabel>
+        <FormInput  name="username" type="text" />
       </FormCell>
       <FormCell>
-        <FormLabel for="username">Password</FormLabel>
-        <FormInput name="password" type="password" />
+        <FormLabel htmlFor="username">Password</FormLabel>
+        <FormInput  name="password" type="password" />
       </FormCell>
       <FormCell>
         <FormSubmit type='submit'>Register</FormSubmit>
