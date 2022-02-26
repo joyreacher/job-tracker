@@ -48,10 +48,12 @@ function LoginForm() {
         }
       })
         .then(response => {
+          
           if(response.status === 200){
             const res = response.data
-            localStorage.setItem(res.token, 'jobz-token')
-            localStorage.setItem(res.user.username, 'jobz-username')
+            localStorage.setItem('token', res.token)
+            localStorage.setItem('username', res.user.username)
+            return window.location.href = '/'
           }
         })
         .catch((error) =>{
