@@ -5,6 +5,7 @@ import { trackPromise} from 'react-promise-tracker';
 // components
 import Layout from "../components/Layout"
 import ApplicationForm from "../components/ApplicationForm"
+import AllJobs from "../components/jobs/AllJobs";
 // styles
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
@@ -15,6 +16,7 @@ const Container = styled.section`
 `
 
 export default function Home() {
+  const [jobs, setJobs] = useState('')
   const checkForToken = () => {
     const token = localStorage.getItem('token')
     return token
@@ -51,6 +53,7 @@ export default function Home() {
       <Helmet title="Home"/>
       <Container>
         <ApplicationForm token={checkForToken()}/>
+        <AllJobs jobs={jobs} />
       </Container>
     </Layout>
   )
