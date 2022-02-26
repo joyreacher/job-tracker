@@ -17,6 +17,7 @@ const mq = breakpoints.map(
 )
 const Container = styled.section`
   display:flex;
+  justify-content: space-between;
   max-width:1020px;
   margin:0 auto;
   ${mq[0]}{
@@ -51,27 +52,25 @@ export default function Home() {
           setJobs(response.data)
         })
         .catch((error) => {
-          return toast.error('whoa something happened')
+          return toast.error(error.message)
         })
         .then(() => {
+          console.log('set false')
           setIsloading(false)
         })
       )
     }
   }
   useEffect(async () =>{
-    if(localStorage.getItem('jobs')){
-      await ApiCall()
-    }
+    await ApiCall()
   },[])
   return(
     <Layout>
       <Helmet title="Home"/>
+      <LoadingSpinnerComponent />
       <Container>
-        <p>Welcome to your job tracker</p>
-        <ApplicationForm token={checkForToken()}/>
-        <LoadingSpinnerComponent />
         { isLoading !== true ? <AllJobs jobs={jobs} /> : 'loading'}
+        <ApplicationForm token={checkForToken()}/>
       </Container>
     </Layout>
   )
