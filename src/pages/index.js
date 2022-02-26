@@ -30,10 +30,6 @@ export default function Home() {
             'Content-type': 'application/json;charset=UTF-8',
             "Authorization" : `Bearer ${token}`
           },
-          // data: {
-          //   Username: e.target[0].value,
-          //   Password: e.target[1].value
-          // }
         })
         .then(response => {
           setJobs(JSON.stringify(response.data))
