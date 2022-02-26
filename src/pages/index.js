@@ -53,6 +53,7 @@ export default function Home() {
     <Layout>
       <Helmet title="Home"/>
       <Container>
+        <p>Welcome to your job tracker</p>
         <ApplicationForm token={checkForToken()}/>
         <LoadingSpinnerComponent />
         <AllJobs jobs={jobs} />
