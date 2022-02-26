@@ -9,6 +9,7 @@ import LoginForm from "../components/LoginForm"
 const Container = styled.section`
   height:100%;
   max-width:1020px;
+  margin:0 auto;
 `
 function Register() {
   return (

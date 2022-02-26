@@ -30,31 +30,33 @@ const FormSubmit = styled.button`
 const FormInput = styled.input`
   font-size: 2rem;
 `
-function LoginForm() {
+function ApplicationForm({token}) {
   
   const handleSubmit = (e) =>{
     e.preventDefault()
     trackPromise(
       axios({
-        url: 'https://jobz-api.herokuapp.com/login',
+        url: 'https://jobz-api.herokuapp.com/job/new',
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-type': 'application/json;charset=UTF-8'
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
         },
         data: {
-          Username: e.target[0].value,
-          Password: e.target[1].value
-        }
+          username: localStorage.getItem('username'),
+          company: e.target[0].value,
+          role: e.target[1].value,
+          contact: e.target[2].value,
+          location: e.target[3].value,
+          source: e.target[4].value,
+          link: e.target[5].value,
+          notes: e.target[6].value,
+        },
       })
         .then(response => {
           
-          if(response.status === 200){
-            const res = response.data
-            localStorage.setItem('token', res.token)
-            localStorage.setItem('username', res.user.username)
-            return window.location.href = '/'
-          }
+          console.log(response.data)
         })
         .catch((error) =>{
           return toast.error(error.response.data.message)
@@ -66,15 +68,35 @@ function LoginForm() {
     <FormContainer onSubmit={handleSubmit}>
       <LoadingSpinnerComponent />
       <FormCell>  
-        <FormLabel htmlFor="username">Username</FormLabel>
-        <FormInput  name="username" type="text"/>
+        <FormLabel htmlFor="company">Company</FormLabel>
+        <FormInput  name="company" type="text"/>
       </FormCell>
       <FormCell>
-        <FormLabel htmlFor="username">Password</FormLabel>
-        <FormInput  name="password" type="password"/>
+        <FormLabel htmlFor="role">role</FormLabel>
+        <FormInput  name="role" type="text"/>
       </FormCell>
       <FormCell>
-        <FormSubmit type='submit'>Login</FormSubmit>
+        <FormLabel htmlFor="contact">Contact</FormLabel>
+        <FormInput  name="contact" type="text"/>
+      </FormCell>
+      <FormCell>
+        <FormLabel htmlFor="location">Location</FormLabel>
+        <FormInput  name="location" type="text"/>
+      </FormCell>
+      <FormCell>
+        <FormLabel htmlFor="source">Source</FormLabel>
+        <FormInput  name="source" type="text"/>
+      </FormCell>
+      <FormCell>
+        <FormLabel htmlFor="link">link</FormLabel>
+        <FormInput  name="link" type="text"/>
+      </FormCell>
+      <FormCell>
+        <FormLabel htmlFor="notes">notes</FormLabel>
+        <FormInput  name="notes" type="text"/>
+      </FormCell>
+      <FormCell>
+        <FormSubmit type='submit'>Add Job</FormSubmit>
         <Link 
           css={css`
               max-width: fit-content;
@@ -86,11 +108,11 @@ function LoginForm() {
               }
             `}
           to='/register/'>
-            No account? Register here.
+            Go to your profile.
         </Link>
       </FormCell>
     </FormContainer>
   )
 }
 
-export default LoginForm
+export default ApplicationForm
