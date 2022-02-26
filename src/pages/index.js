@@ -17,12 +17,13 @@ const Container = styled.section`
 `
 
 export default function Home() {
-  const [jobs, setJobs] = useState('')
+  const [jobs, setJobs] = useState([])
+  const [isLoading, setIsloading] = useState(true)
   const checkForToken = () => {
     const token = localStorage.getItem('token')
     return token
   }
-  useEffect(() =>{
+  const ApiCall = async () => {
     
     if(!checkForToken() || !checkForToken() === undefined){
       return window.location.href = '/login'
@@ -39,15 +40,21 @@ export default function Home() {
           },
         })
         .then(response => {
-          setJobs(JSON.stringify(response.data))
-          console.log(jobs)
+          setJobs(response.data)
         })
         .catch((error) => {
           return toast.error('whoa something happened')
         })
+        .then(() => {
+          setIsloading(false)
+        })
       )
     }
-    
+  }
+  useEffect(async () =>{
+    if(localStorage.getItem('jobs')){
+      await ApiCall()
+    }
   },[])
   return(
     <Layout>
@@ -56,7 +63,7 @@ export default function Home() {
         <p>Welcome to your job tracker</p>
         <ApplicationForm token={checkForToken()}/>
         <LoadingSpinnerComponent />
-        <AllJobs jobs={jobs} />
+        { isLoading !== true ? <AllJobs jobs={jobs} /> : 'loading'}
       </Container>
     </Layout>
   )
