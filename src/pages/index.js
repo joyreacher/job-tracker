@@ -1,10 +1,13 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Helmet } from 'react-helmet'
+import axios from 'axios'
+import { trackPromise} from 'react-promise-tracker';
 // components
 import Layout from "../components/Layout"
 // styles
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
+import toast from "react-hot-toast";
 const Container = styled.section`
   max-width:1020px;
   margin:0 auto;
