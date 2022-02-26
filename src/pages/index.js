@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
 // components
+import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
 import ApplicationForm from "../components/ApplicationForm"
 import AllJobs from "../components/jobs/AllJobs";
@@ -53,6 +54,7 @@ export default function Home() {
       <Helmet title="Home"/>
       <Container>
         <ApplicationForm token={checkForToken()}/>
+        <LoadingSpinnerComponent />
         <AllJobs jobs={jobs} />
       </Container>
     </Layout>
