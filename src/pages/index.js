@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
+import toast from "react-hot-toast";
 // components
 import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
