@@ -4,6 +4,7 @@ import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
 // components
 import Layout from "../components/Layout"
+import ApplicationForm from "../components/ApplicationForm"
 // styles
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
@@ -49,7 +50,7 @@ export default function Home() {
     <Layout>
       <Helmet title="Home"/>
       <Container>
-        <p>hello</p>
+        <ApplicationForm token={checkForToken()}/>
       </Container>
     </Layout>
   )
