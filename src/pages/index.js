@@ -10,11 +10,18 @@ import ApplicationForm from "../components/ApplicationForm"
 import AllJobs from "../components/jobs/AllJobs";
 // styles
 import styled from "@emotion/styled"
-import { css } from "@emotion/react"
-import toast from "react-hot-toast";
+import { jsx, css } from "@emotion/react"
+const breakpoints = [376, 411, 576, 768, 1020, 1200]
+const mq = breakpoints.map(
+  bp => `@media (max-width: ${bp}px)`
+)
 const Container = styled.section`
+  display:flex;
   max-width:1020px;
   margin:0 auto;
+  ${mq[0]}{
+    flex-direction: column;
+  }
 `
 
 export default function Home() {
