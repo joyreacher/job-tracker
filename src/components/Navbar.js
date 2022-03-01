@@ -10,6 +10,9 @@ const NavbarContainer = styled.nav`
   font-size: 2.5rem;
   margin-bottom: 3rem;
 `
+const LogOutLink = styled.p`
+  cursor: pointer;
+`
 function Navbar() {
   const logout = () => {
     localStorage.removeItem('token')
@@ -26,7 +29,7 @@ function Navbar() {
     <NavbarContainer>
       <Toaster />
       <p>Jobz</p>
-      <p onClick={() => logout()}>logout</p>
+      <LogOutLink onClick={() => logout()}>logout</LogOutLink>
     </NavbarContainer>
   )
 }
