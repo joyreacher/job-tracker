@@ -52,10 +52,10 @@ function ApplicationForm({token}) {
           source: e.target[4].value,
           link: e.target[5].value,
           notes: e.target[6].value,
+          dateAdded: e.target[7].value
         },
       })
         .then(response => {
-          
           console.log(response.data)
         })
         .catch((error) =>{
@@ -94,6 +94,7 @@ function ApplicationForm({token}) {
       <FormCell>
         <FormLabel htmlFor="notes">notes</FormLabel>
         <FormInput  name="notes" type="text"/>
+        <FormInput  name="date" type="hidden" value={new Date()} />
       </FormCell>
       <FormCell>
         <FormSubmit type='submit'>Add Job</FormSubmit>
