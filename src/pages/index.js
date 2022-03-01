@@ -11,16 +11,17 @@ import AllJobs from "../components/jobs/AllJobs";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
-const breakpoints = [376, 411, 576, 768, 1020, 1200]
+const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
 )
 const Container = styled.section`
+  padding: 0 2em;
   display:flex;
   justify-content: space-between;
   max-width:1020px;
   margin:0 auto;
-  ${mq[0]}{
+  ${mq[4]}{
     flex-direction: column;
   }
 `
