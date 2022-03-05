@@ -8,6 +8,7 @@ import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
 import ApplicationForm from "../components/ApplicationForm"
 import AllJobs from "../components/jobs/AllJobs";
+import SEO from "../components/Seo";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
@@ -67,7 +68,11 @@ export default function Home() {
   },[])
   return(
     <Layout>
-      <Helmet title="Home"/>
+      <SEO 
+        title="Home" 
+        description="View the latest jobs saved" 
+        lang="US-en"
+        />
       <LoadingSpinnerComponent />
       <Container>
         { isLoading !== true ? <AllJobs jobs={jobs} /> : 'loading'}
