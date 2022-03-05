@@ -42,7 +42,7 @@ export default function Home() {
       const token = checkForToken()
       trackPromise(
         axios({
-          url: 'https://jobz-api.herokuapp.com/jobs',
+          url: 'https://job-tracker-api-v1.herokuapp.com/jobs',
           method: 'GET',
           headers: {
             'Accept': 'application/json',

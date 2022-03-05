@@ -36,7 +36,7 @@ function ApplicationForm({token}) {
     e.preventDefault()
     trackPromise(
       axios({
-        url: 'https://jobz-api.herokuapp.com/job/new',
+        url: 'https://job-tracker-api-v1.herokuapp.com/job/new',
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -56,7 +56,7 @@ function ApplicationForm({token}) {
         },
       })
         .then(response => {
-          console.log(response.data)
+          toast.success('Success')
         })
         .catch((error) =>{
           return toast.error(error.response.data.message)
