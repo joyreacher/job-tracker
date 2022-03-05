@@ -13,4 +13,35 @@
   /* Link colors */
   --color-main-link: hsl(15, 20%, 76%);
   --color-main-link-hover: hsl(15, 20%, 100%);
+  /* Table colors */
+  --color-table-accent: hsl(280, 6%, 15%);
 }
+
+/*
+
+  <link rel="stylesheet" href="https://use.typekit.net/yuf8pbt.css">
+
+  Serenity Light Italic
+
+  font-family: serenity, sans-serif;
+  font-weight: 300;
+  font-style: italic;
+
+  Serenity Bold Italic
+
+  font-family: serenity, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+
+  Serenity Light
+
+  font-family: serenity, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+
+  Serenity Bold
+
+  font-family: serenity, sans-serif;
+  font-weight: 700;
+  font-style: normal; 
+*/
