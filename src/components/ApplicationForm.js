@@ -18,33 +18,44 @@ const FormContainer = styled.form`
   align-items:center;
 `
 const FormInnerContainer = styled.div`
-  display:block;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-center: center;
   width: 80%;
   margin:0 auto;
+  padding:1em 2em;
+  height: 100vh;
 `
 const FormCell = styled.div`
-  width:50%;
   display:flex;
   flex-direction: column;
-  margin:1rem auto;
+`
+const SubmitCell = styled.div`
+  display:flex;
+  min-width:100%;
+  justify-content:center;
 `
 const FormLabel = styled.label`
-  margin:.75rem 0;
+  margin:.5rem 0;
+  width:fit-content;
 `
 const FormSubmit = styled.button`
   align-self: center;
   background-color: var(--color-main-light);
-  font-size: clamp(1.4rem, 1vw, 2rem);
+  font-size: clamp(1.1rem, 1vw, 2rem);
   border-radius: 2px;
   padding:.5rem;
 `
 const FormInput = styled.input`
-  font-size: 2rem;
+  font-size: 1.5rem;
+  width: 90%;
 `
-function ApplicationForm({token}) {
+function ApplicationForm({handleClick}) {
   
   const handleSubmit = (e) =>{
     e.preventDefault()
+    const token = localStorage.getItem('token')
     trackPromise(
       axios({
         url: 'https://job-tracker-api-v1.herokuapp.com/job/new',
@@ -78,7 +89,6 @@ function ApplicationForm({token}) {
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
       <FormInnerContainer className="application-form__inner-container">
-        <LoadingSpinnerComponent />
         <FormCell>  
           <FormLabel htmlFor="company">Company</FormLabel>
           <FormInput  name="company" type="text"/>
@@ -108,22 +118,14 @@ function ApplicationForm({token}) {
           <FormInput  name="notes" type="text"/>
           <FormInput  name="date" type="hidden" value={new Date()} />
         </FormCell>
-        <FormCell>
-          <FormSubmit type='submit'>Add Job</FormSubmit>
-          <Link 
-            css={css`
-                max-width: fit-content;
-                text-decoration:none;
-                color:var(--color-main-link);
-                margin-top:3em;
-                &:hover{
-                  color:var(--color-main-link-hover);
-                }
+        <SubmitCell
+          css={css`
+              position:relative;
               `}
-            to='/register/'>
-              Go to your profile.
-          </Link>
-        </FormCell>
+        >
+          <LoadingSpinnerComponent position="absolute"/>
+          <FormSubmit onClick={() => handleClick()} type='submit'>Add Job</FormSubmit>
+        </SubmitCell>
       </FormInnerContainer>
     </FormContainer>
   )

@@ -13,7 +13,6 @@ const Wrapper = styled("main")`
 export default function Layout({ children }) {
   return (
     <Wrapper>
-      
       <Navbar />
       {children}
     </Wrapper>

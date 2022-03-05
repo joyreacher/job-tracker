@@ -6,6 +6,7 @@ import ClipLoader from 'react-spinners/ClipLoader'
 export const LoadingSpinnerComponent = (props) => {
 const { promiseInProgress } = usePromiseTracker();
 const override = css`
+  position:absolute;
   margin: 0 auto;
   border-color: red;
 `;
@@ -14,6 +15,7 @@ const color = css`color: var(--main-color-light);`
     <div
       css={css`
           margin:0 auto;
+          position:${props.position};
           `}
     >
     {

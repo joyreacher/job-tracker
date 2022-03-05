@@ -83,7 +83,7 @@ function Navbar() {
           </MenuContainer>
         </InnerContainer>
       </NavbarContainer>
-      <ApplicationForm/>
+      <ApplicationForm handleClick={handleClick}/>
     </>
   )
 }
