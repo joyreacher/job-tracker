@@ -14,7 +14,11 @@ const Container = styled.section`
 function Register() {
   return (
     <Layout>
-      <Helmet title="Register" />
+      <Helmet 
+        title="Login" 
+        description="Login to view your saved jobs" 
+        lang="US-en"
+      />
       <Container>
         <LoginForm />
       </Container>

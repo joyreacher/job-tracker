@@ -1,6 +1,11 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "@emotion/styled"
 import { Toaster } from "react-hot-toast"
+import gsap  from "gsap";
+
+
+// components
+import ApplicationForm from './ApplicationForm.js'
 
 const NavbarContainer = styled.nav`
   align-items:center;
@@ -23,7 +28,8 @@ const MenuContainer = styled.div`
   align-items:center;
   width:25vw;
   justify-content: space-between;
-  
+  position: relative;
+  z-index: 400;
 `
 const Menu = styled.div`
   display:flex;
@@ -34,6 +40,7 @@ const Menu = styled.div`
   height:60px;
   width:60px;
   border-radius: 45px;
+  cursor:pointer;
 `
 const MenuText = styled.p`
   align-self: center;
@@ -41,6 +48,7 @@ const MenuText = styled.p`
 const LogOutLink = styled.p`
   cursor: pointer;
 `
+const tl = gsap.timeline({reversed: true, paused:true})
 function Navbar() {
   const logout = () => {
     localStorage.removeItem('token')
@@ -48,26 +56,35 @@ function Navbar() {
     localStorage.removeItem('jobs')
     return window.location.href = '/login'
   }
-  useEffect(() =>{
-    if(!localStorage.getItem('token')){
-      // return window.location.href = '/login'
+  const handleClick = () => {
+    if(tl.reversed()){
+      return tl.play()
     }
-  })
+    tl.reverse()
+  }
+  useEffect(() =>{
+    tl
+      .from('.application-form', {opacity: 0, display:'none', autoAlpha: 0})
+      .from('.application-form__inner-container', {opacity: 0 }, '<')
+  },[])
   return (
-    <NavbarContainer>
-      <InnerContainer>
-        <Toaster />
-        <p>Jobby</p>
-        <MenuContainer>
-          <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-          <Menu>
-            <MenuText>
-              Add Job
-            </MenuText>
-          </Menu>
-        </MenuContainer>
-      </InnerContainer>
-    </NavbarContainer>
+    <>
+      <NavbarContainer>
+        <InnerContainer>
+          <Toaster />
+          <p>Jobby</p>
+          <MenuContainer>
+            <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+            <Menu onClick={() =>handleClick()}>
+              <MenuText >
+                Add Job
+              </MenuText>
+            </Menu>
+          </MenuContainer>
+        </InnerContainer>
+      </NavbarContainer>
+      <ApplicationForm/>
+    </>
   )
 }
 
