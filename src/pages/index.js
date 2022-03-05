@@ -26,58 +26,75 @@ const Container = styled.section`
     flex-direction: column;
   }
 `
-
+const LoadingMessage = styled.div`
+  color:white;
+  background-color: var(--color-main-dark);
+  height: 100vh;
+  width:100vw;
+  display:flex;
+  flex-direction:column;  
+  justify-content: center;
+  align-items: center;
+`
 export default function Home() {
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
   const checkForToken = () => {
-    const token = localStorage.getItem('token')
-    return token
+    return localStorage.getItem('token')
   }
   const ApiCall = async () => {
-    
-    if(!checkForToken() || !checkForToken() === undefined){
-      return window.location.href = '/login'
-    }else{
-      const token = checkForToken()
-      trackPromise(
-        axios({
-          url: 'https://job-tracker-api-v1.herokuapp.com/jobs',
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json;charset=UTF-8',
-            "Authorization" : `Bearer ${token}`
-          },
-        })
-        .then(response => {
-          setJobs(response.data)
-        })
-        .catch((error) => {
-          return toast.error(error.message)
-        })
-        .then(() => {
-          console.log('set false')
-          setIsloading(false)
-        })
-      )
-    }
+    const token = checkForToken()
+    trackPromise(
+      axios({
+        url: 'https://job-tracker-api-v1.herokuapp.com/jobs',
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
+        },
+      })
+      .then(response => {
+        setJobs(response.data)
+      })
+      .catch((error) => {
+        return toast.error(error.message)
+      })
+      .then(() => {
+        console.log('set false')
+        setIsloading(false)
+      })
+    )
   }
   useEffect(async () =>{
+    if(!checkForToken() || !checkForToken() === undefined){
+      window.location.href = '/login'
+    }
     await ApiCall()
   },[])
-  return(
-    <Layout>
-      <SEO 
-        title="Home" 
-        description="View the latest jobs saved" 
-        lang="US-en"
-        />
-      <LoadingSpinnerComponent />
-      <Container>
-        { isLoading !== true ? <AllJobs jobs={jobs} /> : 'loading'}
-        {/* <ApplicationForm token={checkForToken()}/> */}
-      </Container>
-    </Layout>
-  )
+  
+  if(isLoading === true || !checkForToken() || checkForToken() === undefined){
+    return(
+      <LoadingMessage> 
+        <h1>Loading</h1>
+        <LoadingSpinnerComponent />
+      </LoadingMessage>
+    )
+    
+  }else if(!isLoading && checkForToken()){
+    return(
+      <Layout>
+        <SEO 
+          title="Home" 
+          description="View the latest jobs saved" 
+          lang="US-en"
+          />
+        <LoadingSpinnerComponent />
+        <Container>
+          { isLoading !== true ? <AllJobs jobs={jobs} /> : <LoadingMessage />}
+        </Container>
+      </Layout>
+    )
+  }
+  
 }
