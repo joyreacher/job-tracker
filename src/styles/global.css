@@ -5,6 +5,8 @@
 }
 
 :root{
+  /* Navbar*/
+  --color-navbar: hsl(280, 6%, 15%);
   /* Main 🎨  */
   --color-main-dark: #1A181B;
   --color-main-light: #F7F4F3;
