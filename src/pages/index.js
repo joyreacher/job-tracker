@@ -76,7 +76,7 @@ export default function Home() {
       <LoadingSpinnerComponent />
       <Container>
         { isLoading !== true ? <AllJobs jobs={jobs} /> : 'loading'}
-        <ApplicationForm token={checkForToken()}/>
+        {/* <ApplicationForm token={checkForToken()}/> */}
       </Container>
     </Layout>
   )
