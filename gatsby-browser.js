@@ -1,3 +1,5 @@
+import React from 'react'
+import { DataProvider } from './src/context/DataContext'
 import './src/styles/global.css'
 export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(
@@ -9,3 +11,8 @@ export const onServiceWorkerUpdateReady = () => {
     window.location.reload()
   }
 }
+// export const wrapRootElement = ({ element }) => {
+//   <DataProvider>
+//     {element}
+//   </DataProvider>
+// }
