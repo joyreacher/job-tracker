@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { DataContext } from '../context/DataContext'
 import styled from "@emotion/styled"
 import { Toaster } from "react-hot-toast"
 import gsap  from "gsap";
@@ -52,7 +53,7 @@ const tl = gsap.timeline({reversed: true, paused:true})
 function Navbar() {
   const logout = () => {
     localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    localStorage.removeItem('username')
     localStorage.removeItem('jobs')
     return window.location.href = '/login'
   }
@@ -68,23 +69,34 @@ function Navbar() {
       .from('.application-form__inner-container', {opacity: 0 }, '<')
   },[])
   return (
-    <>
-      <NavbarContainer>
-        <InnerContainer>
-          <Toaster />
-          <p>Jobby</p>
-          <MenuContainer>
-            <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-            <Menu onClick={() =>handleClick()}>
-              <MenuText >
-                Add Job
-              </MenuText>
-            </Menu>
-          </MenuContainer>
-        </InnerContainer>
-      </NavbarContainer>
-      <ApplicationForm handleClick={handleClick}/>
-    </>
+    <DataContext.Consumer>
+      {
+        ({addJobs, user}) => {
+         return(
+           <>
+             <NavbarContainer>
+               <InnerContainer>
+                 <Toaster />
+                 <p onClick={() => addJobs('hello')}>Jobby</p>
+                 {
+                   !user ? '' : <MenuContainer>
+                    <p>Hello {user}</p>
+                    <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+                    <Menu onClick={() => handleClick()}>
+                      <MenuText >
+                        Add Job
+                      </MenuText>
+                    </Menu>
+                  </MenuContainer>
+                 }
+               </InnerContainer>
+             </NavbarContainer>
+             <ApplicationForm handleClick={handleClick} />
+           </>
+         )
+        }
+      }
+    </DataContext.Consumer>
   )
 }
 

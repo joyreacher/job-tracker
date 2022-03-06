@@ -1,5 +1,6 @@
 import React, { Children, useState } from 'react';
 export const DataContext = React.createContext({
+  user: localStorage.getItem('username'),
   jobs: () => { console.log('this would set the language')},
   addJobs: (application) => {
     console.log(application)
