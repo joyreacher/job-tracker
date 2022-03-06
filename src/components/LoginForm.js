@@ -36,7 +36,7 @@ function LoginForm() {
     e.preventDefault()
     trackPromise(
       axios({
-        url: 'https://jobz-api.herokuapp.com/login',
+        url: 'https://job-tracker-api-v1.herokuapp.com/login',
         method: 'POST',
         headers: {
           'Accept': 'application/json',

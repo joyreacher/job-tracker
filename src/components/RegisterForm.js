@@ -34,7 +34,7 @@ function RegisterForm() {
     e.preventDefault()
     trackPromise(
       axios({
-        url: 'https://jobz-api.herokuapp.com/users',
+        url: 'https://job-tracker-api-v1.herokuapp.com/users',
         method: 'POST',
         headers: {
           'Accept': 'application/json',
