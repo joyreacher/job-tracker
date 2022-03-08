@@ -69,6 +69,7 @@ function Navbar({handleClick, timeline}) {
     <>
       <NavbarContainer>
         <InnerContainer>
+          <p>Jobby</p>
           <Toaster />
           {
             !state.user ? '' : <MenuContainer>
