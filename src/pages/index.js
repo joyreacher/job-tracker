@@ -4,6 +4,9 @@ import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
 import toast from "react-hot-toast";
 import gsap  from "gsap";
+import { CSVLink, CSVDownload } from 'react-csv'
+// Context
+import {DataContext} from "../context/DataContext";
 // components
 import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
@@ -11,10 +14,10 @@ import AllJobs from "../components/jobs/AllJobs";
 import SEO from "../components/Seo";
 import Navbar from "../components/Navbar";
 import ApplicationForm from "../components/ApplicationForm";
+import Stage from "../components/stages/Stage";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
-import {DataContext} from "../context/DataContext";
 
 
 const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
@@ -24,6 +27,7 @@ const mq = breakpoints.map(
 const Container = styled.section`
   padding: 0 2em;
   display:flex;
+  flex-direction: column;
   justify-content: space-between;
   max-width:1020px;
   margin:0 auto;
@@ -66,9 +70,6 @@ export default function Home() {
       })
       .then(response => {
         return setJobs(response.data)
-        // response.data.map((item) => {
-        //   state.jobs.push(item)
-        // })
       })
       .catch((error) => {
         return toast.error(error.message)
@@ -150,7 +151,12 @@ export default function Home() {
         />
         <Navbar timeline={tl} handleClick={handleClick}/>
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
+        
         <Container>
+          <Stage/>
+          <CSVLink data={jobs}>
+            Download Jobs
+          </CSVLink>
           <LoadingSpinnerComponent />
           {isLoading !== true ? <AllJobs jobs={jobs} /> : <LoadingMessage />}
         </Container>
