@@ -149,7 +149,7 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="US-en"
         />
-        <Navbar timeline={tl} handleClick={handleClick}/>
+        <Navbar jobs={jobs} timeline={tl} handleClick={handleClick}/>
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         
         <Container>

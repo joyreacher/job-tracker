@@ -50,7 +50,7 @@ const LogOutLink = styled.p`
   cursor: pointer;
 `
 
-function Navbar({handleClick, timeline}) {
+function Navbar({handleClick, timeline, jobs}) {
   const tl = timeline
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
