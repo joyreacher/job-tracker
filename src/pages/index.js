@@ -154,9 +154,6 @@ export default function Home() {
         
         <Container>
           <Stage/>
-          <CSVLink data={jobs}>
-            Download Jobs
-          </CSVLink>
           <LoadingSpinnerComponent />
           {isLoading !== true ? <AllJobs jobs={jobs} /> : <LoadingMessage />}
         </Container>
