@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
 import toast from "react-hot-toast";
+import gsap  from "gsap";
 // components
 import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
-import ApplicationForm from "../components/ApplicationForm"
 import AllJobs from "../components/jobs/AllJobs";
 import SEO from "../components/Seo";
+import Navbar from "../components/Navbar";
+import ApplicationForm from "../components/ApplicationForm";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
+import {DataContext} from "../context/DataContext";
+
+
 const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
@@ -36,15 +41,20 @@ const LoadingMessage = styled.div`
   justify-content: center;
   align-items: center;
 `
+const tl = gsap.timeline({reversed: true, paused:true})
 export default function Home() {
+  
+  const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
+  
   const checkForToken = () => {
     return localStorage.getItem('token')
   }
+
   const ApiCall = async () => {
     const token = checkForToken()
-    trackPromise(
+    await trackPromise(
       axios({
         url: 'https://job-tracker-api-v1.herokuapp.com/jobs',
         method: 'GET',
@@ -55,23 +65,72 @@ export default function Home() {
         },
       })
       .then(response => {
-        setJobs(response.data)
+        return setJobs(response.data)
+        // response.data.map((item) => {
+        //   state.jobs.push(item)
+        // })
       })
       .catch((error) => {
         return toast.error(error.message)
       })
       .then(() => {
-        console.log('set false')
         setIsloading(false)
       })
     )
   }
+
+  const handleClick = async () => {
+    console.log('click handleClick')
+    if(tl.reversed()){
+      return tl.play()
+    }
+    return tl.reverse()
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: 'https://job-tracker-api-v1.herokuapp.com/job/new',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
+        },
+        data: {
+          username: localStorage.getItem('username'),
+          company: e.target[0].value,
+          role: e.target[1].value,
+          contact: e.target[2].value,
+          location: e.target[3].value,
+          source: e.target[4].value,
+          link: e.target[5].value,
+          notes: e.target[6].value,
+          dateAdded: e.target[7].value
+        },
+      })
+        .then(response => {
+          console.log(response.data.applications)
+          toast.success('you did it')
+          return ApiCall()
+        })
+        .catch((error) =>{
+          return toast.error(error.response.data.message)
+        })
+        
+    )
+    
+  }
+
   useEffect(async () =>{
     if(!checkForToken() || !checkForToken() === undefined){
       window.location.href = '/login'
     }
+    
     await ApiCall()
-  },[])
+  }, [])
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
@@ -84,17 +143,18 @@ export default function Home() {
   }else if(!isLoading && checkForToken()){
     return(
       <Layout>
-        <SEO 
-          title="Home" 
-          description="View the latest jobs saved" 
+        <SEO
+          title="Home"
+          description="View the latest jobs saved"
           lang="US-en"
-          />
-        <LoadingSpinnerComponent />
+        />
+        <Navbar timeline={tl} handleClick={handleClick}/>
+        <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         <Container>
-          { isLoading !== true ? <AllJobs jobs={jobs} /> : <LoadingMessage />}
+          <LoadingSpinnerComponent />
+          {isLoading !== true ? <AllJobs jobs={jobs} /> : <LoadingMessage />}
         </Container>
       </Layout>
     )
   }
-  
 }

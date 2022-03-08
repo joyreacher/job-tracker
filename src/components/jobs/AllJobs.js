@@ -1,10 +1,11 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
 import Moment from 'react-moment';
 //components
 import JobCard from "./JobCard"
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
+import {DataContext} from "../../context/DataContext";
 const breakpoints = [376, 411, 576, 768, 1020, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
@@ -22,19 +23,19 @@ const TableHead = styled.th`
   background-color: var(--color-table-accent);
 `
 function AllJobs({jobs}) {
+  // const { jobs } = useContext(DataContext)
   /**
    * @function storeJobs
    * @param {Array} jobs 
    * @returns Stringified array of jobs
    */
-  const storeJobs = (jobs) =>{
+  const storeJobs = async (jobs) =>{
     const result = JSON.stringify(jobs)
     localStorage.setItem('jobs', result)
     return result
   }
   const compareArrays = () =>{
     const result = JSON.parse(localStorage.getItem('jobs'))
-    console.log(result)
     if(!result || typeof(result) !== 'object'){
       return false
     }
@@ -43,8 +44,8 @@ function AllJobs({jobs}) {
     }
     return true
   }
-  useEffect(() =>{
-    storeJobs(jobs)
+  useEffect(async () =>{
+    await storeJobs(jobs)
   })
   /** This will run when localstorage is defined */
   if(compareArrays()){
@@ -78,7 +79,7 @@ function AllJobs({jobs}) {
             // count 5 days back
             const date = new Date(element.dateAdded)
             const dateToUse = date.toLocaleDateString('en-US')
-            if(i < 6){
+            if(i < 20){
               return(
   
                 
@@ -125,7 +126,7 @@ function AllJobs({jobs}) {
             // count 5 days back
             const date = new Date(element.dateAdded)
             const dateToUse = date.toLocaleDateString('en-US')
-            if(i < 6){
+            if(i < 20){
               return(
 
                 

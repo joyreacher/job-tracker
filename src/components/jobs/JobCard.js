@@ -32,7 +32,7 @@ function JobCard(props) {
         <Cell>
           <h1>{props.application.company}</h1>
         </Cell>
-      {/* <Cell>
+      <Cell>
         <h2>{props.application.role}</h2>
       </Cell>
       <Cell>
@@ -49,7 +49,7 @@ function JobCard(props) {
       </Cell> 
       <Cell>
         <p>{props.application.notes}</p>
-      </Cell> */}
+      </Cell>
       <Cell> 
         <p>{<Moment subtract={{ days: 5 }} format="MMM DD">{date}</Moment>}</p>
       </Cell>

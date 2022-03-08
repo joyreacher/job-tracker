@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { DataContext } from '../context/DataContext'
 import styled from "@emotion/styled"
 import { Toaster } from "react-hot-toast"
@@ -20,7 +20,7 @@ const InnerContainer = styled.div`
   align-items: center;
   margin:0 auto;
   display:flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   max-width: 1020px;
 `
 const MenuContainer = styled.div`
@@ -49,54 +49,42 @@ const MenuText = styled.p`
 const LogOutLink = styled.p`
   cursor: pointer;
 `
-const tl = gsap.timeline({reversed: true, paused:true})
-function Navbar() {
+
+function Navbar({handleClick, timeline}) {
+  const tl = timeline
+  const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('jobs')
     return window.location.href = '/login'
   }
-  const handleClick = () => {
-    if(tl.reversed()){
-      return tl.play()
-    }
-    tl.reverse()
-  }
+
   useEffect(() =>{
     tl
       .from('.application-form', {opacity: 0, display:'none', autoAlpha: 0})
       .from('.application-form__inner-container', {opacity: 0 }, '<')
   },[])
   return (
-    <DataContext.Consumer>
-      {
-        ({addJobs, user}) => {
-         return(
-           <>
-             <NavbarContainer>
-               <InnerContainer>
-                 <Toaster />
-                 <p onClick={() => addJobs('hello')}>Jobby</p>
-                 {
-                   !user ? '' : <MenuContainer>
-                    <p>Hello {user}</p>
-                    <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-                    <Menu onClick={() => handleClick()}>
-                      <MenuText >
-                        Add Job
-                      </MenuText>
-                    </Menu>
-                  </MenuContainer>
-                 }
-               </InnerContainer>
-             </NavbarContainer>
-             <ApplicationForm handleClick={handleClick} />
-           </>
-         )
-        }
-      }
-    </DataContext.Consumer>
+    <>
+      <NavbarContainer>
+        <InnerContainer>
+          <Toaster />
+          {
+            !state.user ? '' : <MenuContainer>
+              <p>Hello {state.user}</p>
+              <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+              <Menu onClick={async () => await handleClick()}>
+                <MenuText >
+                  Add Job
+                </MenuText>
+              </Menu>
+            </MenuContainer>
+          }
+        </InnerContainer>
+      </NavbarContainer>
+      {/* <ApplicationForm handleClick={handleClick} /> */}
+    </>
   )
 }
 

@@ -1,4 +1,5 @@
 import React from "react"
+import { DataProvider } from "../context/DataContext"
 import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import Navbar from "./Navbar"
@@ -12,9 +13,10 @@ const Wrapper = styled("main")`
 
 export default function Layout({ children }) {
   return (
-    <Wrapper>
-      <Navbar />
-      {children}
-    </Wrapper>
+    <DataProvider>
+      <Wrapper>
+        {children}
+      </Wrapper>
+    </DataProvider>
   )
 }
