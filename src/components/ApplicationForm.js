@@ -53,43 +53,6 @@ const FormInput = styled.input`
   width: 90%;
 `
 function ApplicationForm({handleClick, handleSubmit}) {
-  const [state, dispatch]  = useContext(DataContext)
-  // const handleSubmit = (e) =>{
-  //   e.preventDefault()
-  //   const token = localStorage.getItem('token')
-  //   trackPromise(
-  //     axios({
-  //       url: 'https://job-tracker-api-v1.herokuapp.com/job/new',
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-type': 'application/json;charset=UTF-8',
-  //         "Authorization" : `Bearer ${token}`
-  //       },
-  //       data: {
-  //         username: localStorage.getItem('username'),
-  //         company: e.target[0].value,
-  //         role: e.target[1].value,
-  //         contact: e.target[2].value,
-  //         location: e.target[3].value,
-  //         source: e.target[4].value,
-  //         link: e.target[5].value,
-  //         notes: e.target[6].value,
-  //         dateAdded: e.target[7].value
-  //       },
-  //     })
-  //       .then(response => {
-  //         // UpdateJobs(localStorage.getItem('token'))
-  //         // window.location.reload()
-  //         // return dispatch({type: 'update', payload: {user: localStorage.getItem('username'), refresh: true, jobs: response.data.applications}})
-  //       })
-  //       .catch((error) =>{
-  //         return toast.error(error.response.data.message)
-  //       })
-        
-  //   )
-    
-  // }
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
     <FormInnerContainer className="application-form__inner-container">
@@ -119,7 +82,7 @@ function ApplicationForm({handleClick, handleSubmit}) {
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="notes">notes</FormLabel>
-        <FormInput  name="notes" type="text"/>
+        <FormInput  name="notes" type="textarea"/>
         <FormInput  name="date" type="hidden" value={new Date()} />
       </FormCell>
       <SubmitCell
