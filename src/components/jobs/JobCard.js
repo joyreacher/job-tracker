@@ -29,29 +29,34 @@ function JobCard(props) {
   return (
     <>
       {/* <Container> */}
-        <Cell>
-          <h1>{props.application.company}</h1>
-        </Cell>
+      <Cell>
+        <h1>{props.application.company}</h1>
+      </Cell>
       <Cell>
         <h2>{props.application.role}</h2>
       </Cell>
-      <Cell>
+      {/* <Cell>
         <p>{props.application.contact}</p>
-      </Cell>
-      <Cell>
+      </Cell> */}
+      {/* <Cell>
         <p>{props.application.location}</p>
-      </Cell>
-      <Cell>
+      </Cell> */}
+      {/* <Cell>
         <p>{props.application.source}</p>
+      </Cell> */}
+      <Cell> 
+        <p>{<Moment format="MMM DD">{date}</Moment>}</p>
       </Cell>
       <Cell>
         <p>{props.application.link}</p>
       </Cell> 
-      <Cell>
+      {/* <Cell>
         <p>{props.application.notes}</p>
-      </Cell>
-      <Cell> 
-        <p>{<Moment subtract={{ days: 5 }} format="MMM DD">{date}</Moment>}</p>
+      </Cell> */}
+      
+      <Cell>
+        <button>Delete</button>
+        <button>View</button>
       </Cell>
       {/* </Container> */}
     </>

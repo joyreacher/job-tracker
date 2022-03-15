@@ -62,11 +62,12 @@ function AllJobs({jobs}) {
             <TableHead>Company</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Date Added</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead>Source</TableHead>
+            {/* <TableHead>Location</TableHead> */}
+            {/* <TableHead>Source</TableHead> */}
             <TableHead>Link</TableHead>
-            <TableHead>Notes</TableHead>
-            <TableHead>Date applied</TableHead>
+            {/* <TableHead>Notes</TableHead> */}
+            {/* <TableHead>Date applied</TableHead> */}
+            <TableHead>Delete/View</TableHead>
             <TableHead></TableHead>
           </tr>
         </Head>
@@ -105,15 +106,16 @@ function AllJobs({jobs}) {
       <Table>
         <Head>
           <tr>
-            <TableHead>API</TableHead>
+            <TableHead>Api</TableHead>
             <TableHead>Company</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Date Added</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead>Source</TableHead>
+            {/* <TableHead>Location</TableHead> */}
+            {/* <TableHead>Source</TableHead> */}
             <TableHead>Link</TableHead>
-            <TableHead>Notes</TableHead>
-            <TableHead>Date applied</TableHead>
+            {/* <TableHead>Notes</TableHead> */}
+            {/* <TableHead>Date applied</TableHead> */}
+            <TableHead>Delete/View</TableHead>
             <TableHead></TableHead>
           </tr>
         </Head>
