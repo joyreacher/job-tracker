@@ -1,22 +1,16 @@
-import React, { Children, useState } from 'react';
+import React, { useReducer, useState } from 'react';
+import { reducer, initialState} from './Reducer'
+
 export const DataContext = React.createContext({
-  user: localStorage.getItem('username'),
-  jobs: () => { console.log('this would set the language')},
-  addJobs: (application) => {
-    console.log(application)
-  }
-  
+  state:initialState,
+  dispatch: () =>null
 });
 
-class DataProvider extends React.Component {
-  render() {
-    return (
-      <DataContext.Provider>
-        {Children}
-      </DataContext.Provider>
-    )
-  }
+export const DataProvider = ({children}) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return (
+    <DataContext.Provider value={[state, dispatch]}>
+      {children}
+    </DataContext.Provider>
+  )
 }
-
-export default DataContext
-export { DataProvider }

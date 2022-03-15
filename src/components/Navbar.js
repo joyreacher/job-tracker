@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { DataContext } from '../context/DataContext'
 import styled from "@emotion/styled"
 import { Toaster } from "react-hot-toast"
 import gsap  from "gsap";
+import { CSVLink, CSVDownload } from 'react-csv'
+import { css, jsx } from '@emotion/react'
 
 
 // components
@@ -16,6 +18,7 @@ const NavbarContainer = styled.nav`
   background-color: var(--color-navbar);
 `
 const InnerContainer = styled.div`
+  width:100%;
   height:100%;
   align-items: center;
   margin:0 auto;
@@ -49,55 +52,89 @@ const MenuText = styled.p`
 const LogOutLink = styled.p`
   cursor: pointer;
 `
-const tl = gsap.timeline({reversed: true, paused:true})
-function Navbar() {
+
+function Navbar({handleClick, timeline, jobs}) {
+  const tl = timeline
+  const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('jobs')
     return window.location.href = '/login'
   }
-  const handleClick = () => {
-    if(tl.reversed()){
-      return tl.play()
+  const checkForToken = () => {
+    if(localStorage.getItem('token')){
+      const headers = [
+        { 
+          ' ':'Job Leads',
+          'Name': jobs[0].company,
+          'Role': jobs[0].role,
+          'Contact': jobs[0].contact,
+          '': 'Job Information',
+          'Name': jobs[0].company,
+          'Role': jobs[0].role,
+          'Contact': jobs[0].contact,
+          'Location': jobs[0].location,
+          'Source': jobs[0].source,
+          'Link': jobs[0].link,
+          'Notes': jobs[0].notes
+        }
+      ]
+      return headers
     }
-    tl.reverse()
+    return 
   }
   useEffect(() =>{
-    tl
+    if(localStorage.getItem('token')){
+      tl
       .from('.application-form', {opacity: 0, display:'none', autoAlpha: 0})
       .from('.application-form__inner-container', {opacity: 0 }, '<')
+    }
   },[])
-  return (
-    <DataContext.Consumer>
-      {
-        ({addJobs, user}) => {
-         return(
-           <>
-             <NavbarContainer>
-               <InnerContainer>
-                 <Toaster />
-                 <p onClick={() => addJobs('hello')}>Jobby</p>
-                 {
-                   !user ? '' : <MenuContainer>
-                    <p>Hello {user}</p>
-                    <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-                    <Menu onClick={() => handleClick()}>
-                      <MenuText >
-                        Add Job
-                      </MenuText>
-                    </Menu>
-                  </MenuContainer>
-                 }
-               </InnerContainer>
-             </NavbarContainer>
-             <ApplicationForm handleClick={handleClick} />
-           </>
-         )
-        }
-      }
-    </DataContext.Consumer>
-  )
+  
+  if(localStorage.getItem('token')){
+    return (
+      <>
+        <NavbarContainer>
+          <InnerContainer>
+            <p>Jobby</p>
+            <Toaster />
+            {
+              !state.user ? '' : <MenuContainer>
+                <p>Hello {state.user}</p>
+                <CSVLink data={checkForToken()}
+                  css={css`
+                      text-decoration: none;
+                      color:var(--color-main-light);
+                      `}
+                >
+                  Download Jobs
+                </CSVLink>
+                <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+                <Menu onClick={async () => await handleClick()}>
+                  <MenuText >
+                    Add Job
+                  </MenuText>
+                </Menu>
+              </MenuContainer>
+            }
+          </InnerContainer>
+        </NavbarContainer>
+      </>
+    )
+  }else{
+    return(
+      <>
+        <NavbarContainer>
+          <InnerContainer>
+            <p>Jobby</p>
+            <Toaster />
+          </InnerContainer>
+        </NavbarContainer>
+      </>
+    )
+  }
+  
 }
 
 export default Navbar

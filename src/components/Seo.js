@@ -84,6 +84,7 @@ function Seo({ description, lang, meta, title }) {
         }
       `}
       </script>
+      <link rel="stylesheet" href="https://use.typekit.net/yuf8pbt.css"></link>
     </Helmet>
   )
 }
