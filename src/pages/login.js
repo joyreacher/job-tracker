@@ -6,6 +6,7 @@ import Layout from "../components/Layout"
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
 import LoginForm from "../components/LoginForm"
+import Navbar from "../components/Navbar"
 const Container = styled.section`
   height:100%;
   max-width:1020px;
@@ -19,6 +20,7 @@ function Register() {
         description="Login to view your saved jobs" 
         lang="US-en"
       />
+      <Navbar />
       <Container>
         <LoginForm />
       </Container>

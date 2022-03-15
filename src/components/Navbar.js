@@ -3,6 +3,8 @@ import { DataContext } from '../context/DataContext'
 import styled from "@emotion/styled"
 import { Toaster } from "react-hot-toast"
 import gsap  from "gsap";
+import { CSVLink, CSVDownload } from 'react-csv'
+import { css, jsx } from '@emotion/react'
 
 
 // components
@@ -16,11 +18,12 @@ const NavbarContainer = styled.nav`
   background-color: var(--color-navbar);
 `
 const InnerContainer = styled.div`
+  width:100%;
   height:100%;
   align-items: center;
   margin:0 auto;
   display:flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   max-width: 1020px;
 `
 const MenuContainer = styled.div`
@@ -59,42 +62,79 @@ function Navbar({handleClick, timeline, jobs}) {
     localStorage.removeItem('jobs')
     return window.location.href = '/login'
   }
-
+  const checkForToken = () => {
+    if(localStorage.getItem('token')){
+      const headers = [
+        { 
+          ' ':'Job Leads',
+          'Name': jobs[0].company,
+          'Role': jobs[0].role,
+          'Contact': jobs[0].contact,
+          '': 'Job Information',
+          'Name': jobs[0].company,
+          'Role': jobs[0].role,
+          'Contact': jobs[0].contact,
+          'Location': jobs[0].location,
+          'Source': jobs[0].source,
+          'Link': jobs[0].link,
+          'Notes': jobs[0].notes
+        }
+      ]
+      return headers
+    }
+    return 
+  }
   useEffect(() =>{
-    tl
+    if(localStorage.getItem('token')){
+      tl
       .from('.application-form', {opacity: 0, display:'none', autoAlpha: 0})
       .from('.application-form__inner-container', {opacity: 0 }, '<')
+    }
   },[])
-  return (
-    <>
-      <NavbarContainer>
-        <InnerContainer>
-          <p>Jobby</p>
-          <Toaster />
-          {
-            !state.user ? '' : <MenuContainer>
-              <p>Hello {state.user}</p>
-              <CSVLink data={jobs}
-                css={css`
-                    text-decoration: none;
-                    color:var(--color-main-light);
-                    `}
-              >
-                Download Jobs
-              </CSVLink>
-              <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-              <Menu onClick={async () => await handleClick()}>
-                <MenuText >
-                  Add Job
-                </MenuText>
-              </Menu>
-            </MenuContainer>
-          }
-        </InnerContainer>
-      </NavbarContainer>
-      {/* <ApplicationForm handleClick={handleClick} /> */}
-    </>
-  )
+  
+  if(localStorage.getItem('token')){
+    return (
+      <>
+        <NavbarContainer>
+          <InnerContainer>
+            <p>Jobby</p>
+            <Toaster />
+            {
+              !state.user ? '' : <MenuContainer>
+                <p>Hello {state.user}</p>
+                <CSVLink data={checkForToken()}
+                  css={css`
+                      text-decoration: none;
+                      color:var(--color-main-light);
+                      `}
+                >
+                  Download Jobs
+                </CSVLink>
+                <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+                <Menu onClick={async () => await handleClick()}>
+                  <MenuText >
+                    Add Job
+                  </MenuText>
+                </Menu>
+              </MenuContainer>
+            }
+          </InnerContainer>
+        </NavbarContainer>
+      </>
+    )
+  }else{
+    return(
+      <>
+        <NavbarContainer>
+          <InnerContainer>
+            <p>Jobby</p>
+            <Toaster />
+          </InnerContainer>
+        </NavbarContainer>
+      </>
+    )
+  }
+  
 }
 
 export default Navbar

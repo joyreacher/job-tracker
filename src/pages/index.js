@@ -60,7 +60,7 @@ export default function Home() {
     const token = checkForToken()
     await trackPromise(
       axios({
-        url: 'https://job-tracker-api-v1.herokuapp.com/jobs',
+        url: `https://job-tracker-api-v1.herokuapp.com/jobs/${state.user}`,
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -81,7 +81,6 @@ export default function Home() {
   }
 
   const handleClick = async () => {
-    console.log('click handleClick')
     if(tl.reversed()){
       return tl.play()
     }
@@ -124,13 +123,13 @@ export default function Home() {
     )
     
   }
-
-  useEffect(async () =>{
+  useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
       window.location.href = '/login'
     }
-    
-    await ApiCall()
+    (async function fetchData(){
+      await ApiCall()
+      })()
   }, [])
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
