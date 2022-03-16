@@ -25,7 +25,6 @@ const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
 )
 const Container = styled.section`
-  padding: 0 2em;
   display:flex;
   flex-direction: column;
   justify-content: space-between;

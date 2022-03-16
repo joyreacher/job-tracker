@@ -18,8 +18,26 @@ const OverlayBody = styled.section`
   margin:0 auto;
   padding:0 2em;
 `
+const OverlayFooter = styled.div`
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  max-width: 1020px;
+  margin:4em auto 0 auto;
+  display:flex;
+`
 const Container = styled.div`
   font-size: clamp(1.3rem, 3vw, 13rem);
+`
+const InputCell = styled.div`
+  display:flex;
+  align-items: center;
+  // margin: 0 1em;
+`
+const InputLabel = styled.label`
+  margin:0 1em;
+`
+const Checkbox = styled.input`
+  cursor:pointer;
+  padding:1em;
 `
 const Cell = styled.div`
   display:flex;
@@ -96,6 +114,25 @@ function JobView({handleAnimation, jobViewTL, jobs, jobId, handleJobView}) {
           })
         }
       </OverlayBody>
+      <OverlayFooter>
+        <InputCell>
+          <InputLabel htmlFor="applied">Applied</InputLabel>
+          <Checkbox name="applied" type="checkbox"/>
+        </InputCell>
+        <InputCell>
+          <InputLabel htmlFor="take_home">Phone Screen</InputLabel>
+          <Checkbox name="take_home" type="checkbox"/>
+        </InputCell>
+        <InputCell>
+          <InputLabel htmlFor="interview">Interview</InputLabel>
+          <Checkbox name="interview" type="checkbox"/>
+        </InputCell>
+        <InputCell>
+          <InputLabel htmlFor="take_home">Take Home Assignment</InputLabel>
+          <Checkbox name="take_home" type="checkbox"/>
+        </InputCell>
+        
+      </OverlayFooter>
     </InnerContainer>
     </span>
   )

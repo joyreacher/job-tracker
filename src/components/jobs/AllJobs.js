@@ -25,7 +25,9 @@ const TableHead = styled.th`
 `
 const TableRow = styled.tr`
   cursor: pointer;
-
+  &:hover{
+    background-color: red;
+  }
 `
 // const jobViewTL = gsap.timeline({reversed: true, paused: true})
 function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
