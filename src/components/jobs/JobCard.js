@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { lazy, Suspense, useEffect, useState } from "react"
 import Moment from 'react-moment';
 import styled from "@emotion/styled"
 const Card = styled.td`
@@ -29,10 +29,10 @@ function JobCard(props) {
   return (
     <>
       {/* <Container> */}
-      <Cell>
+      <Cell id={props.application._id}>
         <h1>{props.application.company}</h1>
       </Cell>
-      <Cell>
+      <Cell id={props.application._id}>
         <h2>{props.application.role}</h2>
       </Cell>
       {/* <Cell>
@@ -44,20 +44,15 @@ function JobCard(props) {
       {/* <Cell>
         <p>{props.application.source}</p>
       </Cell> */}
-      <Cell> 
+      <Cell id={props.application._id}> 
         <p>{<Moment format="MMM DD">{date}</Moment>}</p>
       </Cell>
-      <Cell>
+      <Cell id={props.application._id}>
         <p>{props.application.link}</p>
       </Cell> 
       {/* <Cell>
         <p>{props.application.notes}</p>
       </Cell> */}
-      
-      <Cell>
-        <button>Delete</button>
-        <button>View</button>
-      </Cell>
       {/* </Container> */}
     </>
   )

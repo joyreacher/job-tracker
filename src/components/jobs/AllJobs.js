@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { lazy, useEffect, useState, useContext, Suspense } from "react"
 import Moment from 'react-moment';
 //components
 import JobCard from "./JobCard"
@@ -6,6 +6,7 @@ import JobCard from "./JobCard"
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
 import {DataContext} from "../../context/DataContext";
+const JobView = lazy(() => import('./JobView'))
 const breakpoints = [376, 411, 576, 768, 1020, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
@@ -22,7 +23,14 @@ const Head = styled.thead`
 const TableHead = styled.th`
   background-color: var(--color-table-accent);
 `
-function AllJobs({jobs}) {
+const TableRow = styled.tr`
+  cursor: pointer;
+
+`
+// const jobViewTL = gsap.timeline({reversed: true, paused: true})
+function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
+  const [state, dispatch] = useContext(DataContext)
+  const [jobId, setJobId] = useState('')
   // const { jobs } = useContext(DataContext)
   /**
    * @function storeJobs
@@ -44,30 +52,31 @@ function AllJobs({jobs}) {
     }
     return true
   }
-  useEffect(async () =>{
-    await storeJobs(jobs)
+  useEffect(() =>{
+    storeJobs(jobs)
   })
-  /** This will run when localstorage is defined */
+  /* This will run when localstorage is defined */
   if(compareArrays()){
-    /**
-     * @var result
-     * @description Retrieve and parse the stringified jobs array
+    /** 
+     * !@var result
+     * !@description Retrieve and parse the stringified jobs array
      */
     const result = JSON.parse(localStorage.getItem('jobs'))
     return(
+      <>
+      <Suspense fallback={'loading'}>
+        <JobView handleJobView={handleJobView}  jobViewTL={jobViewTL} jobs={result} />
+      </Suspense>
+      
       <Table>
+      
         <Head>
           <tr>
             <TableHead>Local</TableHead>
             <TableHead>Company</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Date Added</TableHead>
-            {/* <TableHead>Location</TableHead> */}
-            {/* <TableHead>Source</TableHead> */}
             <TableHead>Link</TableHead>
-            {/* <TableHead>Notes</TableHead> */}
-            {/* <TableHead>Date applied</TableHead> */}
-            <TableHead>Delete/View</TableHead>
             <TableHead></TableHead>
           </tr>
         </Head>
@@ -84,13 +93,16 @@ function AllJobs({jobs}) {
               return(
   
                 
-                <tr key={element._id}>
+                <TableRow key={element._id} id={element._id} onClick={async (e) => {
+                  await dispatch({type: 'set job id',token:'', jobId: e.target.parentElement.id})
+                  handleJobView(e)
+                  }}>
                 <TableHead>
                   <Moment subtract={{ days: 5 }} format="MMM DD">{currentDate}</Moment>
                 </TableHead>
                 
-                  <JobCard key={element._id} application={element} />
-                </tr>
+                  <JobCard  key={element._id} application={element}/>
+                </TableRow>
               
               )
             }
@@ -99,14 +111,21 @@ function AllJobs({jobs}) {
         }
         </TableBody>
       </Table>
+      </>
     )
   }else{
     /** This will run when localstorage jobs value is not defined */
     return (
+      <>
+      <Suspense fallback={'loading'}>
+        <JobView handleJobView={handleJobView}  jobViewTL={jobViewTL} jobs={jobs} />
+      </Suspense>
+      
       <Table>
+      
         <Head>
           <tr>
-            <TableHead>Api</TableHead>
+            <TableHead>Local</TableHead>
             <TableHead>Company</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Date Added</TableHead>
@@ -115,7 +134,7 @@ function AllJobs({jobs}) {
             <TableHead>Link</TableHead>
             {/* <TableHead>Notes</TableHead> */}
             {/* <TableHead>Date applied</TableHead> */}
-            <TableHead>Delete/View</TableHead>
+            {/* <TableHead>Delete/View</TableHead> */}
             <TableHead></TableHead>
           </tr>
         </Head>
@@ -130,15 +149,19 @@ function AllJobs({jobs}) {
             const dateToUse = date.toLocaleDateString('en-US')
             if(i < 20){
               return(
-
+  
                 
-                <tr key={element._id}>
+                <TableRow key={element._id} id={element._id} onClick={async (e) => {
+                  await dispatch({type: 'set job id',token:'', jobId: e.target.parentElement.id})
+                  handleJobView(e)
+                  
+                  }}>
                 <TableHead>
                   <Moment subtract={{ days: 5 }} format="MMM DD">{currentDate}</Moment>
                 </TableHead>
                 
-                  <JobCard key={element._id} application={element} />
-                </tr>
+                  <JobCard  key={element._id} application={element}/>
+                </TableRow>
               
               )
             }
@@ -147,6 +170,7 @@ function AllJobs({jobs}) {
         }
         </TableBody>
       </Table>
+      </>
     )
   }
   

@@ -8,12 +8,11 @@ import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
 import toast from "react-hot-toast";
 const FormContainer = styled.form`
-  visibility:hidden;
   background-color: var(--color-menu-overlay);
-  position:absolute;
+  position:fixed;
   top:0;
   width:100%;
-  max-height:100vh;
+  min-height:100vh;
   display:flex;
   flex-wrap:wrap;
   align-items:center;
@@ -91,7 +90,7 @@ function ApplicationForm({handleClick, handleSubmit}) {
             `}
       >
         <LoadingSpinnerComponent position="absolute"/>
-        <FormSubmit onClick={() => handleClick()} type='submit'>Add Job</FormSubmit>
+        <FormSubmit onClick={async () => await handleClick()} type='submit'>Add Job</FormSubmit>
       </SubmitCell>
     </FormInnerContainer>
   </FormContainer>
