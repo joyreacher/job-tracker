@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext } from "react"
 import { Link } from 'gatsby'
 import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
@@ -6,6 +6,7 @@ import { LoadingSpinnerComponent } from "./Spinner"
 import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
 import toast from "react-hot-toast";
+import { DataContext } from "../context/DataContext";
 const FormContainer = styled.form`
   display:flex;
   flex-direction: column;
@@ -31,7 +32,7 @@ const FormInput = styled.input`
   font-size: 2rem;
 `
 function LoginForm() {
-  
+  const [state, dispatch] = useContext(DataContext)
   const handleSubmit = (e) =>{
     e.preventDefault()
     trackPromise(
@@ -51,6 +52,7 @@ function LoginForm() {
           
           if(response.status === 200){
             const res = response.data
+            dispatch({type: 'login',token:res.token})
             localStorage.setItem('token', res.token)
             localStorage.setItem('username', res.user.username)
             return window.location.href = '/'

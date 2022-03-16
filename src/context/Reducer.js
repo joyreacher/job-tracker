@@ -1,6 +1,18 @@
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case 'login':
+      console.log(action)
+      return{
+        ...state,
+        token: action.token
+      }
+    case "set job id":
+      return {
+        ...state,
+        jobId: action.jobId,
+        token: action.token
+      }
     case "update":
       console.log("update")
       return {
@@ -27,5 +39,7 @@ export const reducer = (state, action) => {
 export const initialState = {
   refresh: false,
   jobs:[],
-  user: localStorage.getItem('username')
+  user: localStorage.getItem('username'),
+  jobId: '',
+  token: ''
 }
