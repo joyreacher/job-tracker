@@ -45,7 +45,9 @@ const LoadingMessage = styled.div`
   justify-content: center;
   align-items: center;
 `
-const tl = gsap.timeline({reversed: true, paused:true})
+const tl = gsap.timeline({ reversed: true, paused:true})
+const jobViewTL = gsap.timeline({ reversed: true, paused: true})
+
 export default function Home() {
   
   const {state, dispatch} = useContext(DataContext)
@@ -83,8 +85,16 @@ export default function Home() {
   const handleClick = async () => {
     if(tl.reversed()){
       return tl.play()
+    }else{
+      return tl.reverse()
     }
-    return tl.reverse()
+  }
+  const handleJobView = async (element) => {
+    if(jobViewTL.reversed()){
+      return jobViewTL.play()
+    }else{
+      return jobViewTL.reverse()
+    }
   }
 
   const handleSubmit = (e) =>{
@@ -148,13 +158,13 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="US-en"
         />
-        <Navbar jobs={jobs} timeline={tl} handleClick={handleClick}/>
+        <Navbar jobs={jobs} timeline={tl} handleClick={handleClick} token={checkForToken()}/>
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         
         <Container>
           <Stage/>
           <LoadingSpinnerComponent />
-          {isLoading !== true ? <AllJobs jobs={jobs} /> : <LoadingMessage />}
+          {isLoading !== true ? <AllJobs handleJobView={handleJobView} jobViewTL={jobViewTL} jobs={jobs} /> : <LoadingMessage />}
         </Container>
       </Layout>
     )

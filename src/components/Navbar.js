@@ -53,8 +53,7 @@ const LogOutLink = styled.p`
   cursor: pointer;
 `
 
-function Navbar({handleClick, timeline, jobs}) {
-  const tl = timeline
+function Navbar({handleClick, timeline, jobs, token}) {
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
@@ -63,7 +62,7 @@ function Navbar({handleClick, timeline, jobs}) {
     return window.location.href = '/login'
   }
   const checkForToken = () => {
-    if(localStorage.getItem('token')){
+    if(state.user){
       const headers = [
         { 
           ' ':'Job Leads',
@@ -85,16 +84,14 @@ function Navbar({handleClick, timeline, jobs}) {
     return 
   }
   useEffect(() =>{
-    if(localStorage.getItem('token')){
-      tl
-      .from('.application-form', {opacity: 0, display:'none', autoAlpha: 0})
-      .from('.application-form__inner-container', {opacity: 0 }, '<')
+    if(state.user){
+      timeline
+      .from('.application-form', {opacity: 0, autoAlpha: 0})
+      .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<')
     }
-  },[])
-  
-  if(localStorage.getItem('token')){
+  }, [])
+  if(state.user){
     return (
-      <>
         <NavbarContainer>
           <InnerContainer>
             <p>Jobby</p>
@@ -120,7 +117,6 @@ function Navbar({handleClick, timeline, jobs}) {
             }
           </InnerContainer>
         </NavbarContainer>
-      </>
     )
   }else{
     return(
