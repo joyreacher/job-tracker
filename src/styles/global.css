@@ -5,6 +5,8 @@
 }
 
 :root{
+  /* Job View Overlay */
+  --color-jobView-overlay:hsla(276, 6%, 19%, 0.9);
   /* Menu Overlay*/
   --color-menu-overlay: hsla(276, 6%, 15%, 0.703);
   /* Navbar*/
