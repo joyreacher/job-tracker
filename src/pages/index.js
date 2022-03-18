@@ -101,7 +101,7 @@ export default function Home() {
     const token = localStorage.getItem('token')
     trackPromise(
       axios({
-        url: 'https://job-tracker-api-v1.herokuapp.com/job/new',
+        url: 'https://job-tracker-api-v1.herokuapp.com/jobs/new',
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -109,7 +109,7 @@ export default function Home() {
           "Authorization" : `Bearer ${token}`
         },
         data: {
-          username: localStorage.getItem('username'),
+          user: localStorage.getItem('username'),
           company: e.target[0].value,
           role: e.target[1].value,
           contact: e.target[2].value,
@@ -126,7 +126,8 @@ export default function Home() {
           return ApiCall()
         })
         .catch((error) =>{
-          return toast.error(error.response.data.message)
+          console.log(error)
+          return toast.error('Something went wrong')
         })
         
     )
