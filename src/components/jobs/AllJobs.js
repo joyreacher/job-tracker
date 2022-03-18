@@ -6,24 +6,29 @@ import JobCard from "./JobCard"
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
 import {DataContext} from "../../context/DataContext";
+import { gsap } from "gsap/dist/gsap";
+import { Flip } from "gsap/dist/Flip";
+gsap.registerPlugin(Flip);
 const JobView = lazy(() => import('./JobView'))
 const breakpoints = [376, 411, 576, 768, 1020, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
 )
 
-const Table = styled.table`
+const Table = styled.div`
   width:100%;
 `
-const TableBody = styled.tbody`
+const TableBody = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   max-width:100%;
 `
-const Head = styled.thead`
+const Head = styled.div`
 `
-const TableHead = styled.th`
+const TableHead = styled.div`
   background-color: var(--color-table-accent);
 `
-const TableRow = styled.tr`
+const TableRow = styled.div`
   cursor: pointer;
   &:hover{
     background-color: red;
@@ -72,18 +77,7 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
       
       <Table>
       
-        <Head>
-          <tr>
-            <TableHead>Local</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Date Added</TableHead>
-            <TableHead>Link</TableHead>
-            <TableHead></TableHead>
-          </tr>
-        </Head>
-        
-        <TableBody>
+        <TableBody className="group">
         {
           result.map((element, i) => {
             // get current date
@@ -93,9 +87,15 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
             const dateToUse = date.toLocaleDateString('en-US')
             if(i < 20){
               return(
-  
-                
-                <TableRow key={element._id} id={element._id} onClick={async (e) => {
+                <TableRow 
+                  className={`job-row ${!element.stage.applied ? '' : 'applied'}`}  
+                  key={element._id} 
+                  id={element._id} 
+                  data-tha={!element.stage.takeHomeAssignment.received ? '' : 'true'}
+                  data-applied={!element.stage.applied ? '' : 'true'}
+                  data-phonescreen={!element.stage.phoneScreen ? '' : 'true'}
+                  data-facetoface={!element.stage.faceToface ? '' : 'true'}
+                  onClick={async (e) => {
                   await dispatch({type: 'set job id',token:'', jobId: e.target.parentElement.id})
                   handleJobView(e)
                   }}>
@@ -103,7 +103,7 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
                   <Moment subtract={{ days: 5 }} format="MMM DD">{currentDate}</Moment>
                 </TableHead>
                 
-                  <JobCard  key={element._id} application={element}/>
+                  <JobCard className="job" key={element._id} application={element}/>
                 </TableRow>
               
               )
@@ -126,7 +126,7 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
       <Table>
       
         <Head>
-          <tr>
+          <div>
             <TableHead>Local</TableHead>
             <TableHead>Company</TableHead>
             <TableHead>Role</TableHead>
@@ -138,7 +138,7 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
             {/* <TableHead>Date applied</TableHead> */}
             {/* <TableHead>Delete/View</TableHead> */}
             <TableHead></TableHead>
-          </tr>
+          </div>
         </Head>
         
         <TableBody>
