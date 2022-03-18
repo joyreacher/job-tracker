@@ -1,8 +1,12 @@
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case 'applied':
+      return{
+        ...state,
+        applied: action.applied
+      }
     case 'login':
-      console.log(action)
       return{
         ...state,
         token: action.token
@@ -37,6 +41,7 @@ export const reducer = (state, action) => {
 }
 
 export const initialState = {
+  applied: false,
   refresh: false,
   jobs:[],
   user: localStorage.getItem('username'),
