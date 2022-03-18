@@ -133,6 +133,26 @@ export default function Home() {
     )
     
   }
+  const filterJobs = (e) => {
+      document.querySelectorAll('.job-row').forEach((job) => {
+        gsap.set(job, { display:'block' })
+        job.classList.remove('filtered')
+        document.querySelectorAll('.option').forEach((filter) => {
+          //? if the rows data- attribute does NOT match what is passed hide it
+          if(!job.getAttribute('data-' + e)){
+            gsap.set(job, { display: 'none'})
+            job.classList.add('filtered')
+          }
+        })
+      })
+  }
+  const clearFilters = () => {
+    const jobRow = document.querySelectorAll('.job-row')
+    return jobRow.forEach(row => {
+      gsap.set(row, { display:'block' })
+      row.classList.remove('filtered')
+    })
+  }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
       window.location.href = '/login'
