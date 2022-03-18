@@ -182,7 +182,7 @@ export default function Home() {
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         
         <Container>
-          <Stage/>
+          <Stage filterJobs={filterJobs} clearFilters={clearFilters}/>
           <LoadingSpinnerComponent />
           {isLoading !== true ? <AllJobs handleJobView={handleJobView} jobViewTL={jobViewTL} jobs={jobs} /> : <LoadingMessage />}
         </Container>
