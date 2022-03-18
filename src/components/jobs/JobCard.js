@@ -19,7 +19,7 @@ const Container = styled.div`
   display:grid;
   grid-template-rows: 1/-1;
 `
-const Cell = styled.td`
+const Cell = styled.div`
   text-align:center;
   margin:.5em .3em;
 `

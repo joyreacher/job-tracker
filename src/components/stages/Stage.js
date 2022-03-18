@@ -57,25 +57,42 @@ const Result = styled.section`
   padding:1.2rem;
 `
 
-function Stage() {
+const ClearFilters = styled.section`
+  cursor: pointer;
+  background-color:lime;
+  width:80%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:1.2rem;
+`
+
+function Stage({ filterJobs, clearFilters }) {
   return (
     <Container>
       <InnerContainer>
-        <Applied>
+        <Applied 
+          data-filter="applied"
+          className="option" 
+          onClick={() => filterJobs("applied")}>
           Applied
         </Applied>
-        <PhoneScreen>
+        <PhoneScreen className="option" onClick={() => filterJobs("phonescreen")}>
           PhoneScreen
         </PhoneScreen>
-        <FaceToFace>
+        <FaceToFace className="option" onClick={() => filterJobs("facetoface")}>
           Face To Face
         </FaceToFace>
-        <TakeHomeAssignment>
+        <TakeHomeAssignment className="option" onClick={() => filterJobs("tha")}>
           Take Home Assignment
         </TakeHomeAssignment>
         <Result>
           Result
         </Result>
+        <ClearFilters 
+          onClick={() => clearFilters()}>
+          Clear filters
+        </ClearFilters>
       </InnerContainer>
     </Container>
   )

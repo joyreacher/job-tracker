@@ -76,7 +76,7 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
       </Suspense>
       
       <Table>
-      
+        
         <TableBody className="group">
         {
           result.map((element, i) => {
@@ -96,9 +96,9 @@ function AllJobs({jobs, jobViewTL, handleJobView, handleClick}) {
                   data-phonescreen={!element.stage.phoneScreen ? '' : 'true'}
                   data-facetoface={!element.stage.faceToface ? '' : 'true'}
                   onClick={async (e) => {
-                  await dispatch({type: 'set job id',token:'', jobId: e.target.parentElement.id})
-                  handleJobView(e)
-                  }}>
+                    await dispatch({type: 'set job id',token:'', jobId: e.target.parentElement.id})
+                    handleJobView(e)
+                    }}>
                 <TableHead>
                   <Moment subtract={{ days: 5 }} format="MMM DD">{currentDate}</Moment>
                 </TableHead>
