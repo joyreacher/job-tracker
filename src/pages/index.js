@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useRef, useContext, useState, useEffect } from "react"
 import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import { trackPromise} from 'react-promise-tracker';
 import toast from "react-hot-toast";
-import gsap  from "gsap";
+import { gsap } from "gsap";
+import { Flip } from "gsap/Flip";
 import { CSVLink, CSVDownload } from 'react-csv'
 // Context
 import {DataContext} from "../context/DataContext";
@@ -18,7 +19,7 @@ import Stage from "../components/stages/Stage";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
-
+gsap.registerPlugin(Flip);
 
 const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
 const mq = breakpoints.map(
@@ -43,6 +44,59 @@ const LoadingMessage = styled.div`
   flex-direction:column;  
   justify-content: center;
   align-items: center;
+`
+const JobContainer = styled.div`
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap:2em;
+`
+const CheckBoxContainer = styled.div`
+  display:flex;
+  justify-content: center;
+`
+const FilterList = styled.ul`
+  color:black;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  padding: 20px;
+  background: #ebf5fc;
+  box-shadow: -2px -2px 5px var(--color-main-light),
+            3px 3px 5px var(--color-main-dark);
+`
+const ListItem = styled.li`
+  position: relative;
+  list-style: none;
+  text-align: center;
+  margin: 15px;
+`
+const Label = styled.label`
+  position: relative; 
+  cursor: pointer;
+`
+const CheckBox = styled.input`
+  height:3rem;
+  width:2rem;
+  left:-1rem;
+  cursor:pointer;
+  z-index:5;
+  position: absolute;
+  opacity: 0;
+`
+const IconBox = styled.div`
+  width: 60px;
+  height: 60px;
+  background: #ebf5fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
+        3px 3px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  
 `
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
