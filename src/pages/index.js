@@ -129,8 +129,14 @@ export default function Home() {
     current[i] = e;
   };
 
-  
+  const clickFilter = () => {
+    if(fliterTl.reversed()){
+      return fliterTl.play()
+    }else{
+      return fliterTl.reverse()
+    }
 
+  }
   const handleClick = async () => {
     if(tl.reversed()){
       return tl.play()
@@ -225,7 +231,70 @@ export default function Home() {
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         
         <Container>
-          <Stage filterJobs={filterJobs} clearFilters={clearFilters}/>
+        {/* TODO: Listitems can be put in array/function to render */}
+        <CheckBoxContainer className="form-check form-check-inline" >
+            <FilterList>
+              <ListItem>
+                <Label className="form-check-label" htmlFor="applied" >
+                  <CheckBox
+                    name="applied"
+                    value="applied"
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={filterChangeHandler}
+                    onClick={() => clickFilter()}
+                  />
+                  <IconBox id="icon-box">
+                    <i className="fa fa-briefcase" aria-hidden="true"></i>
+                  </IconBox>
+                </Label>
+              </ListItem>
+              
+              <ListItem>
+                <Label className="form-check-label" htmlFor="phonescreen" >
+                  <input
+                    name="phonescreen"
+                    value="phonescreen"
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={filterChangeHandler}
+                  />
+                  <IconBox id="icon-box">
+                    <i className="fa fa-phone" aria-hidden="true"></i>
+                  </IconBox>
+                  phone screen
+                </Label>
+              </ListItem>
+              
+              <ListItem>
+                <Label className="form-check-label" htmlFor="facetoface" >
+                  <input
+                    name="facetoface"
+                    value="facetoface"
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={filterChangeHandler}
+                  />
+                  face to face
+                </Label>
+              </ListItem>
+              
+              <ListItem>
+                <Label className="form-check-label" htmlFor="tha" >
+                  <input
+                    name="tha"
+                    value="tha"
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={filterChangeHandler}
+                  />
+                  take home assignment
+                </Label>
+              </ListItem>
+              
+
+            </FilterList>
+            </CheckBoxContainer>
           <LoadingSpinnerComponent />
           <JobContainer>
             {
