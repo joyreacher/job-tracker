@@ -209,7 +209,7 @@ export default function Home() {
     (async function fetchData(){
       await ApiCall()
       })()
-  }, [])
+  }, [filter])
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
