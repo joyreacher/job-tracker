@@ -83,6 +83,7 @@ export default function Home() {
       .then(() => {
         setIsloading(false)
       })
+        flipInit()
     )
   }
 
