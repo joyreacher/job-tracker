@@ -6,6 +6,21 @@ export const reducer = (state, action) => {
         ...state,
         applied: action.applied
       }
+    case 'phoneScreen':
+      return{
+        ...state,
+        phoneScreen: action.phoneScreen
+      }
+    case 'faceToface':
+      return{
+        ...state,
+        faceToface: action.faceToface
+      }
+    case 'tha':
+        return{
+          ...state,
+          tha: action.tha
+        }
     case 'login':
       return{
         ...state,

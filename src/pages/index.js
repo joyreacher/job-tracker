@@ -206,7 +206,19 @@ export default function Home() {
       return tl.reverse()
     }
   }
-  const handleJobView = async (element) => {
+  const filterById = (e) => {
+    let result = jobs.filter((item) => {
+      if(item._id !== e.target.id){
+        return false
+      }else{
+        
+        return item
+      }
+    })
+    setJobView(result)
+    return result
+  }
+  const handleJobView =  async (e) => {
     if(jobViewTL.reversed()){
       return jobViewTL.play()
     }else{
