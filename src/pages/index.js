@@ -114,6 +114,17 @@ export default function Home() {
       onLeave: elements => gsap.to(elements, {opacity: 0, scale: 0, duration: 1})
     });
   }
+
+  const filterChangeHandler = ({ target }) => {
+    const { value, checked } = target;
+      if (checked) {
+        setFilter([].concat(filter, {id: value}));
+      } else {
+        setFilter(filter.filter(e => e.id !== value));
+      }
+  };
+    }
+  };
   const handleClick = async () => {
     if(tl.reversed()){
       return tl.play()
