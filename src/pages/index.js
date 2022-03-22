@@ -123,8 +123,14 @@ export default function Home() {
         setFilter(filter.filter(e => e.id !== value));
       }
   };
-    }
+
+  const setRefs = (e, i) => {
+    const { current } = elements;
+    current[i] = e;
   };
+
+  
+
   const handleClick = async () => {
     if(tl.reversed()){
       return tl.play()
@@ -221,7 +227,23 @@ export default function Home() {
         <Container>
           <Stage filterJobs={filterJobs} clearFilters={clearFilters}/>
           <LoadingSpinnerComponent />
-          {isLoading !== true ? <AllJobs handleJobView={handleJobView} jobViewTL={jobViewTL} jobs={jobs} /> : <LoadingMessage />}
+          <JobContainer>
+            {
+              jobs.map((e, i) => {
+                return (<div
+                        className={`filter-element `}
+                        data-applied={!e.stage.applied ? '' : 'true'}
+                        data-phonescreen={!e.stage.phoneScreen ? '' : 'true'}
+                        data-facetoface={!e.stage.faceToface ? '' : 'true'}
+                        data-tha={!e.stage.takeHomeAssignment.received ? '' : 'true'}
+                        id={e._id}
+                        key={e._id}
+                        ref={el => setRefs(el, i)}
+                        style={{ 'height': '200px', 'width': '200px', 'backgroundColor': 'green' }}
+                      >{e.company}</div>)
+              })
+            }
+          </JobContainer>
         </Container>
       </Layout>
     )
