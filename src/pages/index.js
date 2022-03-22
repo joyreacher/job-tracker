@@ -87,6 +87,33 @@ export default function Home() {
     )
   }
 
+  const flipInit = () => {
+    const state = Flip.getState(elements.current);
+    
+    const matches = filter.map((filter) => {
+      if(filter.id !== undefined){
+        return filter
+      }
+    })
+    elements.current.forEach((el, i)=> {
+      if(!matches.length ){
+        el.style.display = 'inline-flex'
+      }else if(el.getAttribute(`data-${matches[0].id}`)){
+        return el.style.display = 'inline-flex'
+      }else {
+        el.style.display = 'none'
+      }
+    })
+    // Create the animation
+    Flip.from(state, {
+      duration: 1,
+      scale: true,
+      absolute: true,
+      ease: "power1.inOut",
+      onEnter: elements => gsap.fromTo(elements, {opacity: 0, scale: 0}, {opacity: 1, scale: 1, duration: 1}),
+      onLeave: elements => gsap.to(elements, {opacity: 0, scale: 0, duration: 1})
+    });
+  }
   const handleClick = async () => {
     if(tl.reversed()){
       return tl.play()
