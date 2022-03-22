@@ -46,12 +46,17 @@ const LoadingMessage = styled.div`
 `
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
+const fliterTl = gsap.timeline({paused:true, reversed: true})
 
 export default function Home() {
-  
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
+  
+  const [filter, setFilter] = useState([]);
+  const elements = useRef([]);
+  const filtersInitArray = filter.map((e) => e.value);
+  filtersInitArray.shift();
   
   const checkForToken = () => {
     return localStorage.getItem('token')
@@ -145,13 +150,6 @@ export default function Home() {
           }
         })
       })
-  }
-  const clearFilters = () => {
-    const jobRow = document.querySelectorAll('.job-row')
-    return jobRow.forEach(row => {
-      gsap.set(row, { display:'block' })
-      row.classList.remove('filtered')
-    })
   }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
