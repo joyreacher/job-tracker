@@ -3,7 +3,7 @@ import { reducer, initialState} from './Reducer'
 
 export const DataContext = React.createContext({
   state:initialState,
-  dispatch: () =>null
+  dispatch: () =>reducer
 });
 
 export const DataProvider = ({children}) => {
