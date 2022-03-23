@@ -1,6 +1,14 @@
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case 'checkbox':
+      return{
+        ...state,
+        applied: action.applied,
+        phoneScreen: action.phoneScreen,
+        faceToface: action.faceToface,
+        tha: action.tha
+      }
     case 'applied':
       return{
         ...state,
@@ -30,7 +38,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         jobId: action.jobId,
-        token: action.token
       }
     case "update":
       console.log("update")
@@ -57,6 +64,9 @@ export const reducer = (state, action) => {
 
 export const initialState = {
   applied: false,
+  phoneScreen:false,
+  faceToface: false,
+  tha: false,
   refresh: false,
   jobs:[],
   user: localStorage.getItem('username'),
