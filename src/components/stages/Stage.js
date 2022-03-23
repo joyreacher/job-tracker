@@ -68,6 +68,7 @@ const ClearFilters = styled.section`
 `
 
 function Stage({ filterJobs, clearFilters }) {
+  useEffect(() =>{}, [])
   return (
     <Container>
       <InnerContainer>
@@ -90,7 +91,7 @@ function Stage({ filterJobs, clearFilters }) {
           Result
         </Result>
         <ClearFilters 
-          onClick={() => clearFilters()}>
+          onClick={() => filterJobs("clear")}>
           Clear filters
         </ClearFilters>
       </InnerContainer>
