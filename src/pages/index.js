@@ -266,21 +266,27 @@ export default function Home() {
     const state = Flip.getState(elements.current);
     
     const matches = filter.map((filter) => {
+      cardHoverTl.pause()
       if(filter.id !== undefined){
         return filter
       }
     })
-    elements.current.forEach((el, i)=> {
-      if(!matches.length ){
+    elements.current.forEach((el)=> {
+      if(!matches.length){
         el.style.display = 'inline-flex'
-      }else if(el.getAttribute(`data-${matches[0].id}`)){
-        return el.style.display = 'inline-flex'
-      }else {
+      }
+      for(let x = 0; x < matches.length; x++){
+        if(el.getAttribute(`data-${matches[x].id}`)){
+          el.style.display = 'inline-flex'
+        }
+        else {
         el.style.display = 'none'
       }
+      }
     })
+    let endHeight = gsap.getProperty('.job-container', 'height')
     // Create the animation
-    Flip.from(state, {
+    let flip = Flip.from(state, {
       duration: 1,
       scale: true,
       absolute: true,
@@ -288,6 +294,13 @@ export default function Home() {
       onEnter: elements => gsap.fromTo(elements, {opacity: 0, scale: 0}, {opacity: 1, scale: 1, duration: 1}),
       onLeave: elements => gsap.to(elements, {opacity: 0, scale: 0, duration: 1})
     });
+    flip.fromTo('.job-container', {
+      height: startHeight
+    }, {
+      height: endHeight,
+      clearProps: 'height',
+      duration: flip.duration()
+    })
   }
 
   const filterChangeHandler = ({ target }) => {
