@@ -604,7 +604,16 @@ export default function Home() {
             </FilterList>
             </CheckBoxContainer>
           <LoadingSpinnerComponent />
-          <JobContainer>
+          <JobContainer className="job-container">
+            <JobView 
+              refCheckbox={refCheckbox}
+              checkboxValues={checkboxValues} 
+              handleStageSelect={handleStageSelect} 
+              StageUpdateApiCall={StageUpdateCall} 
+              handleJobView={handleJobView} 
+              jobViewTL={jobViewTL} 
+              jobs={jobs} 
+              jobView={jobView}/>
             {
               jobs.map((job, i) => {
                 return (
