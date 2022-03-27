@@ -153,6 +153,7 @@ const phoneScreenFilterTl = gsap.timeline({paused:true, reversed: true})
 const interviewFilterTl = gsap.timeline({paused:true, reversed: true})
 const thaFilterTl = gsap.timeline({paused:true, reversed: true})
 export default function Home() {
+  let startHeight = gsap.getProperty(".job-container", "height");
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
