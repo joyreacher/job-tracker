@@ -19,6 +19,9 @@ import Stage from "../components/stages/Stage";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
+// icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBriefcase, faCoffee, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
 gsap.registerPlugin(Flip);
 
 const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
@@ -318,8 +321,8 @@ export default function Home() {
                     onChange={filterChangeHandler}
                     onClick={() => clickFilter()}
                   />
-                  <IconBox id="icon-box">
-                    <i className="fa fa-briefcase" aria-hidden="true"></i>
+                  <IconBox id="applied">
+                    <FontAwesomeIcon  icon={faBriefcase} />
                   </IconBox>
                 </Label>
               </ListItem>
@@ -333,10 +336,9 @@ export default function Home() {
                     type="checkbox"
                     onChange={filterChangeHandler}
                   />
-                  <IconBox id="icon-box">
-                    <i className="fa fa-phone" aria-hidden="true"></i>
+                  <IconBox id="phoneScreen">
+                    <FontAwesomeIcon icon={faPhone} />
                   </IconBox>
-                  phone screen
                 </Label>
               </ListItem>
               
@@ -349,7 +351,9 @@ export default function Home() {
                     type="checkbox"
                     onChange={filterChangeHandler}
                   />
-                  face to face
+                  <IconBox id="interview">
+                    <FontAwesomeIcon icon={faPeopleArrows} />
+                  </IconBox>
                 </Label>
               </ListItem>
               
@@ -362,7 +366,9 @@ export default function Home() {
                     type="checkbox"
                     onChange={filterChangeHandler}
                   />
-                  take home assignment
+                  <IconBox id="tha">
+                    <FontAwesomeIcon icon={faHouseLaptop} />
+                  </IconBox>
                 </Label>
               </ListItem>
               
