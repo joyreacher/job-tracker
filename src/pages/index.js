@@ -290,8 +290,8 @@ export default function Home() {
           el.style.display = 'inline-flex'
         }
         else {
-        el.style.display = 'none'
-      }
+          el.style.display = 'none'
+        }
       }
     })
     let endHeight = gsap.getProperty('.job-container', 'height')
@@ -315,11 +315,11 @@ export default function Home() {
 
   const filterChangeHandler = ({ target }) => {
     const { value, checked } = target;
-      if (checked) {
-        setFilter([].concat(filter, {id: value}));
-      } else {
-        setFilter(filter.filter(e => e.id !== value));
-      }
+    if (checked) {
+      setFilter([].concat(filter, {id: value})); 
+    } else {
+      setFilter(filter.filter(e => e.id !== value));
+    }
   };
 
   const setRefs = (e, i) => {
@@ -356,7 +356,7 @@ export default function Home() {
     if(timeline === 'applied'){
       if(appliedFilterTl.reversed()){
         return appliedFilterTl.play()
-    }else{
+      }else{
         return appliedFilterTl.reverse()
       }
     }
@@ -381,7 +381,7 @@ export default function Home() {
         return thaFilterTl.reverse()
       }
     }
-
+    
   }
   const handleClick = async () => {
     if(tl.reversed()){

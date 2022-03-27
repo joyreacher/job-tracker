@@ -109,20 +109,19 @@ function JobView({handleAnimation, jobViewTL, jobs, jobId, handleJobView}) {
       <OverlayFooter>
         <InputCell>
             <InputLabel htmlFor='applied'>Applied</InputLabel>
-            
-            <Checkbox controlled="true" checked={jobView[0].stage.applied ? true : ''} id='applied' ref={refCheckbox} onChange={async () => await handleCheckBox('applied', 'applied')} name="applied" type="checkbox"/>
+            <Checkbox controlled="true" checked={jobView[0].stage.applied ? true : ''} id='applied' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="applied" type="checkbox"/>
         </InputCell>
         <InputCell>
-            <InputLabel htmlFor='phone-screen'>Phone Screen</InputLabel>
-            <Checkbox controlled="true" checked={jobView[0].stage.phoneScreen ? true : ''} id='phone-screen' ref={refCheckbox} onChange={async () => await handleCheckBox('phoneScreen', 'phoneScreen')} name="phoneScreen" type="checkbox"/>
+            <InputLabel htmlFor='phoneScreen'>Phone Screen</InputLabel>
+            <Checkbox controlled="true" checked={jobView[0].stage.phoneScreen ? true : ''} id='phoneScreen' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="phoneScreen" type="checkbox"/>
         </InputCell>
         <InputCell>
             <InputLabel htmlFor='faceToface'>Interview</InputLabel>
-            <Checkbox controlled="true" checked={jobView[0].stage.faceToface ? true : ''} id='faceToface' ref={refCheckbox} onChange={async () => await handleCheckBox('faceToface', 'faceToface')} name="faceToface" type="checkbox"/>
+            <Checkbox controlled="true" checked={jobView[0].stage.faceToface ? true : ''} id='faceToface' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="faceToface" type="checkbox"/>
         </InputCell>
         <InputCell>
             <InputLabel htmlFor='tha'>Take Home Assignment</InputLabel>
-            <Checkbox controlled="true" checked={jobView[0].stage.takeHomeAssignment.received ? true : ''} id='tha' ref={refCheckbox} onChange={async () => await handleCheckBox('tha', 'tha')} name="tha" type="checkbox"/>
+            <Checkbox controlled="true" checked={jobView[0].stage.takeHomeAssignment.dateReceived ? true : ''} id='tha' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="tha" type="checkbox"/>
         </InputCell>
         
       </OverlayFooter>
