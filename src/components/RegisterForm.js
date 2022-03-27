@@ -41,8 +41,8 @@ function RegisterForm() {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: {
-          Username: e.target[0].value,
-          Password: e.target[1].value
+          username: e.target[0].value,
+          password: e.target[1].value
         }
       })
         .then(response => {

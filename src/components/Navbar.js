@@ -15,7 +15,9 @@ const NavbarContainer = styled.nav`
   height:20vh;
   font-size: 1.5rem;
   margin-bottom: 3rem;
-  background-color: var(--color-navbar);
+  background-color: var(--color-morph-light);
+  box-shadow: -2px -2px 5px var(--color-morph-light),
+            3px 3px 5px var(--color-morph-dark);
 `
 const InnerContainer = styled.div`
   width:100%;
@@ -45,6 +47,7 @@ const Menu = styled.div`
   width:60px;
   border-radius: 45px;
   cursor:pointer;
+  color:var(--color-main-light);
 `
 const MenuText = styled.p`
   align-self: center;
@@ -53,7 +56,7 @@ const LogOutLink = styled.p`
   cursor: pointer;
 `
 
-function Navbar({handleClick, timeline, jobs, token}) {
+function Navbar({handleClick, timeline, jobs, jobView}) {
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
@@ -89,7 +92,7 @@ function Navbar({handleClick, timeline, jobs, token}) {
       .from('.application-form', {opacity: 0, autoAlpha: 0})
       .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<')
     }
-  }, [])
+  }, [jobView])
   if(state.user){
     return (
         <NavbarContainer>
@@ -120,17 +123,14 @@ function Navbar({handleClick, timeline, jobs, token}) {
     )
   }else{
     return(
-      <>
         <NavbarContainer>
           <InnerContainer>
             <p>Jobby</p>
             <Toaster />
           </InnerContainer>
         </NavbarContainer>
-      </>
     )
   }
-  
 }
 
 export default Navbar
