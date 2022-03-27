@@ -259,10 +259,32 @@ export default function Home() {
     const { current } = elements;
     current[i] = e;
   };
-
-  const clickFilter = () => {
-    if(fliterTl.reversed()){
-      return fliterTl.play()
+  const filterAnimationsInit = () =>{
+    appliedFilterTl.to('#applied', {
+      ease:'linear',
+      duration:.025,
+      boxShadow: `inset -2px -2px 5px rgba(255, 255, 255, 1),
+      inset 3px 3px 5px rgba(0, 0, 0, 0.1)`
+    })
+    phoneScreenFilterTl.to('#phoneScreen', {
+      ease:'linear',
+      duration:.025,
+      boxShadow: `inset -2px -2px 5px rgba(255, 255, 255, 1),
+      inset 3px 3px 5px rgba(0, 0, 0, 0.1)`
+    })
+    interviewFilterTl.to('#interview', {
+      ease:'linear',
+      duration:.025,
+      boxShadow: `inset -2px -2px 5px rgba(255, 255, 255, 1),
+      inset 3px 3px 5px rgba(0, 0, 0, 0.1)`
+    })
+    thaFilterTl.to('#tha', {
+      ease:'linear',
+      duration:.025,
+      boxShadow: `inset -2px -2px 5px rgba(255, 255, 255, 1),
+      inset 3px 3px 5px rgba(0, 0, 0, 0.1)`
+    })
+  }
     }else{
       return fliterTl.reverse()
     }
