@@ -185,12 +185,7 @@ export default function Home() {
         setIsloading(false)
       })
       .then(() =>{
-        fliterTl.to('#icon-box', {
-          ease:'none',
-          duration:.25,
-          boxShadow: `inset -2px -2px 5px rgba(255, 255, 255, 1),
-          inset 3px 3px 5px rgba(0, 0, 0, 0.1)`
-        })
+        filterAnimationsInit()
         flipInit()
       })
     )
