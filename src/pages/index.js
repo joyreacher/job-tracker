@@ -285,8 +285,34 @@ export default function Home() {
       inset 3px 3px 5px rgba(0, 0, 0, 0.1)`
     })
   }
+  const clickFilter = (timeline) => {
+    if(timeline === 'applied'){
+      if(appliedFilterTl.reversed()){
+        return appliedFilterTl.play()
     }else{
-      return fliterTl.reverse()
+        return appliedFilterTl.reverse()
+      }
+    }
+    else if(timeline === 'phoneScreen'){
+      if(phoneScreenFilterTl.reversed()){
+        return phoneScreenFilterTl.play()
+      }else{
+        return phoneScreenFilterTl.reverse()
+      }
+    }
+    else if(timeline === 'interview'){
+      if(interviewFilterTl.reversed()){
+        return interviewFilterTl.play()
+      }else{
+        return interviewFilterTl.reverse()
+      }
+    }
+    else if(timeline === 'tha'){
+      if(thaFilterTl.reversed()){
+        return thaFilterTl.play()
+      }else{
+        return thaFilterTl.reverse()
+      }
     }
 
   }
