@@ -433,7 +433,7 @@ export default function Home() {
                     className="form-check-input"
                     type="checkbox"
                     onChange={filterChangeHandler}
-                    onClick={() => clickFilter()}
+                    onClick={() => clickFilter('applied')}
                   />
                   <IconBox id="applied">
                     <FontAwesomeIcon  icon={faBriefcase} />
@@ -443,12 +443,13 @@ export default function Home() {
               
               <ListItem>
                 <Label className="form-check-label" htmlFor="phonescreen" >
-                  <input
+                  <CheckBox
                     name="phonescreen"
                     value="phonescreen"
                     className="form-check-input"
                     type="checkbox"
                     onChange={filterChangeHandler}
+                    onClick={() => clickFilter('phoneScreen')}
                   />
                   <IconBox id="phoneScreen">
                     <FontAwesomeIcon icon={faPhone} />
@@ -458,12 +459,13 @@ export default function Home() {
               
               <ListItem>
                 <Label className="form-check-label" htmlFor="facetoface" >
-                  <input
+                  <CheckBox
                     name="facetoface"
                     value="facetoface"
                     className="form-check-input"
                     type="checkbox"
                     onChange={filterChangeHandler}
+                    onClick={() => clickFilter('interview')}
                   />
                   <IconBox id="interview">
                     <FontAwesomeIcon icon={faPeopleArrows} />
@@ -473,12 +475,13 @@ export default function Home() {
               
               <ListItem>
                 <Label className="form-check-label" htmlFor="tha" >
-                  <input
+                  <CheckBox
                     name="tha"
                     value="tha"
                     className="form-check-input"
                     type="checkbox"
                     onChange={filterChangeHandler}
+                    onClick={() => clickFilter('tha')}
                   />
                   <IconBox id="tha">
                     <FontAwesomeIcon icon={faHouseLaptop} />
