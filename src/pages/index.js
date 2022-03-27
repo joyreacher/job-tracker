@@ -470,6 +470,8 @@ export default function Home() {
     (async function fetchData(){
       await ApiCall()
       })()
+  }, [filter, jobView])
+  
   const onEnter = (e) => {
     const select = document.getElementById(e.target.id)
     cardRef.current = select
