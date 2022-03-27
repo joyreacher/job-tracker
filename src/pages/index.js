@@ -16,6 +16,7 @@ import SEO from "../components/Seo";
 import Navbar from "../components/Navbar";
 import ApplicationForm from "../components/ApplicationForm";
 import Stage from "../components/stages/Stage";
+import JobView from '../components/jobs/JobView'
 // styles
 import styled from "@emotion/styled"
 import { jsx, css } from "@emotion/react"
@@ -51,11 +52,16 @@ const LoadingMessage = styled.div`
 const JobContainer = styled.div`
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap:2em;
+  grid-column-gap:15vw;
+  grid-row-gap: 9em;
+  ${mq[4]}{
+    grid-template-columns: 1fr 1fr;
+  }
 `
 const CheckBoxContainer = styled.div`
   display:flex;
   justify-content: center;
+  margin:3em auto;
 `
 const FilterList = styled.ul`
   color:black;
@@ -66,9 +72,9 @@ const FilterList = styled.ul`
   flex-wrap: wrap;
   border-radius: 10px;
   padding: 20px;
-  background: #ebf5fc;
-  box-shadow: -2px -2px 5px var(--color-main-light),
-            3px 3px 5px var(--color-main-dark);
+  background: var(--color-main-light);
+  box-shadow: -2px -2px 5px var(--color-morph-light),
+            3px 3px 5px var(--color-morph-dark);
 `
 const ListItem = styled.li`
   position: relative;
@@ -92,12 +98,12 @@ const CheckBox = styled.input`
 const IconBox = styled.div`
   width: 60px;
   height: 60px;
-  background: #ebf5fc;
+  background: var(--color-main-light);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
-        3px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: -2px -2px 5px var(--color-morph-light),
+        3px 3px 5px var(--color-morph-dark);
   border-radius: 10px;
   
 `
