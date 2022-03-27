@@ -147,8 +147,11 @@ const Conceal = styled.div`
 `
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
-const fliterTl = gsap.timeline({paused:true, reversed: true})
-
+//filter button animations
+const appliedFilterTl = gsap.timeline({paused:true, reversed: true})
+const phoneScreenFilterTl = gsap.timeline({paused:true, reversed: true})
+const interviewFilterTl = gsap.timeline({paused:true, reversed: true})
+const thaFilterTl = gsap.timeline({paused:true, reversed: true})
 export default function Home() {
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
