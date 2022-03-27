@@ -151,6 +151,72 @@ export default function Home() {
       })
     )
   }
+  const StageUpdateCall =  (e) => {
+    // checked will be the opposite state from what it was set to; example: if it returns false, it was true.
+    const checked = e.target.checked
+    const name = e.target.id
+    let setNewDate
+    
+    // TODO: Tighten up the condition 
+    if(checked){
+      setNewDate = new Date()
+      if(name === 'applied'){
+        jobView[0].stage.applied = true
+      }
+      if(name === 'phoneScreen'){
+        jobView[0].stage.phoneScreen = true
+      }
+      if(name === 'tha'){
+        
+        jobView[0].stage.takeHomeAssignment.dateReceived = setNewDate
+        console.log(jobView[0].stage.takeHomeAssignment)
+      }
+      if(name === 'faceToface'){
+        jobView[0].stage.faceToface = true
+      }
+    }else if(!checked){
+      setNewDate = ''
+      if(name === 'applied'){
+        jobView[0].stage.applied = ''
+      }
+      if(name === 'phoneScreen'){
+        jobView[0].stage.phoneScreen = ''
+      }
+      if(name === 'tha'){
+        jobView[0].stage.takeHomeAssignment.dateReceived = ''
+      }
+      if(name === 'faceToface'){
+        jobView[0].stage.faceToface = ''
+      }
+    }
+    //TODO: END CONDITION
+    
+    
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: `https://job-tracker-api-v1.herokuapp.com/jobs/update/${jobView[0]._id}`,
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
+        },
+        data:{
+          id:jobView[0]._id,
+          applied:name === 'applied' ? setNewDate : jobView[0].stage.applied,
+          phoneScreen: name === 'phoneScreen' ? setNewDate : jobView[0].stage.phoneScreen,
+          receivedTHA: name === 'tha' ? checked : jobView[0].stage.takeHomeAssignment.received,
+          dateReceivedTHA: name === 'tha' ? setNewDate : jobView[0].stage.takeHomeAssignment.dateReceived,
+          faceToface: name === 'faceToface' ? setNewDate : jobView[0].stage.faceToface,
+          result: ''
+        }
+      })
+      .then(res => {
+          setJobView([res.data])
+      })
+    )
+  }
 
   const flipInit = () => {
     const state = Flip.getState(elements.current);
