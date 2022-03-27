@@ -6,6 +6,8 @@
 
 :root{
   /* Job View Overlay */
+  --color-morph-light: rgba(247, 244, 243, 1);
+  --color-morph-dark: rgba(26, 24, 27, .1);
   --color-jobView-overlay:hsla(276, 6%, 19%, 0.9);
   /* Menu Overlay*/
   --color-menu-overlay: hsla(276, 6%, 15%, 0.703);
