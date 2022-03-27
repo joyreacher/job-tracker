@@ -154,12 +154,16 @@ const interviewFilterTl = gsap.timeline({paused:true, reversed: true})
 const thaFilterTl = gsap.timeline({paused:true, reversed: true})
 export default function Home() {
   let startHeight = gsap.getProperty(".job-container", "height");
+  const [jobView, setJobView] = useState()
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
+  const [checkboxValues, setCheckboxValues] = useState({})
   
   const [filter, setFilter] = useState([]);
+  const cardRef = useRef(null)
   const elements = useRef([]);
+  const refCheckbox = useRef(false);
   const filtersInitArray = filter.map((e) => e.value);
   filtersInitArray.shift();
   let cardExitTime = 0
