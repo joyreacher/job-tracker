@@ -375,6 +375,9 @@ export default function Home() {
       return tl.reverse()
     }
   }
+  const handleStageSelect = (type) => {
+    StageUpdateCall(type)
+  }
   const filterById = (e) => {
     let result = jobs.filter((item) => {
       if(item._id !== e.target.id){
