@@ -17,6 +17,7 @@ const FormContainer = styled.form`
   flex-wrap:wrap;
   align-items:center;
   visibility:hidden;
+  z-index:10;
 `
 const FormInnerContainer = styled.div`
   display:flex;
