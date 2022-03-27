@@ -492,18 +492,65 @@ export default function Home() {
           <LoadingSpinnerComponent />
           <JobContainer>
             {
-              jobs.map((e, i) => {
-                return (<div
-                        className={`filter-element `}
-                        data-applied={!e.stage.applied ? '' : 'true'}
-                        data-phonescreen={!e.stage.phoneScreen ? '' : 'true'}
-                        data-facetoface={!e.stage.faceToface ? '' : 'true'}
-                        data-tha={!e.stage.takeHomeAssignment.received ? '' : 'true'}
-                        id={e._id}
-                        key={e._id}
-                        ref={el => setRefs(el, i)}
-                        style={{ 'height': '200px', 'width': '200px', 'backgroundColor': 'green' }}
-                      >{e.company}</div>)
+              jobs.map((job, i) => {
+                return (
+                    <JobCardContainer
+                      className={`filter-element ${job.company}`}
+                      data-applied={!job.stage.applied ? '' : 'true'}
+                      data-phonescreen={!job.stage.phoneScreen ? '' : 'true'}
+                      data-facetoface={!job.stage.faceToface ? '' : 'true'}
+                      data-tha={!job.stage.takeHomeAssignment.received ? '' : 'true'}
+                      id={job._id}
+                      key={job._id}
+                      ref={el => {
+                        setRefs(el, i)
+                        }}
+                      onMouseEnter={(e) => {
+                        cardRef.current = e.currentTarget
+                        onEnter(e)  
+                        console.log(cardHoverTl.time() < cardExitTime)
+                        if(cardHoverTl.isActive() && cardHoverTl.time() <= cardHoverTl.progress(.5)){
+                          cardHoverTl.timeScale(2).tweenTo('conceal')
+                        }
+                        if(cardHoverTl.time() < cardExitTime){
+                          cardHoverTl.play()
+                        }else{
+                          // restart if the whole animation is played on reenter
+                          cardHoverTl.restart()
+                        }
+                      }}
+                      onMouseLeave={(e) =>{
+                        if(cardHoverTl.time() < cardExitTime){
+                          cardHoverTl.reverse().timeScale(2).then(() => {
+                            cardHoverTl.clear()
+                          })
+                          
+                        }else{
+                          // restart if the whole animation is played on reenter
+                          cardHoverTl.play().timeScale(2).tweenFromTo('conceal')
+                        }
+                      }}
+                      onClick={ (e) => {
+                        cardHoverTl.reverse()
+                        // onLeave(e)
+                        filterById(e)
+                        handleJobView(e)
+                        }}
+                    >
+                      <JobInnerContainer id={job._id}>
+                        <JobCardCompanyTitle id={job._id}>
+                          {job.company}
+                        </JobCardCompanyTitle>
+                        <Line className={`line-${job._id}`}></Line>
+                        <JobCardBody id={job._id}>
+                          <JobCardCopy id={job._id}>
+                            {job.role}
+                          </JobCardCopy>
+                        </JobCardBody>
+                      </JobInnerContainer>
+                      <Conceal id={job._id} className={`conceal-${job._id}`}></Conceal>
+                    </JobCardContainer>
+                      )
               })
             }
           </JobContainer>
