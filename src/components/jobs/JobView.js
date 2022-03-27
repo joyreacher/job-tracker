@@ -21,7 +21,7 @@ const OverlayBody = styled.section`
 const OverlayFooter = styled.div`
   font-size: clamp(1rem, 2.5vw, 2rem);
   max-width: 1020px;
-  margin:4em auto 0 auto;
+  margin:2em auto 0 auto;
   display:flex;
 `
 const Container = styled.div`
@@ -29,11 +29,12 @@ const Container = styled.div`
 `
 const InputCell = styled.div`
   display:flex;
+  justify-content: space-around;
   align-items: center;
-  // margin: 0 1em;
+  padding:0 .5em;
 `
 const InputLabel = styled.label`
-  margin:0 1em;
+  margin:0 .5em;
 `
 const Checkbox = styled.input`
   cursor:pointer;
@@ -47,12 +48,12 @@ const CloseButton = styled.div`
   padding: 1em;
   cursor: pointer;
 `
-function JobView({handleAnimation, jobViewTL, jobs, jobId, handleJobView}) {
+function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox}) {
   const [state, dispatch] = useContext(DataContext)
   useEffect(() =>{
     jobViewTL
       .from('.job-view--overlay', {opacity: 0, display:'none', autoAlpha: 0, xPercent: -100})
-  },[])
+  }, [])
   return (
     <span className="job-view--overlay" css={css`
     position:fixed;
@@ -62,6 +63,7 @@ function JobView({handleAnimation, jobViewTL, jobs, jobId, handleJobView}) {
     width:100vw;
     min-height: 100vh;
     z-index: 500;
+    visibility:hidden;
     `}>
     <InnerContainer>
       <OverlayHeader>
@@ -72,59 +74,59 @@ function JobView({handleAnimation, jobViewTL, jobs, jobId, handleJobView}) {
         </CloseButton>
       </OverlayHeader>
       <OverlayBody>
-        {
+      {
         !jobView ? 'no results' : (
           <div key={jobView[0]._id}>
             <Container >
-                  <Cell>
-                    <p>Company:</p>
+              <Cell>
+                <p>Company:</p>
                 <h1>{jobView[0].company}</h1>
-                  </Cell>
-                  <Cell>
-                    <p>Role: </p>
+              </Cell>
+              <Cell>
+                <p>Role: </p>
                 <h1>{jobView[0].role}</h1>
-                  </Cell>
-                  <Cell>
-                    <p>Contact: </p>
+              </Cell>
+              <Cell>
+                <p>Contact: </p>
                 <h1>{jobView[0].contact}</h1>
-                  </Cell>
-                  <Cell>
-                    <p>Loaction:</p>
+              </Cell>
+              <Cell>
+                <p>Loaction:</p>
                 <h1>{jobView[0].location}</h1>
-                  </Cell>
-                  <Cell>
-                    <p>Source:</p>
+              </Cell>
+              <Cell>
+                <p>Source:</p>
                 <h1>{jobView[0].source}</h1>
-                  </Cell>
-                  <Cell>
-                    <p>Link:</p>
+              </Cell>
+              <Cell>
+                <p>Link:</p>
                 <h1>{jobView[0].link}</h1>
-                  </Cell>
-                  <Cell>
-                    <p>Notes:</p>
+              </Cell>
+              <Cell>
+                <p>Notes:</p>
                 <h1>{jobView[0].notes}</h1>
-                  </Cell>
-                </Container>
+              </Cell>
+            </Container>
           
-      <OverlayFooter>
-        <InputCell>
+        <OverlayFooter>
+          <InputCell>
             <InputLabel htmlFor='applied'>Applied</InputLabel>
             <Checkbox controlled="true" checked={jobView[0].stage.applied ? true : ''} id='applied' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="applied" type="checkbox"/>
-        </InputCell>
-        <InputCell>
+          </InputCell>
+          <InputCell>
             <InputLabel htmlFor='phoneScreen'>Phone Screen</InputLabel>
             <Checkbox controlled="true" checked={jobView[0].stage.phoneScreen ? true : ''} id='phoneScreen' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="phoneScreen" type="checkbox"/>
-        </InputCell>
-        <InputCell>
+          </InputCell>
+          <InputCell>
             <InputLabel htmlFor='faceToface'>Interview</InputLabel>
             <Checkbox controlled="true" checked={jobView[0].stage.faceToface ? true : ''} id='faceToface' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="faceToface" type="checkbox"/>
-        </InputCell>
-        <InputCell>
+          </InputCell>
+          <InputCell>
             <InputLabel htmlFor='tha'>Take Home Assignment</InputLabel>
             <Checkbox controlled="true" checked={jobView[0].stage.takeHomeAssignment.dateReceived ? true : ''} id='tha' ref={refCheckbox} onChange={async (e) => await handleStageSelect(e)} name="tha" type="checkbox"/>
-        </InputCell>
-        
-      </OverlayFooter>
+          </InputCell>
+          
+        </OverlayFooter>
         </div>
         )
       }
