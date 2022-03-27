@@ -158,7 +158,8 @@ export default function Home() {
   const elements = useRef([]);
   const filtersInitArray = filter.map((e) => e.value);
   filtersInitArray.shift();
-  
+  let cardExitTime = 0
+  const cardHoverTl = gsap.timeline({paused:true, reversed: true})
   const checkForToken = () => {
     return localStorage.getItem('token')
   }
@@ -455,7 +456,46 @@ export default function Home() {
     (async function fetchData(){
       await ApiCall()
       })()
-  }, [filter])
+  const onEnter = (e) => {
+    const select = document.getElementById(e.target.id)
+    cardRef.current = select
+    cardHoverTl
+    .to(select, {
+      color: 'var(--color-main-light)', 
+      transformOrigin: 'center, center', 
+      // transform: 'scale(1.25)',
+      backgroundColor: 'red'
+      })
+    cardHoverTl.to(`.conceal-${e.target.id}`, {
+      yPercent:'-100'
+    }, '<')
+    cardHoverTl.fromTo(`.line-${e.target.id}`,{
+      width: '0',
+    },{
+      width: '5.5rem',
+      duration:'.25',
+      ease: 'power3.inOut'
+    })
+    .addPause('exit')
+    cardExitTime = cardHoverTl.duration()
+    cardHoverTl.to(cardRef.current, {
+      color: 'var(--color-main-dark)', 
+      // transform: 'scale(1)',
+      duration:.25,
+      }, '<')
+    .to(`.line-${e.target.id}`,{
+      width: '0',
+      duration:.025,
+    }, '<')
+    .addLabel('conceal')
+    .to(`.conceal-${e.target.id}`, {
+      duration:.10,
+      zIndex:3,
+      yPercent:'0',
+      ease:'power1.inOut',
+      onComplete: () => cardHoverTl.clear()
+    }, '<-.00005')
+  }
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
