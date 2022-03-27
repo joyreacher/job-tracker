@@ -101,6 +101,50 @@ const IconBox = styled.div`
   border-radius: 10px;
   
 `
+const JobCardContainer = styled.div`
+  overflow-y:hidden;
+  cursor:pointer;
+  // width: 200px;
+  height:200px;
+  background: var(--color-morph-light);
+  box-shadow: -2px -2px 5px var(--color-morph-light),
+        3px 3px 5px var(--color-morph-dark);
+`
+const JobInnerContainer = styled.section`
+  padding:1.2rem;
+  position:relative;
+  overflow:hidden;
+`
+const JobCardCompanyTitle= styled.h1`
+  font-size:clamp(1.2rem, 3vw, 1.8rem);
+  position:relative;
+  z-index:4;
+`
+const Line = styled.span`
+  background-color: var(--color-main-light);
+  height: 4px;
+  position:absolute;
+  width:0;
+  top:50px;
+  left:20px;
+`
+const JobCardBody = styled.div`
+  padding:2em 0;
+  position:relative;
+  z-index:4;
+`
+const JobCardCopy = styled.p`
+  font-size: clamp(1rem, 2vw, 1.1rem);
+`
+const Conceal = styled.div`
+  position:absolute;
+  background-color: var(--color-main-light);
+  height:200px;
+  width:100%;
+  z-index: -1;
+  top:0;
+  left:0;
+`
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
 const fliterTl = gsap.timeline({paused:true, reversed: true})
