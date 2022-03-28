@@ -162,7 +162,8 @@ const phoneScreenFilterTl = gsap.timeline({paused:true, reversed: true})
 const interviewFilterTl = gsap.timeline({paused:true, reversed: true})
 const thaFilterTl = gsap.timeline({paused:true, reversed: true})
 export default function Home() {
-  let startHeight = gsap.getProperty(".job-container", "height");
+  const isBrowser = () => typeof window !== "undefined"
+  let startHeight = isBrowser() ? gsap.getProperty(".job-container", "height") : '';
   const [jobView, setJobView] = useState()
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
@@ -178,7 +179,11 @@ export default function Home() {
   let cardExitTime = 0
   const cardHoverTl = gsap.timeline({paused:true, reversed: true})
   const checkForToken = () => {
+    if(isBrowser()){
     return localStorage.getItem('token')
+    }else{
+      return
+    }
   }
 
   const ApiCall = async () => {

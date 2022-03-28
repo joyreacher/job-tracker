@@ -55,7 +55,7 @@ function LoginForm() {
             dispatch({type: 'login',token:res.token})
             localStorage.setItem('token', res.token)
             localStorage.setItem('username', res.user.username)
-            return window.location.href = '/'
+            return window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/'
           }
         })
         .catch((error) =>{

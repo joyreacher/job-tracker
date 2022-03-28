@@ -96,7 +96,7 @@ function Navbar({handleClick, timeline, jobs, jobView}) {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('jobs')
-    return window.location.href = '/login'
+    return window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
   }
   const checkForToken = () => {
     if(state.user){
