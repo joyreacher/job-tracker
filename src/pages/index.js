@@ -458,19 +458,6 @@ export default function Home() {
     )
     
   }
-  const filterJobs = (e) => {
-      document.querySelectorAll('.job-row').forEach((job) => {
-        gsap.set(job, { display:'block' })
-        job.classList.remove('filtered')
-        document.querySelectorAll('.option').forEach((filter) => {
-          //? if the rows data- attribute does NOT match what is passed hide it
-          if(!job.getAttribute('data-' + e)){
-            gsap.set(job, { display: 'none'})
-            job.classList.add('filtered')
-          }
-        })
-      })
-  }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
       window.location.href = '/login'
@@ -480,46 +467,6 @@ export default function Home() {
       })()
   }, [filter, jobView])
   
-  const onEnter = (e) => {
-    const select = document.getElementById(e.target.id)
-    cardRef.current = select
-    cardHoverTl
-    .to(select, {
-      color: 'var(--color-main-light)', 
-      transformOrigin: 'center, center', 
-      // transform: 'scale(1.25)',
-      backgroundColor: 'red'
-      })
-    cardHoverTl.to(`.conceal-${e.target.id}`, {
-      yPercent:'-100'
-    }, '<')
-    cardHoverTl.fromTo(`.line-${e.target.id}`,{
-      width: '0',
-    },{
-      width: '5.5rem',
-      duration:'.25',
-      ease: 'power3.inOut'
-    })
-    .addPause('exit')
-    cardExitTime = cardHoverTl.duration()
-    cardHoverTl.to(cardRef.current, {
-      color: 'var(--color-main-dark)', 
-      // transform: 'scale(1)',
-      duration:.25,
-      }, '<')
-    .to(`.line-${e.target.id}`,{
-      width: '0',
-      duration:.025,
-    }, '<')
-    .addLabel('conceal')
-    .to(`.conceal-${e.target.id}`, {
-      duration:.10,
-      zIndex:3,
-      yPercent:'0',
-      ease:'power1.inOut',
-      onComplete: () => cardHoverTl.clear()
-    }, '<-.00005')
-  }
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
@@ -636,34 +583,7 @@ export default function Home() {
                       ref={el => {
                         setRefs(el, i)
                         }}
-                      onMouseEnter={(e) => {
-                        cardRef.current = e.currentTarget
-                        onEnter(e)  
-                        console.log(cardHoverTl.time() < cardExitTime)
-                        if(cardHoverTl.isActive() && cardHoverTl.time() <= cardHoverTl.progress(.5)){
-                          cardHoverTl.timeScale(2).tweenTo('conceal')
-                        }
-                        if(cardHoverTl.time() < cardExitTime){
-                          cardHoverTl.play()
-                        }else{
-                          // restart if the whole animation is played on reenter
-                          cardHoverTl.restart()
-                        }
-                      }}
-                      onMouseLeave={(e) =>{
-                        if(cardHoverTl.time() < cardExitTime){
-                          cardHoverTl.reverse().timeScale(2).then(() => {
-                            cardHoverTl.clear()
-                          })
-                          
-                        }else{
-                          // restart if the whole animation is played on reenter
-                          cardHoverTl.play().timeScale(2).tweenFromTo('conceal')
-                        }
-                      }}
                       onClick={ (e) => {
-                        cardHoverTl.reverse()
-                        // onLeave(e)
                         filterById(e)
                         handleJobView(e)
                         }}
@@ -672,14 +592,12 @@ export default function Home() {
                         <JobCardCompanyTitle id={job._id}>
                           {job.company}
                         </JobCardCompanyTitle>
-                        <Line className={`line-${job._id}`}></Line>
                         <JobCardBody id={job._id}>
                           <JobCardCopy id={job._id}>
                             {job.role}
                           </JobCardCopy>
                         </JobCardBody>
                       </JobInnerContainer>
-                      <Conceal id={job._id} className={`conceal-${job._id}`}></Conceal>
                     </JobCardContainer>
                       )
               })
