@@ -5,6 +5,10 @@ import { Toaster } from "react-hot-toast"
 import gsap  from "gsap";
 import { CSVLink, CSVDownload } from 'react-csv'
 import { css, jsx } from '@emotion/react'
+const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
+const mq = breakpoints.map(
+  bp => `@media (max-width: ${bp}px)`
+)
 
 
 // components
@@ -35,7 +39,9 @@ const MenuContainer = styled.div`
   width:25vw;
   justify-content: space-between;
   position: relative;
-  z-index: 400;
+  ${mq[4]}{
+    display:none;
+  }
 `
 const Menu = styled.div`
   display:flex;
@@ -48,6 +54,33 @@ const Menu = styled.div`
   border-radius: 45px;
   cursor:pointer;
   color:var(--color-main-light);
+  
+`
+const IconDotOne = styled.div`
+  height:7.5px;
+  width:7.5px;
+  border-radius: 50px;
+  background-color: var(--color-main-dark);
+`
+const IconDotTwo = styled.div`
+  margin:.2em 0;
+  height:7.5px;
+  width:7.5px;
+  border-radius: 50px;
+  background-color: var(--color-main-dark);
+`
+const IconDotThree = styled.div`
+  height:7.5px;
+  width:7.5px;
+  border-radius: 50px;
+  background-color: var(--color-main-dark);
+`
+const MenuIcon = styled.div`
+  display:none;
+  cursor:pointer;
+  ${mq[4]}{
+    display:block;
+  }
 `
 const MenuText = styled.p`
   align-self: center;
@@ -55,7 +88,8 @@ const MenuText = styled.p`
 const LogOutLink = styled.p`
   cursor: pointer;
 `
-
+const menuTl = gsap.timeline({paused: true, reversed:true})
+let menuTlExitTime = 0
 function Navbar({handleClick, timeline, jobs, jobView}) {
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
@@ -86,11 +120,56 @@ function Navbar({handleClick, timeline, jobs, jobView}) {
     }
     return 
   }
+  const handleMenuClick = () => {
+    if(menuTl.reversed()){
+      menuTl.play()
+    }
+    else if(menuTl.paused()){
+      menuTl.play()
+    }
+    else if(menuTl.totalProgress(1)){
+      menuTl.seek('start')
+    }
+    
+  }
   useEffect(() =>{
     if(state.user){
+      let setEase = 'bounce.out'
       timeline
       .from('.application-form', {opacity: 0, autoAlpha: 0})
-      .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<')
+      .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<');
+      menuTl
+      .addLabel('start')
+      .to('#menu-icon > div',  {
+        background: 'red'
+      })
+      .to('#icon-one', {
+        x:'.3rem',
+        y:'2.3rem',
+        ease: setEase,
+      }, '<')
+      .to('#icon-two', {
+        x:'-1.1rem',
+        y:'1.5rem',
+        ease: setEase,
+      }, '<')
+      .to('#icon-three', {
+        x:'-.4rem',
+        y:'.8rem',
+        ease: setEase,
+      }, '<')
+      .addPause('exit')
+      .addLabel('mid')
+      menuTl.to('#menu-icon > div', {
+        background:'var(--color-main-dark)',
+      })
+      .to(['#icon-one', '#icon-two', '#icon-three'], {
+        x:0,
+        y:0,
+        ease:'power3.in'
+      }, '<')
+      .addLabel('end')
+      
     }
   }, [jobView])
   if(state.user){
@@ -118,6 +197,14 @@ function Navbar({handleClick, timeline, jobs, jobView}) {
                 </Menu>
               </MenuContainer>
             }
+            <MenuIcon 
+              id="menu-icon"
+              onClick={() => handleMenuClick()}
+            >
+              <IconDotOne id="icon-one"/>
+              <IconDotTwo id="icon-two"/>
+              <IconDotThree id="icon-three"/>
+            </MenuIcon>
           </InnerContainer>
         </NavbarContainer>
     )
