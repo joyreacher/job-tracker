@@ -75,6 +75,9 @@ const FilterList = styled.ul`
   background: var(--color-main-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
             3px 3px 5px var(--color-morph-dark);
+  ${mq[4]}{
+    height:auto;
+  }
 `
 const ListItem = styled.li`
   position: relative;
