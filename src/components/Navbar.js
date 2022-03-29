@@ -216,7 +216,7 @@ function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
                 <CSVLink data={checkForToken()}
                   css={css`
                       text-decoration: none;
-                      color:var(--color-main-light);
+                      color:var(--color-main-dark);
                       `}
                 >
                   Download Jobs
