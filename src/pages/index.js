@@ -203,6 +203,7 @@ const appliedFilterTl = gsap.timeline({paused:true, reversed: true})
 const phoneScreenFilterTl = gsap.timeline({paused:true, reversed: true})
 const interviewFilterTl = gsap.timeline({paused:true, reversed: true})
 const thaFilterTl = gsap.timeline({paused:true, reversed: true})
+const menuTl = gsap.timeline({paused: true, reversed:true})
 export default function Home() {
   const isBrowser = () => typeof window !== "undefined"
   let startHeight = isBrowser() ? gsap.getProperty(".job-container", "height") : '';
@@ -571,7 +572,7 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="US-en"
         />
-        <Navbar jobs={jobs} timeline={tl} handleClick={handleClick} token={checkForToken()}/>
+        <Navbar menuTl={menuTl} jobs={jobs} timeline={tl} handleClick={handleClick} token={checkForToken()}/>
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         
         <Container>
