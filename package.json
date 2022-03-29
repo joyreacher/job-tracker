@@ -28,6 +28,7 @@
     "gatsby-plugin-react-helmet": "^5.8.0",
     "gsap": "^3.9.1",
     "react": "^17.0.1",
+    "react-confirm-alert": "^2.8.0",
     "react-csv": "^2.2.2",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
