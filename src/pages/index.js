@@ -359,8 +359,9 @@ export default function Home() {
     }, {
       height: endHeight,
       clearProps: 'height',
-      duration: flip.duration()
-    })
+      duration: flip.duration(),
+      ease:'power3.inOut'
+    }, 0)
   }
 
   const filterChangeHandler = ({ target }) => {
@@ -489,7 +490,7 @@ export default function Home() {
       })
         .then(response => {
           console.log(response.data.applications)
-          toast.success('you did it')
+          toast.success('you added a job')
           return ApiCall()
         })
         .catch((error) =>{
@@ -646,7 +647,9 @@ export default function Home() {
 
             </FilterList>
             </CheckBoxContainer>
+            <LoaderContainer>
           <LoadingSpinnerComponent />
+            </LoaderContainer>
           <JobContainer className="job-container">
             <JobView 
               refCheckbox={refCheckbox}
