@@ -121,7 +121,7 @@ function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
     return window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
   }
   const checkForToken = () => {
-    if(state.user){
+    if(state.user && jobs){
       const headers = [
         { 
           ' ':'Job Leads',
