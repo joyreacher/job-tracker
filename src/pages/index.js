@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { gsap } from "gsap";
 import { Flip } from "gsap/Flip";
 import { CSVLink, CSVDownload } from 'react-csv'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 // Context
 import {DataContext} from "../context/DataContext";
 // components
@@ -284,7 +286,6 @@ export default function Home() {
     const state = Flip.getState(elements.current);
     
     const matches = filter.map((filter) => {
-      cardHoverTl.pause()
       if(filter.id !== undefined){
         return filter
       }
@@ -458,6 +459,52 @@ export default function Home() {
     )
     
   }
+  const submit = (e) =>{
+    confirmAlert({
+      title:'Confirm delete',
+      message: "Are you sure you want to delete this job?",
+      buttons:[
+        {
+          label:"Yes",
+          onClick: () => deleteJob(e)
+        },
+        {
+          label:"No",
+          onClick: () => alert('Click no')
+        }
+      ]
+    })
+  }
+  const deleteJob = (e) => {
+    e.preventDefault()
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: 'https://job-tracker-api-v1.herokuapp.com/jobs/delete',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization": `Bearer ${token}`
+        },
+        data: {
+          jobId: e.target.id,
+          user: localStorage.getItem('username'),
+        },
+      })
+        .then(response => {
+          console.log(response)
+          toast.success('You deleted a job')
+        })
+        .catch((error) => {
+          console.log(error)
+          return toast.error('Could not delete job')
+        })
+        .then(() =>{
+          return ApiCall()
+        })
+    )
+  }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
       window.location.href = '/login'
@@ -596,6 +643,14 @@ export default function Home() {
                           <JobCardCopy id={job._id}>
                             {job.role}
                           </JobCardCopy>
+                            <button
+                            id={job._id}
+                              onClick={ (e) => {
+                                submit(e)
+                                }}
+                            >
+                              Delete
+                            </button>
                         </JobCardBody>
                       </JobInnerContainer>
                     </JobCardContainer>
