@@ -112,6 +112,7 @@ const MenuContainerOverlay = styled.div`
     margin:1.3em 0;
   }
 `
+function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
@@ -164,6 +165,12 @@ const MenuContainerOverlay = styled.div`
       .to('#menu-icon > div',  {
         background: 'red'
       })
+      .fromTo('.modal', {yPercent:'-100'},{
+        yPercent: '0',
+        display:'block',
+        opacity:1,
+        ease: 'power4.out'
+      }, '<')
       .to('#icon-one', {
         x:'.3rem',
         y:'2.3rem',
@@ -171,7 +178,7 @@ const MenuContainerOverlay = styled.div`
       }, '<')
       .to('#icon-two', {
         x:'-1.1rem',
-        y:'1.5rem',
+        y:'1.6rem',
         ease: setEase,
       }, '<')
       .to('#icon-three', {
@@ -184,6 +191,10 @@ const MenuContainerOverlay = styled.div`
       menuTl.to('#menu-icon > div', {
         background:'var(--color-main-dark)',
       })
+      .to('.modal',{
+        display:'none',
+        opacity:0
+      }, '<')
       .to(['#icon-one', '#icon-two', '#icon-three'], {
         x:0,
         y:0,
