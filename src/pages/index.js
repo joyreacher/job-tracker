@@ -671,10 +671,7 @@ export default function Home() {
                       ref={el => {
                         setRefs(el, i)
                         }}
-                      onClick={ (e) => {
-                        filterById(e)
-                        handleJobView(e)
-                        }}
+                      
                     >
                       <JobInnerContainer id={job._id}>
                         <JobCardCompanyTitle id={job._id}>
@@ -684,6 +681,16 @@ export default function Home() {
                           <JobCardCopy id={job._id}>
                             {job.role}
                           </JobCardCopy>
+                          <JobCardFooter>
+                            <button
+                              id={job._id}
+                              onClick={ (e) => {
+                                filterById(e)
+                                handleJobView(e)
+                                }}
+                            >
+                              Info
+                            </button>
                             <button
                             id={job._id}
                               onClick={ (e) => {
@@ -692,6 +699,7 @@ export default function Home() {
                             >
                               Delete
                             </button>
+                          </JobCardFooter>
                         </JobCardBody>
                       </JobInnerContainer>
                     </JobCardContainer>
