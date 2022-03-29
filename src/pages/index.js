@@ -21,22 +21,22 @@ import Stage from "../components/stages/Stage";
 import JobView from '../components/jobs/JobView'
 // styles
 import styled from "@emotion/styled"
-import { jsx, css } from "@emotion/react"
+import { jsx, css, keyframes } from "@emotion/react"
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faCoffee, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
 gsap.registerPlugin(Flip);
 
-const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
+const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
 )
 const Container = styled.section`
   display:flex;
-  flex-direction: column;
   justify-content: space-between;
   max-width:1020px;
   margin:0 auto;
+  padding: 0 2em;
   ${mq[4]}{
     flex-direction: column;
   }
@@ -53,32 +53,48 @@ const LoadingMessage = styled.div`
 `
 const JobContainer = styled.div`
   display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap:1vw;
+  grid-row-gap: 1.75em;
+  padding:1em 0 1em 1em;
+  ${mq[6]}{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  ${mq[5]}{
+    
   grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap:15vw;
-  grid-row-gap: 9em;
+  }
   ${mq[4]}{
+    
     grid-template-columns: 1fr 1fr;
   }
+  ${mq[2]}{
+    
+    grid-template-columns: 1fr;
+  }
+  
 `
 const CheckBoxContainer = styled.div`
   display:flex;
   justify-content: center;
-  margin:3em auto;
+  justify-self:flex-start;
 `
 const FilterList = styled.ul`
+  height:500px;
   color:black;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  flex-flow:column;
   border-radius: 10px;
-  padding: 20px;
   background: var(--color-main-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
             3px 3px 5px var(--color-morph-dark);
   ${mq[4]}{
     height:auto;
+    flex-flow:row;
   }
 `
 const ListItem = styled.li`
@@ -113,13 +129,27 @@ const IconBox = styled.div`
   
 `
 const JobCardContainer = styled.div`
+  justify-self: flex-end;
   overflow-y:hidden;
   cursor:pointer;
-  // width: 200px;
+  width:200px;
   height:200px;
   background: var(--color-morph-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
         3px 3px 5px var(--color-morph-dark);
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:red;
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+  ${mq[4]}{
+    justify-self:center;
+    width: 80%;
+  }
+  ${mq[2]}{
+    justify-self:center;
+  }
 `
 const JobInnerContainer = styled.section`
   padding:1.2rem;
@@ -155,6 +185,16 @@ const Conceal = styled.div`
   z-index: -1;
   top:0;
   left:0;
+`
+const LoaderContainer = styled.div`
+  margin:2em 0;
+  min-height:10vw;
+  position:absolute;
+  top:50%;
+  left:50%;
+`
+const JobCardFooter = styled.div`
+
 `
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
