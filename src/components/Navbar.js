@@ -237,6 +237,25 @@ function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
               <IconDotTwo id="icon-two"/>
               <IconDotThree id="icon-three"/>
             </MenuIcon>
+            <Overlay className="modal">
+              <MenuContainerOverlay>
+                <p>Hello {state.user}</p>
+                <CSVLink data={checkForToken()}
+                  css={css`
+                      text-decoration: none;
+                      color:var(--color-main-light);
+                      `}
+                >
+                  Download Jobs
+                </CSVLink>
+                <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+                <Menu onClick={async () => await handleClick()}>
+                  <MenuText >
+                    Add Job
+                  </MenuText>
+                </Menu>
+              </MenuContainerOverlay>
+            </Overlay>
           </InnerContainer>
         </NavbarContainer>
     )
