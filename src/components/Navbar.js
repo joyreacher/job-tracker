@@ -5,20 +5,19 @@ import { Toaster } from "react-hot-toast"
 import gsap  from "gsap";
 import { CSVLink, CSVDownload } from 'react-csv'
 import { css, jsx } from '@emotion/react'
-const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
+const breakpoints = [376, 411, 576, 768, 845, 978, 1020, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
 )
 
 
-// components
-import ApplicationForm from './ApplicationForm.js'
 
 const NavbarContainer = styled.nav`
   align-items:center;
   height:20vh;
   font-size: 1.5rem;
   margin-bottom: 3rem;
+  padding: 0 2em;
   background-color: var(--color-morph-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
             3px 3px 5px var(--color-morph-dark);
@@ -36,25 +35,25 @@ const MenuContainer = styled.div`
   font-size: 1.1rem;
   display:flex;
   align-items:center;
-  width:25vw;
+  width:55%;
   justify-content: space-between;
   position: relative;
-  ${mq[4]}{
+  ${mq[2]}{
     display:none;
   }
 `
-const Menu = styled.div`
+// Add job button
+const Menu = styled.button`
   display:flex;
   justify-content:center;
   text-align:center;
   font-size: 1rem;
   background-color: var(--color-main-dark);
-  height:60px;
-  width:60px;
-  border-radius: 45px;
+  border-radius: 7px;
+  padding:.25em;
   cursor:pointer;
   color:var(--color-main-light);
-  
+  z-index:500;
 `
 const IconDotOne = styled.div`
   height:7.5px;
@@ -78,8 +77,11 @@ const IconDotThree = styled.div`
 const MenuIcon = styled.div`
   display:none;
   cursor:pointer;
-  ${mq[4]}{
+  padding:2em 0 2em 2em;
+  ${mq[2]}{
     display:block;
+    position:relative;
+    z-index:400;
   }
 `
 const MenuText = styled.p`
@@ -88,9 +90,28 @@ const MenuText = styled.p`
 const LogOutLink = styled.p`
   cursor: pointer;
 `
-const menuTl = gsap.timeline({paused: true, reversed:true})
-let menuTlExitTime = 0
-function Navbar({handleClick, timeline, jobs, jobView}) {
+const Overlay = styled.div`
+  display:none;
+  position:fixed;
+  height:100vh;
+  width:100vw;
+  z-index:200;
+  background-color:var(--color-main-dark);
+  top:0;
+  left:0;
+  padding:2em;
+`
+const MenuContainerOverlay = styled.div`
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-end;
+  color:var(--color-main-light);
+  p, a{
+    margin:1.3em 0;
+  }
+`
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
