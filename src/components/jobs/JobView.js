@@ -4,6 +4,10 @@ import {DataContext} from "../../context/DataContext";
 import { jsx, css } from "@emotion/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
+const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
+const mq = breakpoints.map(
+  bp => `@media (max-width: ${bp}px)`
+)
 const InnerContainer = styled.section`
   height:100%;
   width:100%;
