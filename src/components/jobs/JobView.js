@@ -1,16 +1,21 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useState } from "react"
 import styled from "@emotion/styled"
 import {DataContext} from "../../context/DataContext";
 import { jsx, css } from "@emotion/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { useRef } from "react";
+const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
+const mq = breakpoints.map(
+  bp => `@media (max-width: ${bp}px)`
+)
 const InnerContainer = styled.section`
   height:100%;
   width:100%;
   color:var(--color-main-light);
 `
 const OverlayHeader = styled.header`
-  height:25vh;
+  height:10vh;
   display:flex;
   align-items:flex-start;
   justify-content:flex-end;
@@ -29,6 +34,7 @@ const OverlayFooter = styled.div`
 `
 const Container = styled.div`
   font-size: clamp(1rem, 2vw, 3rem);
+  margin:0 auto;
 `
 const InputCell = styled.div`
   display:flex;
@@ -45,7 +51,8 @@ const Checkbox = styled.input`
 `
 const Cell = styled.div`
   display:flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin:.9rem 0;
 `
 const CloseButton = styled.div`
   padding: 1em;
@@ -96,8 +103,123 @@ const IconBox = styled.div`
   border-radius: 10px;
   
 `
-function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox}) {
+const OverlayMainContent = styled.section`
+  padding:1em;
+`
+const ErrorMessage = styled.div`
+  position:absolute;
+  top:15%;
+  right:40%;
+  left:40%;
+  text-align:center;
+  color:red;
+  p{
+    width: 100%;
+  }
+`
+const IconInstructions = styled.p`
+  margin:1em auto;
+  text-align:center;
+`
+const JobDetailHeadline = styled.h1`
+  text-align: left;
+`
+const CellLabelValue = styled.div`
+  display:flex;
+  justify-content:space-between;
+  width:50%;
+  ${mq[2]}{
+    display:block;
+  }
+`
+const CellBtnContainer = styled.div`
+  display:flex;
+  justify-content: space-between;
+`
+function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
+  const [display, setDisplay] = useState(false)
+  const [company, setCompany] = useState(false)
+  const [role, setRole] = useState(false)
+  const [contact, setContact] = useState(false)
+  const [location, setLocation] = useState(false)
+  const [source, setSource] = useState(false)
+  const [link, setLink] = useState(false)
+  const [notes, setNotes] = useState(false)
+  const [error, setError] = useState(null)
+  const updateRef = useRef('')
+  const switchDisplayAndInput = (e) =>  {
+    switch(e.target.id){
+      case 'company':
+        if(!company){
+          return setCompany(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter a company name')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setCompany(false)
+        }
+      case 'role':
+        if(!role){
+          return setRole(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the role/position')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setRole(false)
+        }
+      case 'contact':
+        if(!contact){
+          return setContact(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the contact information')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setContact(false)
+        }
+      case 'location':
+        if(!location){
+          return setLocation(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the location of this job')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setLocation(false)
+        }
+      case 'source':
+        if(!source){
+          return setSource(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the source of this job')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setSource(false)
+        }
+      case 'link':
+        if(!link){
+          return setLink(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the link to this job')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setLink(false)
+        }
+      case 'notes':
+        if(!notes){
+          return setNotes(true)
+        }else{
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setNotes(false)
+        }
+
+    }
+  }
   useEffect(() =>{
     jobViewTL
       .from('.job-view--overlay', {opacity: 0, display:'none', autoAlpha: 0, xPercent: -100})
@@ -114,8 +236,10 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
     visibility:hidden;
     `}>
     <InnerContainer>
+      {!error ? '' : <ErrorMessage>{error}</ErrorMessage>}
       <OverlayHeader>
         <CloseButton onClick={async (e) => {
+          setDisplay(false)
           await handleJobView(e)
           }}>
           <p>Close</p>
@@ -123,141 +247,201 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       </OverlayHeader>
       <OverlayBody>
       {
+        !jobView ? '' : (<><IconInstructions>Click an icon to set the job stage</IconInstructions><FilterList>
+          <ListItem>
+              <Label className="form-check-label" htmlFor="applied" >
+                <CheckBox
+                  name="applied"
+                  value="applied"
+                  className="form-check-input"
+                  type="checkbox"
+                  onChange={async (e) => await handleStageSelect(e)} 
+                  ref={refCheckbox} 
+                  id='applied' 
+                  controlled="true" 
+                  checked={jobView[0].stage.applied ? true : ''} 
+                />
+                <IconBox id="applied">
+                  <FontAwesomeIcon  
+                    icon={faBriefcase} 
+                    color={`${jobView[0].stage.applied ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                  />
+                </IconBox>
+              </Label>
+            </ListItem>
+            
+            <ListItem>
+            <Label className="form-check-label" htmlFor="phonescreen" >
+              <CheckBox
+                name="phonescreen"
+                value="phonescreen"
+                className="form-check-input"
+                type="checkbox"
+                
+                controlled="true" 
+                checked={jobView[0].stage.phoneScreen ? true : ''} 
+                id='phoneScreen' 
+                ref={refCheckbox} 
+                onChange={async (e) => await handleStageSelect(e)}
+              />
+              <IconBox id="phoneScreen">
+                <FontAwesomeIcon 
+                  icon={faPhone} 
+                  color={`${jobView[0].stage.phoneScreen ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+            </Label>
+          </ListItem>
+          
+          <ListItem>
+            <Label className="form-check-label" htmlFor="facetoface" >
+              <CheckBox
+                name="facetoface"
+                value="facetoface"
+                className="form-check-input"
+                type="checkbox"
+                
+                
+                controlled="true" 
+                checked={jobView[0].stage.faceToface ? true : ''} 
+                id='faceToface' 
+                ref={refCheckbox} 
+                onChange={async (e) => await handleStageSelect(e)} 
+              />
+              <IconBox id="interview">
+                <FontAwesomeIcon 
+                  icon={faPeopleArrows} 
+                  color={`${jobView[0].stage.faceToface ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+            </Label>
+          </ListItem>
+          
+          <ListItem>
+            <Label className="form-check-label" htmlFor="tha" >
+              <CheckBox
+                name="tha"
+                value="tha"
+                className="form-check-input"
+                type="checkbox"
+                
+                controlled="true" 
+                checked={jobView[0].stage.takeHomeAssignment.dateReceived ? true : ''} 
+                id='tha' 
+                ref={refCheckbox} 
+                onChange={async (e) => await handleStageSelect(e)} 
+                
+              />
+              <IconBox id="tha">
+                <FontAwesomeIcon 
+                  icon={faHouseLaptop}
+                  color={`${jobView[0].stage.takeHomeAssignment.dateReceived ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+            </Label>
+          </ListItem>
+  </FilterList> </>)
+      }
+      
+      {
         !jobView ? 'no results' : (
-          <div key={jobView[0]._id}>
+          <OverlayMainContent key={jobView[0]._id}>
             <Container >
               <Cell>
-                <p>Company:</p>
-                <h1>{jobView[0].company}</h1>
+                <CellLabelValue>
+                <label htmlFor="company">Company:</label>
+                { !company ? <JobDetailHeadline className="input-value">{jobView[0].company}</JobDetailHeadline> : (<><input defaultValue={jobView[0].company} id="company" ref={updateRef} type="text" className="input-box"/></>) }
+                </CellLabelValue>
+                <CellBtnContainer>
+                  { !company ? '' : <button onClick={() => {setError(''); setCompany(false)}}>Cancel</button>}
+                  <button
+                    id='company'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!company ? "Update" : "Confirm"}
+                  </button>
+                </CellBtnContainer>
               </Cell>
               <Cell>
-                <p>Role: </p>
-                <h1>{jobView[0].role}</h1>
+                <CellLabelValue>
+                  <label htmlFor="role">Role: </label>
+                  { !role ? <h1 className="input-value">{jobView[0].role}</h1> : (<><input defaultValue={jobView[0].role} id="role" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setRole(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='role'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!role ? "Update" : "Confirm"}
+                </button>
               </Cell>
               <Cell>
-                <p>Contact: </p>
-                <h1>{jobView[0].contact}</h1>
+                <CellLabelValue>
+                  <label htmlFor="contact">Contact: </label>
+                  { !contact ? <h1 className="input-value">{jobView[0].contact}</h1> : (<><input defaultValue={jobView[0].contact} id="contact" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setContact(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='contact'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!contact ? "Update" : "Confirm"}
+                </button>
               </Cell>
               <Cell>
-                <p>Loaction:</p>
-                <h1>{jobView[0].location}</h1>
+                <CellLabelValue>
+                  <label htmlFor="location">Loaction:</label>
+                  { !location ? <h1 className="input-value">{jobView[0].location}</h1> : (<><input defaultValue={jobView[0].location} id="location" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLocation(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='location'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!location ? "Update" : "Confirm"}
+                </button>
               </Cell>
               <Cell>
-                <p>Source:</p>
-                <h1>{jobView[0].source}</h1>
+                <CellLabelValue>
+                  <label htmlFor="source">Source:</label>
+                  { !source ? <h1 className="input-value">{jobView[0].source}</h1> : (<><input defaultValue={jobView[0].source} id="source" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setSource(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='source'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!source ? "Update" : "Confirm"}
+                </button>
               </Cell>
               <Cell>
-                <p>Link:</p>
-                <h1>{jobView[0].link}</h1>
+                <CellLabelValue>
+                  <label htmlFor="link">Link:</label>
+                  { !link ? <h1 className="input-value">{jobView[0].link}</h1> : (<><input defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLink(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='link'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!link ? "Update" : "Confirm"}
+                </button>
               </Cell>
               <Cell>
-                <p>Notes:</p>
-                <h1>{jobView[0].notes}</h1>
+                <CellLabelValue>
+                  <label htmlFor="notes">Notes:</label>
+                  { !notes ? <h1 className="input-value">{jobView[0].notes}</h1> : (<><textarea defaultValue={jobView[0].notes} id="notes" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setNotes(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='notes'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!notes ? "Update" : "Confirm"}
+                </button>
               </Cell>
             </Container>
-          
-        <OverlayFooter>
-          <CheckBoxContainer>
-            <FilterList>
-              <ListItem>
-                  <Label className="form-check-label" htmlFor="applied" >
-                    <CheckBox
-                      name="applied"
-                      value="applied"
-                      className="form-check-input"
-                      type="checkbox"
-                      onChange={async (e) => await handleStageSelect(e)} 
-                      ref={refCheckbox} 
-                      id='applied' 
-                      controlled="true" 
-                      checked={jobView[0].stage.applied ? true : ''} 
-                    />
-                    <IconBox id="applied">
-                      <FontAwesomeIcon  
-                        icon={faBriefcase} 
-                        color={`${jobView[0].stage.applied ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                      />
-                    </IconBox>
-                  </Label>
-                </ListItem>
-                
-                <ListItem>
-                <Label className="form-check-label" htmlFor="phonescreen" >
-                  <CheckBox
-                    name="phonescreen"
-                    value="phonescreen"
-                    className="form-check-input"
-                    type="checkbox"
-                    
-                    controlled="true" 
-                    checked={jobView[0].stage.phoneScreen ? true : ''} 
-                    id='phoneScreen' 
-                    ref={refCheckbox} 
-                    onChange={async (e) => await handleStageSelect(e)}
-                  />
-                  <IconBox id="phoneScreen">
-                    <FontAwesomeIcon 
-                      icon={faPhone} 
-                      color={`${jobView[0].stage.phoneScreen ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                    />
-                  </IconBox>
-                </Label>
-              </ListItem>
-              
-              <ListItem>
-                <Label className="form-check-label" htmlFor="facetoface" >
-                  <CheckBox
-                    name="facetoface"
-                    value="facetoface"
-                    className="form-check-input"
-                    type="checkbox"
-                    
-                    
-                    controlled="true" 
-                    checked={jobView[0].stage.faceToface ? true : ''} 
-                    id='faceToface' 
-                    ref={refCheckbox} 
-                    onChange={async (e) => await handleStageSelect(e)} 
-                  />
-                  <IconBox id="interview">
-                    <FontAwesomeIcon 
-                      icon={faPeopleArrows} 
-                      color={`${jobView[0].stage.faceToface ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                    />
-                  </IconBox>
-                </Label>
-              </ListItem>
-              
-              <ListItem>
-                <Label className="form-check-label" htmlFor="tha" >
-                  <CheckBox
-                    name="tha"
-                    value="tha"
-                    className="form-check-input"
-                    type="checkbox"
-                    
-                    controlled="true" 
-                    checked={jobView[0].stage.takeHomeAssignment.dateReceived ? true : ''} 
-                    id='tha' 
-                    ref={refCheckbox} 
-                    onChange={async (e) => await handleStageSelect(e)} 
-                    
-                  />
-                  <IconBox id="tha">
-                    <FontAwesomeIcon 
-                      icon={faHouseLaptop}
-                      color={`${jobView[0].stage.takeHomeAssignment.dateReceived ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                    />
-                  </IconBox>
-                </Label>
-              </ListItem>
-            </FilterList>
-          </CheckBoxContainer>
-          
-        </OverlayFooter>
-        </div>
+        </OverlayMainContent>
         )
+        
       }
+      <OverlayFooter>
+
+      </OverlayFooter>
       </OverlayBody>
     </InnerContainer>
     </span>

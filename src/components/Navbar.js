@@ -5,16 +5,19 @@ import { Toaster } from "react-hot-toast"
 import gsap  from "gsap";
 import { CSVLink, CSVDownload } from 'react-csv'
 import { css, jsx } from '@emotion/react'
+const breakpoints = [376, 411, 576, 768, 845, 978, 1020, 1200]
+const mq = breakpoints.map(
+  bp => `@media (max-width: ${bp}px)`
+)
 
 
-// components
-import ApplicationForm from './ApplicationForm.js'
 
 const NavbarContainer = styled.nav`
   align-items:center;
   height:20vh;
   font-size: 1.5rem;
   margin-bottom: 3rem;
+  padding: 0 2em;
   background-color: var(--color-morph-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
             3px 3px 5px var(--color-morph-dark);
@@ -32,22 +35,54 @@ const MenuContainer = styled.div`
   font-size: 1.1rem;
   display:flex;
   align-items:center;
-  width:25vw;
+  width:55%;
   justify-content: space-between;
   position: relative;
-  z-index: 400;
+  ${mq[2]}{
+    display:none;
+  }
 `
-const Menu = styled.div`
+// Add job button
+const Menu = styled.button`
   display:flex;
   justify-content:center;
   text-align:center;
   font-size: 1rem;
   background-color: var(--color-main-dark);
-  height:60px;
-  width:60px;
-  border-radius: 45px;
+  border-radius: 7px;
+  padding:.25em;
   cursor:pointer;
   color:var(--color-main-light);
+  z-index:500;
+`
+const IconDotOne = styled.div`
+  height:7.5px;
+  width:7.5px;
+  border-radius: 50px;
+  background-color: var(--color-main-dark);
+`
+const IconDotTwo = styled.div`
+  margin:.2em 0;
+  height:7.5px;
+  width:7.5px;
+  border-radius: 50px;
+  background-color: var(--color-main-dark);
+`
+const IconDotThree = styled.div`
+  height:7.5px;
+  width:7.5px;
+  border-radius: 50px;
+  background-color: var(--color-main-dark);
+`
+const MenuIcon = styled.div`
+  display:none;
+  cursor:pointer;
+  padding:2em 0 2em 2em;
+  ${mq[2]}{
+    display:block;
+    position:relative;
+    z-index:400;
+  }
 `
 const MenuText = styled.p`
   align-self: center;
@@ -55,17 +90,39 @@ const MenuText = styled.p`
 const LogOutLink = styled.p`
   cursor: pointer;
 `
-
-function Navbar({handleClick, timeline, jobs, jobView}) {
+const Overlay = styled.div`
+  display:none;
+  position:fixed;
+  height:100vh;
+  width:100vw;
+  z-index:200;
+  background-color:var(--color-main-dark);
+  top:0;
+  left:0;
+  padding:2em;
+`
+const MenuContainerOverlay = styled.div`
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-end;
+  color:var(--color-main-light);
+  p, a{
+    margin:1.3em 0;
+  }
+`
+function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('jobs')
     return window.location.href = '/login'
+    // return window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
   }
   const checkForToken = () => {
-    if(state.user){
+    if(state.user && jobs){
       const headers = [
         { 
           ' ':'Job Leads',
@@ -86,11 +143,66 @@ function Navbar({handleClick, timeline, jobs, jobView}) {
     }
     return 
   }
+  const handleMenuClick = () => {
+    if(menuTl.reversed()){
+      menuTl.play()
+    }
+    else if(menuTl.paused()){
+      menuTl.play()
+    }
+    else if(menuTl.totalProgress(1)){
+      menuTl.seek('start')
+    }
+    
+  }
   useEffect(() =>{
     if(state.user){
+      let setEase = 'bounce.out'
       timeline
       .from('.application-form', {opacity: 0, autoAlpha: 0})
-      .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<')
+      .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<');
+      menuTl
+      .addLabel('start')
+      .to('#menu-icon > div',  {
+        background: 'red'
+      })
+      .fromTo('.modal', {yPercent:'-100'},{
+        yPercent: '0',
+        display:'block',
+        opacity:1,
+        ease: 'power4.out'
+      }, '<')
+      .to('#icon-one', {
+        x:'.3rem',
+        y:'2.3rem',
+        ease: setEase,
+      }, '<')
+      .to('#icon-two', {
+        x:'-1.1rem',
+        y:'1.6rem',
+        ease: setEase,
+      }, '<')
+      .to('#icon-three', {
+        x:'-.4rem',
+        y:'.8rem',
+        ease: setEase,
+      }, '<')
+      .addPause('exit')
+      .addLabel('mid')
+      menuTl.to('#menu-icon > div', {
+        background:'var(--color-main-dark)',
+      })
+      .to('.modal',{
+        display:'none',
+        opacity:0
+      }, '<')
+      .to(['#icon-one', '#icon-two', '#icon-three'], {
+        x:0,
+        y:0,
+        ease:'power3.in'
+      }, '<')
+      .addLabel('end')
+      
     }
   }, [jobView])
   if(state.user){
@@ -101,6 +213,33 @@ function Navbar({handleClick, timeline, jobs, jobView}) {
             <Toaster />
             {
               !state.user ? '' : <MenuContainer>
+                <p>Hello {state.user}</p>
+                <CSVLink data={checkForToken()}
+                  css={css`
+                      text-decoration: none;
+                      color:var(--color-main-dark);
+                      `}
+                >
+                  Download Jobs
+                </CSVLink>
+                <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+                <Menu onClick={async () => await handleClick()}>
+                  <MenuText >
+                    Add Job
+                  </MenuText>
+                </Menu>
+              </MenuContainer>
+            }
+            <MenuIcon 
+              id="menu-icon"
+              onClick={() => handleMenuClick()}
+            >
+              <IconDotOne id="icon-one"/>
+              <IconDotTwo id="icon-two"/>
+              <IconDotThree id="icon-three"/>
+            </MenuIcon>
+            <Overlay className="modal">
+              <MenuContainerOverlay>
                 <p>Hello {state.user}</p>
                 <CSVLink data={checkForToken()}
                   css={css`
@@ -116,8 +255,8 @@ function Navbar({handleClick, timeline, jobs, jobView}) {
                     Add Job
                   </MenuText>
                 </Menu>
-              </MenuContainer>
-            }
+              </MenuContainerOverlay>
+            </Overlay>
           </InnerContainer>
         </NavbarContainer>
     )

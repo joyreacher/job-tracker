@@ -5,7 +5,7 @@
  */
 
 module.exports = {
-  pathPrefix: `projects/Gatsby-test/`,
+  pathPrefix: `projects/jobby/`,
   /* Your site config here */
   plugins: [
     `gatsby-plugin-emotion`,
@@ -14,8 +14,8 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Job Tracker`,
-        short_name: `Jobz`,
-        start_url: `https://joyreacher.com/`,
+        short_name: `Jobby`,
+        start_url: `/`,
         background_color: `#1A181B`,
         theme_color: `#F7F4F3`,
         display: `standalone`,

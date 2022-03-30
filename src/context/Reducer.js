@@ -1,4 +1,4 @@
-
+const isBrowser = () => typeof window !== "undefined"
 export const reducer = (state, action) => {
   switch (action.type) {
     case 'checkbox':
@@ -69,7 +69,7 @@ export const initialState = {
   tha: false,
   refresh: false,
   jobs:[],
-  user: localStorage.getItem('username'),
+  user: isBrowser() ? localStorage.getItem('username') : '',
   jobId: '',
   token: ''
 }

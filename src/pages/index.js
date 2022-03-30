@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { gsap } from "gsap";
 import { Flip } from "gsap/Flip";
 import { CSVLink, CSVDownload } from 'react-csv'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 // Context
 import {DataContext} from "../context/DataContext";
 // components
@@ -19,22 +21,22 @@ import Stage from "../components/stages/Stage";
 import JobView from '../components/jobs/JobView'
 // styles
 import styled from "@emotion/styled"
-import { jsx, css } from "@emotion/react"
+import { jsx, css, keyframes } from "@emotion/react"
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faCoffee, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
 gsap.registerPlugin(Flip);
 
-const breakpoints = [376, 411, 576, 768, 845, 1020, 1200]
+const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
 )
 const Container = styled.section`
   display:flex;
-  flex-direction: column;
   justify-content: space-between;
   max-width:1020px;
   margin:0 auto;
+  padding: 0 2em;
   ${mq[4]}{
     flex-direction: column;
   }
@@ -51,36 +53,62 @@ const LoadingMessage = styled.div`
 `
 const JobContainer = styled.div`
   display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap:15vw;
-  grid-row-gap: 9em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap:1vw;
+  grid-row-gap: 1.75em;
+  padding:1em 0 1em 1em;
+  ${mq[6]}{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  ${mq[5]}{
+    
+    grid-template-columns: 1fr 1fr 1fr;
+  }
   ${mq[4]}{
+    
     grid-template-columns: 1fr 1fr;
   }
+  ${mq[2]}{
+    padding:1em;
+    grid-template-columns: 1fr;
+  }
+  ${mq[0]}{
+    
+    
+  }
+  
 `
 const CheckBoxContainer = styled.div`
   display:flex;
   justify-content: center;
-  margin:3em auto;
+  justify-self:flex-start;
 `
 const FilterList = styled.ul`
+  height:500px;
   color:black;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  flex-flow:column;
   border-radius: 10px;
-  padding: 20px;
   background: var(--color-main-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
             3px 3px 5px var(--color-morph-dark);
+  ${mq[4]}{
+    height:auto;
+    flex-flow:row;
+  }
 `
 const ListItem = styled.li`
   position: relative;
   list-style: none;
   text-align: center;
   margin: 15px;
+  ${mq[0]}{
+    margin:5px;
+  }
 `
 const Label = styled.label`
   position: relative; 
@@ -108,13 +136,27 @@ const IconBox = styled.div`
   
 `
 const JobCardContainer = styled.div`
+  justify-self: flex-end;
   overflow-y:hidden;
-  cursor:pointer;
-  // width: 200px;
+  width:200px;
   height:200px;
   background: var(--color-morph-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
         3px 3px 5px var(--color-morph-dark);
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:red;
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+  ${mq[4]}{
+    justify-self:center;
+    width: 80%;
+  }
+  ${mq[2]}{
+    justify-self:center;
+    width: 100%;
+  }
 `
 const JobInnerContainer = styled.section`
   padding:1.2rem;
@@ -151,6 +193,60 @@ const Conceal = styled.div`
   top:0;
   left:0;
 `
+const LoaderContainer = styled.div`
+  margin:2em 0;
+  min-height:10vw;
+  position:absolute;
+  top:50%;
+  left:50%;
+`
+const JobCardFooter = styled.div`
+
+`
+const DeleteUIContainer = styled.div`
+  color:var(--color-main-light);
+  font-family: serenity;
+  background: var(--color-main-danger);
+  height: 25vw;
+  width: 50vw;
+  display:flex;
+  
+  justify-content: center;
+  align-items:center;
+`
+const DeleteUIInner = styled.div`
+  display:block;
+  width: 80%;
+`
+const DeleteButton = styled.button`
+  cursor: pointer;
+  width: 50%;
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:red;
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+`
+const DeleteCancelButton = styled.button`
+  cursor: pointer;
+  width: 50%;
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:var(--color-main-success);
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+`
+const Highlight = styled.span`
+  text-decoration: underline;
+`
+const DeleteUICopy = styled.div`
+  margin: 1em 0;
+`
+const DeleteActionContainer = styled.div`
+  margin-top:2em;
+`
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
 //filter button animations
@@ -158,8 +254,10 @@ const appliedFilterTl = gsap.timeline({paused:true, reversed: true})
 const phoneScreenFilterTl = gsap.timeline({paused:true, reversed: true})
 const interviewFilterTl = gsap.timeline({paused:true, reversed: true})
 const thaFilterTl = gsap.timeline({paused:true, reversed: true})
+const menuTl = gsap.timeline({paused: true, reversed:true})
 export default function Home() {
-  let startHeight = gsap.getProperty(".job-container", "height");
+  const isBrowser = () => typeof window !== "undefined"
+  let startHeight = isBrowser() ? gsap.getProperty(".job-container", "height") : '';
   const [jobView, setJobView] = useState()
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
@@ -175,7 +273,11 @@ export default function Home() {
   let cardExitTime = 0
   const cardHoverTl = gsap.timeline({paused:true, reversed: true})
   const checkForToken = () => {
-    return localStorage.getItem('token')
+    if(isBrowser()){
+      return localStorage.getItem('token')
+    }else{
+      return
+    }
   }
 
   const ApiCall = async () => {
@@ -205,6 +307,39 @@ export default function Home() {
       })
     )
   }
+  const JobUpdateCall = (e) => {
+    console.log(e)
+    console.log(jobView[0])
+    // return e
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: `https://job-tracker-api-v1.herokuapp.com/jobs/update`,
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
+        },
+        data:{
+          jobId: e[1],
+          user: localStorage.getItem('username'),
+          company: e[0] === 'company' ? e[2] : jobView[0].company,
+          role: e[0] === 'role' ? e[2] : jobView[0].role === "" ? 'no role info': jobView[0].role,
+          contact: e[0] === 'contact' ? e[2] : (jobView[0].contact === "" ? 'no contact info': jobView[0].contact),
+          location: e[0] === 'location' ? e[2] : jobView[0].location,
+          source: e[0] === 'source' ? e[2] : jobView[0].source,
+          link: e[0] === 'link' ? e[2] : jobView[0].link,
+          notes: e[0] === 'notes' ? e[2] : jobView[0].notes,
+          dateAdded: jobView[0].dateAdded,
+        }
+      })
+      .then(res => {
+          
+          setJobView([res.data])
+      })
+    )
+  }
   const StageUpdateCall =  (e) => {
     // checked will be the opposite state from what it was set to; example: if it returns false, it was true.
     const checked = e.target.checked
@@ -223,7 +358,6 @@ export default function Home() {
       if(name === 'tha'){
         
         jobView[0].stage.takeHomeAssignment.dateReceived = setNewDate
-        console.log(jobView[0].stage.takeHomeAssignment)
       }
       if(name === 'faceToface'){
         jobView[0].stage.faceToface = true
@@ -276,7 +410,6 @@ export default function Home() {
     const state = Flip.getState(elements.current);
     
     const matches = filter.map((filter) => {
-      cardHoverTl.pause()
       if(filter.id !== undefined){
         return filter
       }
@@ -309,8 +442,9 @@ export default function Home() {
     }, {
       height: endHeight,
       clearProps: 'height',
-      duration: flip.duration()
-    })
+      duration: flip.duration(),
+      ease:'power3.inOut'
+    }, 0)
   }
 
   const filterChangeHandler = ({ target }) => {
@@ -439,7 +573,7 @@ export default function Home() {
       })
         .then(response => {
           console.log(response.data.applications)
-          toast.success('you did it')
+          toast.success('you added a job')
           return ApiCall()
         })
         .catch((error) =>{
@@ -450,21 +584,67 @@ export default function Home() {
     )
     
   }
-  const filterJobs = (e) => {
-      document.querySelectorAll('.job-row').forEach((job) => {
-        gsap.set(job, { display:'block' })
-        job.classList.remove('filtered')
-        document.querySelectorAll('.option').forEach((filter) => {
-          //? if the rows data- attribute does NOT match what is passed hide it
-          if(!job.getAttribute('data-' + e)){
-            gsap.set(job, { display: 'none'})
-            job.classList.add('filtered')
-          }
-        })
+  const submit = (e) =>{
+    const job = filterById(e)
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteUIContainer className='custom-ui'>
+            <DeleteUIInner>
+            <h1>Are you sure?</h1>
+            <DeleteUICopy>You want to delete <Highlight>{job[0].company}</Highlight></DeleteUICopy>
+            <DeleteActionContainer>
+              <DeleteCancelButton onClick={onClose}>No</DeleteCancelButton>
+              <DeleteButton
+                onClick={() => {
+                  deleteJob(e);
+                  onClose();
+                }}
+              >
+                Yes, Delete it!
+              </DeleteButton>
+            
+            </DeleteActionContainer>
+            
+            </DeleteUIInner>
+          </DeleteUIContainer>
+        );
+      },
+    })
+  }
+  const deleteJob = (e) => {
+    e.preventDefault()
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: 'https://job-tracker-api-v1.herokuapp.com/jobs/delete',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization": `Bearer ${token}`
+        },
+        data: {
+          jobId: e.target.id,
+          user: localStorage.getItem('username'),
+        },
       })
+        .then(response => {
+          console.log(response)
+          toast.success('You deleted a job')
+        })
+        .catch((error) => {
+          console.log(error)
+          return toast.error('Could not delete job')
+        })
+        .then(() =>{
+          return ApiCall()
+        })
+    )
   }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
+      // window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
       window.location.href = '/login'
     }
     (async function fetchData(){
@@ -472,46 +652,6 @@ export default function Home() {
       })()
   }, [filter, jobView])
   
-  const onEnter = (e) => {
-    const select = document.getElementById(e.target.id)
-    cardRef.current = select
-    cardHoverTl
-    .to(select, {
-      color: 'var(--color-main-light)', 
-      transformOrigin: 'center, center', 
-      // transform: 'scale(1.25)',
-      backgroundColor: 'red'
-      })
-    cardHoverTl.to(`.conceal-${e.target.id}`, {
-      yPercent:'-100'
-    }, '<')
-    cardHoverTl.fromTo(`.line-${e.target.id}`,{
-      width: '0',
-    },{
-      width: '5.5rem',
-      duration:'.25',
-      ease: 'power3.inOut'
-    })
-    .addPause('exit')
-    cardExitTime = cardHoverTl.duration()
-    cardHoverTl.to(cardRef.current, {
-      color: 'var(--color-main-dark)', 
-      // transform: 'scale(1)',
-      duration:.25,
-      }, '<')
-    .to(`.line-${e.target.id}`,{
-      width: '0',
-      duration:.025,
-    }, '<')
-    .addLabel('conceal')
-    .to(`.conceal-${e.target.id}`, {
-      duration:.10,
-      zIndex:3,
-      yPercent:'0',
-      ease:'power1.inOut',
-      onComplete: () => cardHoverTl.clear()
-    }, '<-.00005')
-  }
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
@@ -529,7 +669,7 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="US-en"
         />
-        <Navbar jobs={jobs} timeline={tl} handleClick={handleClick} token={checkForToken()}/>
+        <Navbar menuTl={menuTl} jobs={jobs} timeline={tl} handleClick={handleClick} token={checkForToken()}/>
         <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
         
         <Container>
@@ -603,7 +743,9 @@ export default function Home() {
 
             </FilterList>
             </CheckBoxContainer>
-          <LoadingSpinnerComponent />
+            <LoaderContainer>
+              <LoadingSpinnerComponent />
+            </LoaderContainer>
           <JobContainer className="job-container">
             <JobView 
               refCheckbox={refCheckbox}
@@ -613,7 +755,9 @@ export default function Home() {
               handleJobView={handleJobView} 
               jobViewTL={jobViewTL} 
               jobs={jobs} 
-              jobView={jobView}/>
+              jobView={jobView}
+              JobUpdateCall={JobUpdateCall}
+              />
             {
               jobs.map((job, i) => {
                 return (
@@ -628,50 +772,37 @@ export default function Home() {
                       ref={el => {
                         setRefs(el, i)
                         }}
-                      onMouseEnter={(e) => {
-                        cardRef.current = e.currentTarget
-                        onEnter(e)  
-                        console.log(cardHoverTl.time() < cardExitTime)
-                        if(cardHoverTl.isActive() && cardHoverTl.time() <= cardHoverTl.progress(.5)){
-                          cardHoverTl.timeScale(2).tweenTo('conceal')
-                        }
-                        if(cardHoverTl.time() < cardExitTime){
-                          cardHoverTl.play()
-                        }else{
-                          // restart if the whole animation is played on reenter
-                          cardHoverTl.restart()
-                        }
-                      }}
-                      onMouseLeave={(e) =>{
-                        if(cardHoverTl.time() < cardExitTime){
-                          cardHoverTl.reverse().timeScale(2).then(() => {
-                            cardHoverTl.clear()
-                          })
-                          
-                        }else{
-                          // restart if the whole animation is played on reenter
-                          cardHoverTl.play().timeScale(2).tweenFromTo('conceal')
-                        }
-                      }}
-                      onClick={ (e) => {
-                        cardHoverTl.reverse()
-                        // onLeave(e)
-                        filterById(e)
-                        handleJobView(e)
-                        }}
+                      
                     >
                       <JobInnerContainer id={job._id}>
                         <JobCardCompanyTitle id={job._id}>
                           {job.company}
                         </JobCardCompanyTitle>
-                        <Line className={`line-${job._id}`}></Line>
                         <JobCardBody id={job._id}>
                           <JobCardCopy id={job._id}>
                             {job.role}
                           </JobCardCopy>
+                          <JobCardFooter>
+                            <button
+                              id={job._id}
+                              onClick={ (e) => {
+                                filterById(e)
+                                handleJobView(e)
+                                }}
+                            >
+                              Info
+                            </button>
+                            <button
+                            id={job._id}
+                              onClick={ (e) => {
+                                submit(e)
+                                }}
+                            >
+                              Delete
+                            </button>
+                          </JobCardFooter>
                         </JobCardBody>
                       </JobInnerContainer>
-                      <Conceal id={job._id} className={`conceal-${job._id}`}></Conceal>
                     </JobCardContainer>
                       )
               })
