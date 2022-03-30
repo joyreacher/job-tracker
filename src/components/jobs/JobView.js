@@ -93,7 +93,9 @@ const CheckBox = styled.input`
   position: absolute;
   opacity: 0;
 `
-const IconBox = styled.div`
+const IconBox = styled.span`
+  top:0;
+  left:-1.5em;
   width: 20px;
   height: 20px;
   background: var(--color-main-dark);
@@ -101,7 +103,7 @@ const IconBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  
+  position:absolute;
 `
 const OverlayMainContent = styled.section`
   padding:1em;
@@ -135,6 +137,10 @@ const CellLabelValue = styled.div`
 const CellBtnContainer = styled.div`
   display:flex;
   justify-content: space-between;
+`
+const IconAndLabelContainer = styled.div`
+  display:flex;
+  position:relative;
 `
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
@@ -359,6 +365,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
           <OverlayMainContent key={jobView[0]._id}>
             <Container >
             <Cell>
+              <IconAndLabelContainer>
               <IconBox id="applied">
                 <FontAwesomeIcon  
                   icon={faBriefcase} 
@@ -369,6 +376,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                 <label htmlFor="applied">Date Applied:</label>
                 { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment date={jobView[0].stage.applied}/>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
+                </IconAndLabelContainer>
                 <CellBtnContainer>
                   { !applied ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
                   <button
