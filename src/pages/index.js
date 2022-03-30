@@ -517,7 +517,7 @@ export default function Home() {
     }
     
   }
-  const handleClick = async () => {
+  const AddJobModalHandler = async () => {
     if(tl.reversed()){
       return tl.play()
     }else{
@@ -669,8 +669,8 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="US-en"
         />
-        <Navbar menuTl={menuTl} jobs={jobs} timeline={tl} handleClick={handleClick} token={checkForToken()}/>
-        <ApplicationForm handleClick={handleClick} handleSubmit={handleSubmit}/>
+        <Navbar menuTl={menuTl} jobs={jobs} timeline={tl} AddJobModalHandler={AddJobModalHandler} token={checkForToken()}/>
+        <ApplicationForm AddJobModalHandler={AddJobModalHandler} handleSubmit={handleSubmit}/>
         
         <Container>
         {/* TODO: Listitems can be put in array/function to render */}

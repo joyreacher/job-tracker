@@ -59,7 +59,7 @@ const FormInputTextArea = styled.textarea`
   font-size: 1.5rem;
   width: 90%;
 `
-function ApplicationForm({handleClick, handleSubmit}) {
+function ApplicationForm({AddJobModalHandler, handleSubmit}) {
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
     <FormInnerContainer className="application-form__inner-container">

@@ -112,7 +112,7 @@ const MenuContainerOverlay = styled.div`
     margin:1.3em 0;
   }
 `
-function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
+function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
   const logout = () => {
     localStorage.removeItem('token')
@@ -223,7 +223,9 @@ function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
                   Download Jobs
                 </CSVLink>
                 <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-                <Menu onClick={async () => await handleClick()}>
+                  }
+                  await AddJobModalHandler()
+                  }}>
                   <MenuText >
                     Add Job
                   </MenuText>
@@ -250,7 +252,7 @@ function Navbar({handleClick, timeline, jobs, jobView, menuTl}) {
                   Download Jobs
                 </CSVLink>
                 <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-                <Menu onClick={async () => await handleClick()}>
+                <Menu onClick={async () => await AddJobModalHandler()}>
                   <MenuText >
                     Add Job
                   </MenuText>
