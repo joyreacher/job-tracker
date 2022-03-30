@@ -100,7 +100,39 @@ const IconBox = styled.div`
   border-radius: 10px;
   
 `
-function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox}) {
+const OverlayMainContent = styled.section`
+  padding:1em;
+`
+const ErrorMessage = styled.div`
+  position:absolute;
+  top:15%;
+  right:40%;
+  left:40%;
+  text-align:center;
+  color:red;
+  p{
+    width: 100%;
+  }
+`
+const IconInstructions = styled.p`
+  margin:1em auto;
+  text-align:center;
+`
+const JobDetailHeadline = styled.h1`
+  text-align: left;
+`
+const CellLabelValue = styled.div`
+  display:flex;
+  justify-content:space-between;
+  width:50%;
+  ${mq[2]}{
+    display:block;
+  }
+`
+const CellBtnContainer = styled.div`
+  display:flex;
+  justify-content: space-between;
+`
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
   const [company, setCompany] = useState(false)
