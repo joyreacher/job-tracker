@@ -203,6 +203,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       {!error ? '' : <ErrorMessage>{error}</ErrorMessage>}
       <OverlayHeader>
         <CloseButton onClick={async (e) => {
+          setDisplay(false)
           await handleJobView(e)
           }}>
           <p>Close</p>
