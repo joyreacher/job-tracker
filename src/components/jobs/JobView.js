@@ -145,6 +145,7 @@ const IconAndLabelContainer = styled.div`
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
+  const [tha, setTha] = useState(false)
   const [faceToface, setFaceToFace] = useState(false)
   const [phoneScreen, setPhoneScreen] = useState(false)
   const [applied, setApplied] = useState(false)
@@ -159,6 +160,16 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
   const updateRef = useRef('')
   const switchDisplayAndInput = (e) =>  {
     switch(e.target.id){
+      case 'tha':
+        if(!tha){
+          return setTha(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Applied date has an error')
+          }
+          handleStageSelect(e.target.id, updateRef.current.value, true)
+          return setTha(false)
+        }
       case 'faceToface':
         if(!faceToface){
           return setFaceToFace(true)
@@ -450,6 +461,29 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   { !faceToface ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
                   <button
                     id='faceToface'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!applied ? "Update" : "Confirm"}
+                  </button>
+                </CellBtnContainer>
+              </Cell>
+              <Cell>
+              <IconAndLabelContainer>
+              <IconBox id="tha">
+                <FontAwesomeIcon 
+                  icon={faHouseLaptop}
+                  color={`${jobView[0].stage.takeHomeAssignment.dateReceived ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+                <CellLabelValue>
+                <label htmlFor="tha">Take Home Assignment:</label>
+                { !tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment date={jobView[0].stage.takeHomeAssignment.dateReceived}/>}</JobDetailHeadline> : (<><input id="tha" ref={updateRef} type="date" className="input-box"/></>) }
+                </CellLabelValue>
+                </IconAndLabelContainer>
+                <CellBtnContainer>
+                  { !tha ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  <button
+                    id='tha'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!applied ? "Update" : "Confirm"}
