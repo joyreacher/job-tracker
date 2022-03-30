@@ -304,8 +304,8 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   </IconBox>
                 </Label>
               </ListItem>
-            </FilterList>
-          </CheckBoxContainer>
+  </FilterList> </>)
+      }
           
       {
         !jobView ? 'no results' : (
