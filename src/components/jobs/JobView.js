@@ -14,7 +14,7 @@ const InnerContainer = styled.section`
   color:var(--color-main-light);
 `
 const OverlayHeader = styled.header`
-  height:25vh;
+  height:10vh;
   display:flex;
   align-items:flex-start;
   justify-content:flex-end;
@@ -33,6 +33,7 @@ const OverlayFooter = styled.div`
 `
 const Container = styled.div`
   font-size: clamp(1rem, 2vw, 3rem);
+  margin:0 auto;
 `
 const InputCell = styled.div`
   display:flex;
