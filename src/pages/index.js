@@ -196,6 +196,48 @@ const LoaderContainer = styled.div`
 const JobCardFooter = styled.div`
 
 `
+const DeleteUIContainer = styled.div`
+  color:var(--color-main-light);
+  font-family: serenity;
+  background: var(--color-main-danger);
+  height: 25vw;
+  width: 50vw;
+  display:flex;
+  
+  justify-content: center;
+  align-items:center;
+`
+const DeleteUIInner = styled.div`
+  display:block;
+  width: 80%;
+`
+const DeleteButton = styled.button`
+  cursor: pointer;
+  width: 50%;
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:red;
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+`
+const DeleteCancelButton = styled.button`
+  cursor: pointer;
+  width: 50%;
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:var(--color-main-success);
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+`
+`
+const DeleteUICopy = styled.div`
+  margin: 1em 0;
+`
+const DeleteActionContainer = styled.div`
+  margin-top:2em;
+`
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
 //filter button animations
@@ -502,19 +544,31 @@ export default function Home() {
     
   }
   const submit = (e) =>{
+    const job = filterById(e)
     confirmAlert({
-      title:'Confirm delete',
-      message: "Are you sure you want to delete this job?",
-      buttons:[
-        {
-          label:"Yes",
-          onClick: () => deleteJob(e)
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteUIContainer className='custom-ui'>
+            <DeleteUIInner>
+            <h1>Are you sure?</h1>
+            <DeleteUICopy>You want to delete <Highlight>{job[0].company}</Highlight></DeleteUICopy>
+            <DeleteActionContainer>
+              <DeleteCancelButton onClick={onClose}>No</DeleteCancelButton>
+              <DeleteButton
+                onClick={() => {
+                  deleteJob(e);
+                  onClose();
+                }}
+              >
+                Yes, Delete it!
+              </DeleteButton>
+            
+            </DeleteActionContainer>
+            
+            </DeleteUIInner>
+          </DeleteUIContainer>
+        );
         },
-        {
-          label:"No",
-          onClick: () => alert('Click no')
-        }
-      ]
     })
   }
   const deleteJob = (e) => {
