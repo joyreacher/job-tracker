@@ -367,60 +367,75 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   <label htmlFor="role">Role: </label>
                   { !role ? <h1 className="input-value">{jobView[0].role}</h1> : (<><input defaultValue={jobView[0].role} id="role" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setRole(false)}}>Cancel</button></>) }
                 </CellLabelValue>
+                <CellBtnContainer>
+                { !role ? '' : <button onClick={() => {setError(''); setRole(false)}}>Cancel</button>}
                 <button
                   id='role'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!role ? "Update" : "Confirm"}
                 </button>
+                </CellBtnContainer>
               </Cell>
               <Cell>
                 <CellLabelValue>
                   <label htmlFor="contact">Contact: </label>
                   { !contact ? <h1 className="input-value">{jobView[0].contact}</h1> : (<><input defaultValue={jobView[0].contact} id="contact" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setContact(false)}}>Cancel</button></>) }
                 </CellLabelValue>
+                <CellBtnContainer>
+                { !contact ? '' : <button onClick={() => {setError(''); setContact(false)}}>Cancel</button>}
                 <button
                   id='contact'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!contact ? "Update" : "Confirm"}
                 </button>
+                </CellBtnContainer>
               </Cell>
               <Cell>
                 <CellLabelValue>
                   <label htmlFor="location">Loaction:</label>
                   { !location ? <h1 className="input-value">{jobView[0].location}</h1> : (<><input defaultValue={jobView[0].location} id="location" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLocation(false)}}>Cancel</button></>) }
                 </CellLabelValue>
+                <CellBtnContainer>
+                { !location ? '' : <button onClick={() => {setError(''); setLocation(false)}}>Cancel</button>}
                 <button
                   id='location'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!location ? "Update" : "Confirm"}
                 </button>
+                </CellBtnContainer>
               </Cell>
               <Cell>
                 <CellLabelValue>
                   <label htmlFor="source">Source:</label>
                   { !source ? <h1 className="input-value">{jobView[0].source}</h1> : (<><input defaultValue={jobView[0].source} id="source" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setSource(false)}}>Cancel</button></>) }
                 </CellLabelValue>
+                <CellBtnContainer>
+                { !source ? '' : <button onClick={() => {setError(''); setSource(false)}}>Cancel</button>}
                 <button
                   id='source'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!source ? "Update" : "Confirm"}
                 </button>
+                </CellBtnContainer>
               </Cell>
               <Cell>
                 <CellLabelValue>
                   <label htmlFor="link">Link:</label>
                   { !link ? <h1 className="input-value">{jobView[0].link}</h1> : (<><input defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLink(false)}}>Cancel</button></>) }
                 </CellLabelValue>
+                <CellBtnContainer>
+                { !link ? '' : <button onClick={() => {setError(''); setLink(false)}}>Cancel</button>}
                 <button
                   id='link'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!link ? "Update" : "Confirm"}
                 </button>
+                </CellBtnContainer>
               </Cell>
               <Cell>
                 <CellLabelValue>
