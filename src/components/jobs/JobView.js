@@ -145,7 +145,7 @@ const IconAndLabelContainer = styled.div`
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
-  const [phoneScreen, setphoneScreen] = useState(false)
+  const [phoneScreen, setPhoneScreen] = useState(false)
   const [applied, setApplied] = useState(false)
   const [company, setCompany] = useState(false)
   const [role, setRole] = useState(false)
