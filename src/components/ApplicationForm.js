@@ -41,6 +41,7 @@ const SubmitCell = styled.div`
 const FormLabel = styled.label`
   margin:.5rem 0;
   width:fit-content;
+  color: var(--color-main-light);
 `
 const FormSubmit = styled.button`
   align-self: center;
@@ -53,6 +54,10 @@ const FormInput = styled.input`
   font-size: 1.5rem;
   width: 90%;
 `
+const FormInputTextArea = styled.textarea`
+  font-size: 1.5rem;
+  width: 90%;
+`
 function ApplicationForm({handleClick, handleSubmit}) {
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
@@ -62,7 +67,7 @@ function ApplicationForm({handleClick, handleSubmit}) {
         <FormInput  name="company" type="text"/>
       </FormCell>
       <FormCell>
-        <FormLabel htmlFor="role">role</FormLabel>
+        <FormLabel htmlFor="role">Role</FormLabel>
         <FormInput  name="role" type="text"/>
       </FormCell>
       <FormCell>
@@ -78,12 +83,12 @@ function ApplicationForm({handleClick, handleSubmit}) {
         <FormInput  name="source" type="text"/>
       </FormCell>
       <FormCell>
-        <FormLabel htmlFor="link">link</FormLabel>
+        <FormLabel htmlFor="link">Link</FormLabel>
         <FormInput  name="link" type="text"/>
       </FormCell>
       <FormCell>
-        <FormLabel htmlFor="notes">notes</FormLabel>
-        <FormInput  name="notes" type="textarea"/>
+        <FormLabel htmlFor="notes">Notes</FormLabel>
+        <FormInputTextArea  name="notes" type="textarea"/>
         <FormInput  name="date" type="hidden" value={new Date()} />
       </FormCell>
       <SubmitCell
