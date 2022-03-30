@@ -145,6 +145,7 @@ const IconAndLabelContainer = styled.div`
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
+  const [phoneScreen, setphoneScreen] = useState(false)
   const [applied, setApplied] = useState(false)
   const [company, setCompany] = useState(false)
   const [role, setRole] = useState(false)
@@ -157,6 +158,16 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
   const updateRef = useRef('')
   const switchDisplayAndInput = (e) =>  {
     switch(e.target.id){
+      case 'phoneScreen':
+        if(!phoneScreen){
+          return setPhoneScreen(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Applied date has an error')
+          }
+          handleStageSelect(e.target.id, updateRef.current.value)
+          return setPhoneScreen(false)
+        }
       case 'applied':
         if(!applied){
           return setApplied(true)
@@ -167,6 +178,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
           handleStageSelect(e.target.id, updateRef.current.value)
           return setApplied(false)
         }
+        // END STAGES UPDATE
       case 'company':
         if(!company){
           return setCompany(true)
@@ -381,6 +393,29 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   { !applied ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
                   <button
                     id='applied'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!applied ? "Update" : "Confirm"}
+                  </button>
+                </CellBtnContainer>
+              </Cell>
+              <Cell>
+              <IconAndLabelContainer>
+              <IconBox id="phoneScreen">
+                <FontAwesomeIcon 
+                  icon={faPhone} 
+                  color={`${jobView[0].stage.phoneScreen ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+                <CellLabelValue>
+                <label htmlFor="phoneScreen">Phone Screen:</label>
+                { !phoneScreen ? <JobDetailHeadline className="input-value">{!jobView[0].stage.phoneScreen ? 'No phone screen set' : <Moment date={jobView[0].stage.phoneScreen}/>}</JobDetailHeadline> : (<><input id="phoneScreen" ref={updateRef} type="date" className="input-box"/></>) }
+                </CellLabelValue>
+                </IconAndLabelContainer>
+                <CellBtnContainer>
+                  { !phoneScreen ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  <button
+                    id='phoneScreen'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!applied ? "Update" : "Confirm"}
