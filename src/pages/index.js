@@ -238,6 +238,8 @@ const DeleteCancelButton = styled.button`
     animation-play-state: running;
   }
 `
+const Highlight = styled.span`
+  text-decoration: underline;
 `
 const DeleteUICopy = styled.div`
   margin: 1em 0;
