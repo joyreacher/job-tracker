@@ -102,6 +102,88 @@ const IconBox = styled.div`
 `
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox}) {
   const [state, dispatch] = useContext(DataContext)
+  const [display, setDisplay] = useState(false)
+  const [company, setCompany] = useState(false)
+  const [role, setRole] = useState(false)
+  const [contact, setContact] = useState(false)
+  const [location, setLocation] = useState(false)
+  const [source, setSource] = useState(false)
+  const [link, setLink] = useState(false)
+  const [notes, setNotes] = useState(false)
+  const [error, setError] = useState(null)
+  const updateRef = useRef('')
+  const switchDisplayAndInput = (e) =>  {
+    switch(e.target.id){
+      case 'company':
+        if(!company){
+          return setCompany(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter a company name')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setCompany(false)
+        }
+      case 'role':
+        if(!role){
+          return setRole(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the role/position')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setRole(false)
+        }
+      case 'contact':
+        if(!contact){
+          return setContact(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the contact information')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setContact(false)
+        }
+      case 'location':
+        if(!location){
+          return setLocation(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the location of this job')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setLocation(false)
+        }
+      case 'source':
+        if(!source){
+          return setSource(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the source of this job')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setSource(false)
+        }
+      case 'link':
+        if(!link){
+          return setLink(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Enter the link to this job')
+          }
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setLink(false)
+        }
+      case 'notes':
+        if(!notes){
+          return setNotes(true)
+        }else{
+          JobUpdateCall([e.target.id, jobView[0]._id, updateRef.current.value])
+          return setNotes(false)
+        }
+
+    }
+  }
   useEffect(() =>{
     jobViewTL
       .from('.job-view--overlay', {opacity: 0, display:'none', autoAlpha: 0, xPercent: -100})
