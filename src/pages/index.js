@@ -155,6 +155,7 @@ const JobCardContainer = styled.div`
   }
   ${mq[2]}{
     justify-self:center;
+    width: 100%;
   }
 `
 const JobInnerContainer = styled.section`
