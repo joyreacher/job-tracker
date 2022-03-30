@@ -73,7 +73,7 @@ function ApplicationForm({handleClick, handleSubmit}) {
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="contact">Contact</FormLabel>
-        <FormInput id="contact" name="contact" type="text" placeholder="(xxx)xxx-xxxx"/>
+        <FormInput id="contact" name="contact" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" type="tel" placeholder="xxx-xxx-xxxx" required/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="location">Location</FormLabel>
