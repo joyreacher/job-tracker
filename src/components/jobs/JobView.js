@@ -223,9 +223,101 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
             </FilterList>
           </CheckBoxContainer>
           
-        </OverlayFooter>
-        </div>
+      {
+        !jobView ? 'no results' : (
+          <OverlayMainContent key={jobView[0]._id}>
+            <Container >
+              <Cell>
+                <CellLabelValue>
+                <label htmlFor="company">Company:</label>
+                { !company ? <JobDetailHeadline className="input-value">{jobView[0].company}</JobDetailHeadline> : (<><input defaultValue={jobView[0].company} id="company" ref={updateRef} type="text" className="input-box"/></>) }
+                </CellLabelValue>
+                <CellBtnContainer>
+                  { !company ? '' : <button onClick={() => {setError(''); setCompany(false)}}>Cancel</button>}
+                  <button
+                    id='company'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!company ? "Update" : "Confirm"}
+                  </button>
+                </CellBtnContainer>
+              </Cell>
+              <Cell>
+                <CellLabelValue>
+                  <label htmlFor="role">Role: </label>
+                  { !role ? <h1 className="input-value">{jobView[0].role}</h1> : (<><input defaultValue={jobView[0].role} id="role" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setRole(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='role'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!role ? "Update" : "Confirm"}
+                </button>
+              </Cell>
+              <Cell>
+                <CellLabelValue>
+                  <label htmlFor="contact">Contact: </label>
+                  { !contact ? <h1 className="input-value">{jobView[0].contact}</h1> : (<><input defaultValue={jobView[0].contact} id="contact" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setContact(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='contact'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!contact ? "Update" : "Confirm"}
+                </button>
+              </Cell>
+              <Cell>
+                <CellLabelValue>
+                  <label htmlFor="location">Loaction:</label>
+                  { !location ? <h1 className="input-value">{jobView[0].location}</h1> : (<><input defaultValue={jobView[0].location} id="location" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLocation(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='location'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!location ? "Update" : "Confirm"}
+                </button>
+              </Cell>
+              <Cell>
+                <CellLabelValue>
+                  <label htmlFor="source">Source:</label>
+                  { !source ? <h1 className="input-value">{jobView[0].source}</h1> : (<><input defaultValue={jobView[0].source} id="source" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setSource(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='source'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!source ? "Update" : "Confirm"}
+                </button>
+              </Cell>
+              <Cell>
+                <CellLabelValue>
+                  <label htmlFor="link">Link:</label>
+                  { !link ? <h1 className="input-value">{jobView[0].link}</h1> : (<><input defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLink(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='link'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!link ? "Update" : "Confirm"}
+                </button>
+              </Cell>
+              <Cell>
+                <CellLabelValue>
+                  <label htmlFor="notes">Notes:</label>
+                  { !notes ? <h1 className="input-value">{jobView[0].notes}</h1> : (<><textarea defaultValue={jobView[0].notes} id="notes" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setNotes(false)}}>Cancel</button></>) }
+                </CellLabelValue>
+                <button
+                  id='notes'
+                  onClick={(e) => switchDisplayAndInput(e)}
+                >
+                  {!notes ? "Update" : "Confirm"}
+                </button>
+              </Cell>
+            </Container>
+        </OverlayMainContent>
         )
+        
       }
       </OverlayBody>
     </InnerContainer>
