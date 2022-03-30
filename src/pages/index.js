@@ -356,7 +356,6 @@ export default function Home() {
       if(name === 'tha'){
         
         jobView[0].stage.takeHomeAssignment.dateReceived = setNewDate
-        console.log(jobView[0].stage.takeHomeAssignment)
       }
       if(name === 'faceToface'){
         jobView[0].stage.faceToface = true
