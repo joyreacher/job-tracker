@@ -69,8 +69,12 @@ const JobContainer = styled.div`
     grid-template-columns: 1fr 1fr;
   }
   ${mq[2]}{
-    
+    padding:1em;
     grid-template-columns: 1fr;
+  }
+  ${mq[0]}{
+    
+    
   }
   
 `
@@ -102,6 +106,9 @@ const ListItem = styled.li`
   list-style: none;
   text-align: center;
   margin: 15px;
+  ${mq[0]}{
+    margin:5px;
+  }
 `
 const Label = styled.label`
   position: relative; 
