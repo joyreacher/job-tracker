@@ -435,6 +435,9 @@ const CellBtnContainer = styled.div`
         )
         
       }
+      <OverlayFooter>
+
+      </OverlayFooter>
       </OverlayBody>
     </InnerContainer>
     </span>
