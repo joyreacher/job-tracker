@@ -361,7 +361,6 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
             <Cell>
                 <CellLabelValue>
                 <label htmlFor="applied">Date Applied:</label>
-                {console.log(jobView[0].stage.applied)}
                 { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment date={jobView[0].stage.applied}/>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 <CellBtnContainer>
