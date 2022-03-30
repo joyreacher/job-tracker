@@ -7,32 +7,55 @@ import { LoadingSpinnerComponent } from "./Spinner"
 import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
 import toast from "react-hot-toast";
+const breakpoints = [376, 411, 576, 768, 845, 978, 1020, 1200]
+const mq = breakpoints.map(
+  bp => `@media (max-width: ${bp}px)`
+)
 const FormContainer = styled.form`
   background-color: var(--color-menu-overlay);
   position:fixed;
   top:0;
   width:100%;
-  min-height:100vh;
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
   visibility:hidden;
   z-index:10;
+  height:100vh;
 `
 const FormInnerContainer = styled.div`
+  margin:0 auto 3em auto;
+  padding-top: 4em;
+  padding-bottom: 1em;
+  // height: 100vh;
+  ${mq[4]}{
+    padding-left:2em;
   display:flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-center: center;
-  width: 80%;
-  margin:0 auto;
-  padding:3em 5em;
-  height: 100vh;
+    flex-wrap:wrap;
+  }
+  ${mq[2]}{
+    padding-left:0;
+    flex-direction:column;
+  }
 `
-const FormCell = styled.div`
+const FormCell = styled.span`
   display:flex;
-  flex-direction: column;
-  font-size: clamp(1.5rem, 1vw, 2rem);
+  justify-content:space-between;
+  
+  width: 30%;
+  margin:.5em auto;
+  min-width50%;
+  ${mq[7]}{
+    width:40%;
+  }
+  ${mq[6]}{
+    width:50%;
+  }
+  ${mq[4]}{
+    width:50%;
+    font-size: clamp(1.1rem, 1vw, 2rem);
+    flex-direction:column;
+  }
+  ${mq[2]}{
+    margin:.25em auto;
+  }
 `
 const SubmitCell = styled.div`
   display:flex;
@@ -40,23 +63,30 @@ const SubmitCell = styled.div`
   justify-content:center;
 `
 const FormLabel = styled.label`
-  margin:.5rem 0;
   width:fit-content;
   color: var(--color-main-light);
 `
 const FormSubmit = styled.button`
   align-self: center;
   background-color: var(--color-main-light);
-  font-size: clamp(1.1rem, 1vw, 2rem);
+  font-size: clamp(1rem, 1vw, 1.2rem);
   border-radius: 2px;
   padding:.5rem;
+  margin-top:2em;
 `
 const FormInput = styled.input`
-  font-size: 1.5rem;
-  width: 90%;
+  text-align:right;
+  max-width:50%;
+  ${mq[4]}{
+    max-width: 90%;
+  }
+  ${mq[2]}{
+    max-width: 100%;
+    min-width:10em;
+  }
 `
 const FormInputTextArea = styled.textarea`
-  font-size: 1.5rem;
+  font-size: clamp(.9rem, 2vw, 1rem);
   width: 90%;
 `
 function ApplicationForm({AddJobModalHandler, handleSubmit}) {
