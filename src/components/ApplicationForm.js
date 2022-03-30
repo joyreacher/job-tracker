@@ -98,7 +98,7 @@ function ApplicationForm({AddJobModalHandler, handleSubmit}) {
             `}
       >
         <LoadingSpinnerComponent position="absolute"/>
-        <FormSubmit onClick={async () => await handleClick()} type='submit'>Add Job</FormSubmit>
+        <FormSubmit onClick={async () => await AddJobModalHandler()} type='submit'>Add Job</FormSubmit>
       </SubmitCell>
     </FormInnerContainer>
   </FormContainer>
