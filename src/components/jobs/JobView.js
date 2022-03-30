@@ -248,101 +248,101 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       <OverlayBody>
       {
         !jobView ? '' : (<><IconInstructions>Click an icon to set the job stage</IconInstructions><FilterList>
-              <ListItem>
-                  <Label className="form-check-label" htmlFor="applied" >
-                    <CheckBox
-                      name="applied"
-                      value="applied"
-                      className="form-check-input"
-                      type="checkbox"
-                      onChange={async (e) => await handleStageSelect(e)} 
-                      ref={refCheckbox} 
-                      id='applied' 
-                      controlled="true" 
-                      checked={jobView[0].stage.applied ? true : ''} 
-                    />
-                    <IconBox id="applied">
-                      <FontAwesomeIcon  
-                        icon={faBriefcase} 
-                        color={`${jobView[0].stage.applied ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                      />
-                    </IconBox>
-                  </Label>
-                </ListItem>
+          <ListItem>
+              <Label className="form-check-label" htmlFor="applied" >
+                <CheckBox
+                  name="applied"
+                  value="applied"
+                  className="form-check-input"
+                  type="checkbox"
+                  onChange={async (e) => await handleStageSelect(e)} 
+                  ref={refCheckbox} 
+                  id='applied' 
+                  controlled="true" 
+                  checked={jobView[0].stage.applied ? true : ''} 
+                />
+                <IconBox id="applied">
+                  <FontAwesomeIcon  
+                    icon={faBriefcase} 
+                    color={`${jobView[0].stage.applied ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                  />
+                </IconBox>
+              </Label>
+            </ListItem>
+            
+            <ListItem>
+            <Label className="form-check-label" htmlFor="phonescreen" >
+              <CheckBox
+                name="phonescreen"
+                value="phonescreen"
+                className="form-check-input"
+                type="checkbox"
                 
-                <ListItem>
-                <Label className="form-check-label" htmlFor="phonescreen" >
-                  <CheckBox
-                    name="phonescreen"
-                    value="phonescreen"
-                    className="form-check-input"
-                    type="checkbox"
-                    
-                    controlled="true" 
-                    checked={jobView[0].stage.phoneScreen ? true : ''} 
-                    id='phoneScreen' 
-                    ref={refCheckbox} 
-                    onChange={async (e) => await handleStageSelect(e)}
-                  />
-                  <IconBox id="phoneScreen">
-                    <FontAwesomeIcon 
-                      icon={faPhone} 
-                      color={`${jobView[0].stage.phoneScreen ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                    />
-                  </IconBox>
-                </Label>
-              </ListItem>
-              
-              <ListItem>
-                <Label className="form-check-label" htmlFor="facetoface" >
-                  <CheckBox
-                    name="facetoface"
-                    value="facetoface"
-                    className="form-check-input"
-                    type="checkbox"
-                    
-                    
-                    controlled="true" 
-                    checked={jobView[0].stage.faceToface ? true : ''} 
-                    id='faceToface' 
-                    ref={refCheckbox} 
-                    onChange={async (e) => await handleStageSelect(e)} 
-                  />
-                  <IconBox id="interview">
-                    <FontAwesomeIcon 
-                      icon={faPeopleArrows} 
-                      color={`${jobView[0].stage.faceToface ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                    />
-                  </IconBox>
-                </Label>
-              </ListItem>
-              
-              <ListItem>
-                <Label className="form-check-label" htmlFor="tha" >
-                  <CheckBox
-                    name="tha"
-                    value="tha"
-                    className="form-check-input"
-                    type="checkbox"
-                    
-                    controlled="true" 
-                    checked={jobView[0].stage.takeHomeAssignment.dateReceived ? true : ''} 
-                    id='tha' 
-                    ref={refCheckbox} 
-                    onChange={async (e) => await handleStageSelect(e)} 
-                    
-                  />
-                  <IconBox id="tha">
-                    <FontAwesomeIcon 
-                      icon={faHouseLaptop}
-                      color={`${jobView[0].stage.takeHomeAssignment.dateReceived ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
-                    />
-                  </IconBox>
-                </Label>
-              </ListItem>
+                controlled="true" 
+                checked={jobView[0].stage.phoneScreen ? true : ''} 
+                id='phoneScreen' 
+                ref={refCheckbox} 
+                onChange={async (e) => await handleStageSelect(e)}
+              />
+              <IconBox id="phoneScreen">
+                <FontAwesomeIcon 
+                  icon={faPhone} 
+                  color={`${jobView[0].stage.phoneScreen ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+            </Label>
+          </ListItem>
+          
+          <ListItem>
+            <Label className="form-check-label" htmlFor="facetoface" >
+              <CheckBox
+                name="facetoface"
+                value="facetoface"
+                className="form-check-input"
+                type="checkbox"
+                
+                
+                controlled="true" 
+                checked={jobView[0].stage.faceToface ? true : ''} 
+                id='faceToface' 
+                ref={refCheckbox} 
+                onChange={async (e) => await handleStageSelect(e)} 
+              />
+              <IconBox id="interview">
+                <FontAwesomeIcon 
+                  icon={faPeopleArrows} 
+                  color={`${jobView[0].stage.faceToface ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+            </Label>
+          </ListItem>
+          
+          <ListItem>
+            <Label className="form-check-label" htmlFor="tha" >
+              <CheckBox
+                name="tha"
+                value="tha"
+                className="form-check-input"
+                type="checkbox"
+                
+                controlled="true" 
+                checked={jobView[0].stage.takeHomeAssignment.dateReceived ? true : ''} 
+                id='tha' 
+                ref={refCheckbox} 
+                onChange={async (e) => await handleStageSelect(e)} 
+                
+              />
+              <IconBox id="tha">
+                <FontAwesomeIcon 
+                  icon={faHouseLaptop}
+                  color={`${jobView[0].stage.takeHomeAssignment.dateReceived ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+            </Label>
+          </ListItem>
   </FilterList> </>)
       }
-          
+      
       {
         !jobView ? 'no results' : (
           <OverlayMainContent key={jobView[0]._id}>

@@ -62,7 +62,7 @@ const JobContainer = styled.div`
   }
   ${mq[5]}{
     
-  grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
   ${mq[4]}{
     
@@ -274,7 +274,7 @@ export default function Home() {
   const cardHoverTl = gsap.timeline({paused:true, reversed: true})
   const checkForToken = () => {
     if(isBrowser()){
-    return localStorage.getItem('token')
+      return localStorage.getItem('token')
     }else{
       return
     }
@@ -609,7 +609,7 @@ export default function Home() {
             </DeleteUIInner>
           </DeleteUIContainer>
         );
-        },
+      },
     })
   }
   const deleteJob = (e) => {
@@ -644,6 +644,7 @@ export default function Home() {
   }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
+      // window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
       window.location.href = '/login'
     }
     (async function fetchData(){
@@ -743,7 +744,7 @@ export default function Home() {
             </FilterList>
             </CheckBoxContainer>
             <LoaderContainer>
-          <LoadingSpinnerComponent />
+              <LoadingSpinnerComponent />
             </LoaderContainer>
           <JobContainer className="job-container">
             <JobView 
