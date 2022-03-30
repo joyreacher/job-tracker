@@ -65,31 +65,31 @@ function ApplicationForm({handleClick, handleSubmit}) {
     <FormInnerContainer className="application-form__inner-container">
       <FormCell>  
         <FormLabel htmlFor="company">Company</FormLabel>
-        <FormInput  id="company" name="company" type="text"/>
+        <FormInput  id="company" name="company" type="text" placeholder="Facebook, Google, etc..."/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="role">Role</FormLabel>
-        <FormInput id="role" name="role" type="text"/>
+        <FormInput id="role" name="role" type="text" placeholder="Frontend Developer, etc..."/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="contact">Contact</FormLabel>
-        <FormInput id="contact" name="contact" type="text"/>
+        <FormInput id="contact" name="contact" type="text" placeholder="(xxx)xxx-xxxx"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="location">Location</FormLabel>
-        <FormInput id="location" name="location" type="text"/>
+        <FormInput id="location" name="location" type="text" placeholder="Remote, USA, etc..."/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="source">Source</FormLabel>
-        <FormInput id="source" name="source" type="text"/>
+        <FormInput id="source" name="source" type="text" placeholder="ZipRecruiter, LinkedIn, etc..."/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="link">Link</FormLabel>
-        <FormInput id="link" name="link" type="text"/>
+        <FormInput id="link" name="link" type="text" placeholder="something.com"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="notes">Notes</FormLabel>
-        <FormInputTextArea id="notes" name="notes" type="textarea"/>
+        <FormInputTextArea id="notes" name="notes" type="textarea" placeholder="Anything that comes to mind"/>
         <FormInput  name="date" type="hidden" value={new Date()} />
       </FormCell>
       <SubmitCell
