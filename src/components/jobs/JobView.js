@@ -200,6 +200,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
     visibility:hidden;
     `}>
     <InnerContainer>
+      {!error ? '' : <ErrorMessage>{error}</ErrorMessage>}
       <OverlayHeader>
         <CloseButton onClick={async (e) => {
           await handleJobView(e)
