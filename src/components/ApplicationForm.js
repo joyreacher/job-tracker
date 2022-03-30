@@ -26,12 +26,13 @@ const FormInnerContainer = styled.div`
   align-center: center;
   width: 80%;
   margin:0 auto;
-  padding:1em 2em;
+  padding:3em 5em;
   height: 100vh;
 `
 const FormCell = styled.div`
   display:flex;
   flex-direction: column;
+  font-size: clamp(1.5rem, 1vw, 2rem);
 `
 const SubmitCell = styled.div`
   display:flex;
