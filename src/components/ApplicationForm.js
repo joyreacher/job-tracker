@@ -27,7 +27,7 @@ const FormInnerContainer = styled.div`
   // height: 100vh;
   ${mq[4]}{
     padding-left:2em;
-  display:flex;
+    display:flex; 
     flex-wrap:wrap;
   }
   ${mq[2]}{

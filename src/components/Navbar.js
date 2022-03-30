@@ -112,8 +112,29 @@ const MenuContainerOverlay = styled.div`
     margin:1.3em 0;
   }
 `
+const AddJobButtonMobile = styled.button`
+  display:none;
+  ${mq[2]}{
+    position:relative;
+    display:block;
+    font-size: 1rem;
+    background-color: var(--color-main-dark);
+    border-radius: 7px;
+    padding:.25em;
+    cursor:pointer;
+    color:var(--color-main-light);
+    z-index:500;
+  }
+`
+const LogoText = styled.h1`
+  color:var(--color-main-dark);
+  position:relative;
+  z-index:500;
+`
+const buttonAnimation = gsap.timeline({paused:true})
 function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
+  const [display, setDisplay] = useState(false)
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
@@ -172,6 +193,15 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
         opacity:1,
         ease: 'power4.out'
       }, '<')
+      .fromTo('.logo-text', {
+        y:0,
+        color:'var(--color-main-dark)',
+        ease:'elastic.out(1, .3)',
+      },{
+        y:'10px',
+        color:'var(--color-main-light)',
+        ease:'elastic.out(1, .3)'
+      })
       .to('#icon-one', {
         x:'.3rem',
         y:'2.3rem',
@@ -196,6 +226,11 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
         display:'none',
         opacity:0
       }, '<')
+      .to('.logo-text', {
+        y:0,
+        color:'var(--color-main-dark)',
+        ease:'power3.in'
+      }, '<')
       .to(['#icon-one', '#icon-two', '#icon-three'], {
         x:0,
         y:0,
@@ -204,13 +239,25 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
       .addLabel('end')
       
     }
-  }, [jobView])
+  }, [jobView, timeline])
   if(state.user){
     return (
         <NavbarContainer>
           <InnerContainer>
-            <p>Jobby</p>
+            <LogoText className="logo-text">Jobby</LogoText>
             <Toaster />
+            <AddJobButtonMobile
+              onClick={async () =>{
+                if(!display){
+                  setDisplay(true)
+                }else{
+                  setDisplay(false)
+                }
+                await AddJobModalHandler()
+                }}
+            >
+              {!display ? 'Add Job' : 'Close'}
+            </AddJobButtonMobile>
             {
               !state.user ? '' : <MenuContainer>
                 <p>Hello {state.user}</p>
@@ -223,11 +270,16 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
                   Download Jobs
                 </CSVLink>
                 <LogOutLink onClick={() => logout()}>logout</LogOutLink>
+                <Menu onClick={async () => {
+                  if(!display){
+                    setDisplay(true)
+                  }else{
+                    setDisplay(false)
                   }
                   await AddJobModalHandler()
                   }}>
                   <MenuText >
-                    Add Job
+                    {!display ? 'Add Job' : 'Close'}
                   </MenuText>
                 </Menu>
               </MenuContainer>
@@ -252,11 +304,7 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
                   Download Jobs
                 </CSVLink>
                 <LogOutLink onClick={() => logout()}>logout</LogOutLink>
-                <Menu onClick={async () => await AddJobModalHandler()}>
-                  <MenuText >
-                    Add Job
-                  </MenuText>
-                </Menu>
+                
               </MenuContainerOverlay>
             </Overlay>
           </InnerContainer>
