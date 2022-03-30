@@ -145,6 +145,7 @@ const IconAndLabelContainer = styled.div`
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
+  const [faceToface, setFaceToFace] = useState(false)
   const [phoneScreen, setPhoneScreen] = useState(false)
   const [applied, setApplied] = useState(false)
   const [company, setCompany] = useState(false)
@@ -158,6 +159,16 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
   const updateRef = useRef('')
   const switchDisplayAndInput = (e) =>  {
     switch(e.target.id){
+      case 'faceToface':
+        if(!faceToface){
+          return setFaceToFace(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Applied date has an error')
+          }
+          handleStageSelect(e.target.id, updateRef.current.value)
+          return setFaceToFace(false)
+        }
       case 'phoneScreen':
         if(!phoneScreen){
           return setPhoneScreen(true)
@@ -416,6 +427,29 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   { !phoneScreen ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
                   <button
                     id='phoneScreen'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!applied ? "Update" : "Confirm"}
+                  </button>
+                </CellBtnContainer>
+              </Cell>
+              <Cell>
+              <IconAndLabelContainer>
+              <IconBox id="interview">
+                <FontAwesomeIcon 
+                  icon={faPeopleArrows} 
+                  color={`${jobView[0].stage.faceToface ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
+                <CellLabelValue>
+                <label htmlFor="faceToface">Interview:</label>
+                { !faceToface ? <JobDetailHeadline className="input-value">{!jobView[0].stage.faceToface ? 'No interview set up' : <Moment date={jobView[0].stage.faceToface}/>}</JobDetailHeadline> : (<><input id="faceToface" ref={updateRef} type="date" className="input-box"/></>) }
+                </CellLabelValue>
+                </IconAndLabelContainer>
+                <CellBtnContainer>
+                  { !faceToface ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  <button
+                    id='faceToface'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!applied ? "Update" : "Confirm"}
