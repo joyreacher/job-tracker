@@ -298,6 +298,39 @@ export default function Home() {
       })
     )
   }
+  const JobUpdateCall = (e) => {
+    console.log(e)
+    console.log(jobView[0])
+    // return e
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: `https://job-tracker-api-v1.herokuapp.com/jobs/update`,
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
+        },
+        data:{
+          jobId: e[1],
+          user: localStorage.getItem('username'),
+          company: e[0] === 'company' ? e[2] : jobView[0].company,
+          role: e[0] === 'role' ? e[2] : jobView[0].role === "" ? 'no role info': jobView[0].role,
+          contact: e[0] === 'contact' ? e[2] : (jobView[0].contact === "" ? 'no contact info': jobView[0].contact),
+          location: e[0] === 'location' ? e[2] : jobView[0].location,
+          source: e[0] === 'source' ? e[2] : jobView[0].source,
+          link: e[0] === 'link' ? e[2] : jobView[0].link,
+          notes: e[0] === 'notes' ? e[2] : jobView[0].notes,
+          dateAdded: jobView[0].dateAdded,
+        }
+      })
+      .then(res => {
+          
+          setJobView([res.data])
+      })
+    )
+  }
   const StageUpdateCall =  (e) => {
     // checked will be the opposite state from what it was set to; example: if it returns false, it was true.
     const checked = e.target.checked
@@ -713,7 +746,9 @@ export default function Home() {
               handleJobView={handleJobView} 
               jobViewTL={jobViewTL} 
               jobs={jobs} 
-              jobView={jobView}/>
+              jobView={jobView}
+              JobUpdateCall={JobUpdateCall}
+              />
             {
               jobs.map((job, i) => {
                 return (
