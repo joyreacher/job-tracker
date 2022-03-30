@@ -51,7 +51,8 @@ const Checkbox = styled.input`
 `
 const Cell = styled.div`
   display:flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin:.9rem 0;
 `
 const CloseButton = styled.div`
   padding: 1em;
