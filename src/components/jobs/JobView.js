@@ -136,6 +136,7 @@ const CellBtnContainer = styled.div`
   display:flex;
   justify-content: space-between;
 `
+function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
   const [company, setCompany] = useState(false)
