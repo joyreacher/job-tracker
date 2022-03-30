@@ -359,6 +359,12 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
           <OverlayMainContent key={jobView[0]._id}>
             <Container >
             <Cell>
+              <IconBox id="applied">
+                <FontAwesomeIcon  
+                  icon={faBriefcase} 
+                  color={`${jobView[0].stage.applied ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
+                />
+              </IconBox>
                 <CellLabelValue>
                 <label htmlFor="applied">Date Applied:</label>
                 { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment date={jobView[0].stage.applied}/>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
