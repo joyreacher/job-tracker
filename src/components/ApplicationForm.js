@@ -65,31 +65,31 @@ function ApplicationForm({handleClick, handleSubmit}) {
     <FormInnerContainer className="application-form__inner-container">
       <FormCell>  
         <FormLabel htmlFor="company">Company</FormLabel>
-        <FormInput  name="company" type="text"/>
+        <FormInput  id="company" name="company" type="text"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="role">Role</FormLabel>
-        <FormInput  name="role" type="text"/>
+        <FormInput id="role" name="role" type="text"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="contact">Contact</FormLabel>
-        <FormInput  name="contact" type="text"/>
+        <FormInput id="contact" name="contact" type="text"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="location">Location</FormLabel>
-        <FormInput  name="location" type="text"/>
+        <FormInput id="location" name="location" type="text"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="source">Source</FormLabel>
-        <FormInput  name="source" type="text"/>
+        <FormInput id="source" name="source" type="text"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="link">Link</FormLabel>
-        <FormInput  name="link" type="text"/>
+        <FormInput id="link" name="link" type="text"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="notes">Notes</FormLabel>
-        <FormInputTextArea  name="notes" type="textarea"/>
+        <FormInputTextArea id="notes" name="notes" type="textarea"/>
         <FormInput  name="date" type="hidden" value={new Date()} />
       </FormCell>
       <SubmitCell
