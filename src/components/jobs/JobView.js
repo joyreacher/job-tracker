@@ -4,7 +4,7 @@ import {DataContext} from "../../context/DataContext";
 import { jsx, css } from "@emotion/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
-import { useRef } from "react";
+import Moment from "react-moment";
 const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
@@ -139,6 +139,7 @@ const CellBtnContainer = styled.div`
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
+  const [applied, setApplied] = useState(false)
   const [company, setCompany] = useState(false)
   const [role, setRole] = useState(false)
   const [contact, setContact] = useState(false)
@@ -150,6 +151,16 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
   const updateRef = useRef('')
   const switchDisplayAndInput = (e) =>  {
     switch(e.target.id){
+      case 'applied':
+        if(!applied){
+          return setApplied(true)
+        }else{
+          if(!updateRef.current.value){
+            return setError('Applied date has an error')
+          }
+          handleStageSelect(e.target.id, updateRef.current.value)
+          return setApplied(false)
+        }
       case 'company':
         if(!company){
           return setCompany(true)
@@ -347,6 +358,22 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
         !jobView ? 'no results' : (
           <OverlayMainContent key={jobView[0]._id}>
             <Container >
+            <Cell>
+                <CellLabelValue>
+                <label htmlFor="applied">Date Applied:</label>
+                {console.log(jobView[0].stage.applied)}
+                { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment date={jobView[0].stage.applied}/>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
+                </CellLabelValue>
+                <CellBtnContainer>
+                  { !applied ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  <button
+                    id='applied'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!applied ? "Update" : "Confirm"}
+                  </button>
+                </CellBtnContainer>
+              </Cell>
               <Cell>
                 <CellLabelValue>
                 <label htmlFor="company">Company:</label>
