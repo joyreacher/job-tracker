@@ -138,7 +138,6 @@ const IconBox = styled.div`
 const JobCardContainer = styled.div`
   justify-self: flex-end;
   overflow-y:hidden;
-  cursor:pointer;
   width:200px;
   height:200px;
   background: var(--color-morph-light);
