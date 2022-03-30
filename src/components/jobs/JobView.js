@@ -127,42 +127,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       </OverlayHeader>
       <OverlayBody>
       {
-        !jobView ? 'no results' : (
-          <div key={jobView[0]._id}>
-            <Container >
-              <Cell>
-                <p>Company:</p>
-                <h1>{jobView[0].company}</h1>
-              </Cell>
-              <Cell>
-                <p>Role: </p>
-                <h1>{jobView[0].role}</h1>
-              </Cell>
-              <Cell>
-                <p>Contact: </p>
-                <h1>{jobView[0].contact}</h1>
-              </Cell>
-              <Cell>
-                <p>Loaction:</p>
-                <h1>{jobView[0].location}</h1>
-              </Cell>
-              <Cell>
-                <p>Source:</p>
-                <h1>{jobView[0].source}</h1>
-              </Cell>
-              <Cell>
-                <p>Link:</p>
-                <h1>{jobView[0].link}</h1>
-              </Cell>
-              <Cell>
-                <p>Notes:</p>
-                <h1>{jobView[0].notes}</h1>
-              </Cell>
-            </Container>
-          
-        <OverlayFooter>
-          <CheckBoxContainer>
-            <FilterList>
+        !jobView ? '' : (<><IconInstructions>Click an icon to set the job stage</IconInstructions><FilterList>
               <ListItem>
                   <Label className="form-check-label" htmlFor="applied" >
                     <CheckBox
