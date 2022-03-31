@@ -247,6 +247,17 @@ const DeleteUICopy = styled.div`
 const DeleteActionContainer = styled.div`
   margin-top:2em;
 `
+const JobCardButton = styled.button`
+  margin:1em .25em 0 0;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.5rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+`
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
 //filter button animations
@@ -807,7 +818,7 @@ export default function Home() {
                             {job.role}
                           </JobCardCopy>
                           <JobCardFooter>
-                            <button
+                            <JobCardButton
                               id={job._id}
                               onClick={ (e) => {
                                 gsap.to(window, {duration: 1.2, scrollTo: 0, ease:'power3.out'})
@@ -816,15 +827,15 @@ export default function Home() {
                                 }}
                             >
                               Info
-                            </button>
-                            <button
+                            </JobCardButton>
+                            <JobCardButton
                             id={job._id}
                               onClick={ (e) => {
                                 submit(e)
                                 }}
                             >
                               Delete
-                            </button>
+                            </JobCardButton>
                           </JobCardFooter>
                         </JobCardBody>
                       </JobInnerContainer>
