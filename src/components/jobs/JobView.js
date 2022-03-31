@@ -522,13 +522,13 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   { !link ? <JobDetailHeadline className="input-value">{jobView[0].link}</JobDetailHeadline> : <TextInput defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box"/> }
                 </CellLabelValue>
                 <ButtonContainer>
-                { !link ? '' : <CancelButton onClick={() => {setError(''); setLink(false)}}>Cancel</CancelButton>}
                 <UpdateButton
                   id='link'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!link ? "Update" : "Confirm"}
                 </UpdateButton>
+                { !link ? '' : <CancelButton onClick={() => {setError(''); setLink(false)}}>Cancel</CancelButton>}
                 </ButtonContainer>
               </Cell>
               <Cell>
@@ -537,13 +537,13 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   { !notes ? <JobNotes className="input-value">{jobView[0].notes}</JobNotes> : (<TextAreaInput defaultValue={jobView[0].notes} id="notes" ref={updateRef} type="text" className="input-box"/>) }
                 </NotesCellLabelValue>
                 <ButtonContainer>
-                  { !notes ? '' : <CancelButton onClick={() => {setError('');setNotes(false)}}>Cancel</CancelButton>}
                   <UpdateButton
                     id='notes'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!notes ? "Update" : "Confirm"}
                   </UpdateButton>
+                  { !notes ? '' : <CancelButton onClick={() => {setError('');setNotes(false)}}>Cancel</CancelButton>}
                 </ButtonContainer>
               </Cell>
               </Separator>
