@@ -5,6 +5,8 @@
 }
 
 :root{
+  /* Highlight color */
+  --color-main-highlight: rgb(255, 213, 213);
   /* Job View Overlay */
   --color-morph-light: rgba(247, 244, 243, 1);
   --color-morph-dark: rgba(26, 24, 27, .1);
