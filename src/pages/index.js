@@ -524,8 +524,32 @@ export default function Home() {
       return tl.reverse()
     }
   }
-  const handleStageSelect = (type) => {
-    StageUpdateCall(type)
+  const handleStageSelect = (id, date, value = null) => {
+    console.log(value)
+    const token = localStorage.getItem('token')
+    trackPromise(
+      axios({
+        url: `https://job-tracker-api-v1.herokuapp.com/jobs/update/${jobView[0]._id}`,
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json;charset=UTF-8',
+          "Authorization" : `Bearer ${token}`
+        },
+        data:{
+          id:jobView[0]._id,
+          applied:id === 'applied' ? date : jobView[0].stage.applied,
+          phoneScreen: id === 'phoneScreen' ? date : jobView[0].stage.phoneScreen,
+          receivedTHA: id === 'tha' ? value : jobView[0].stage.takeHomeAssignment.received,
+          dateReceivedTHA: id === 'tha' ? date : jobView[0].stage.takeHomeAssignment.dateReceived,
+          faceToface: id === 'faceToface' ? date : jobView[0].stage.faceToface,
+          result: ''
+        }
+      })
+      .then(res => {
+          setJobView([res.data])
+      })
+    )
   }
   const filterById = (e) => {
     let result = jobs.filter((item) => {
@@ -786,6 +810,7 @@ export default function Home() {
                             <button
                               id={job._id}
                               onClick={ (e) => {
+                                gsap.to(window, {duration: 1.2, scrollTo: 0, ease:'power3.out'})
                                 filterById(e)
                                 handleJobView(e)
                                 }}
