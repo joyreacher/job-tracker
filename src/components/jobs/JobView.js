@@ -272,8 +272,10 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
   }
   useEffect(() =>{
     jobViewTL
-      .from('.job-view--overlay', {opacity: 0, display:'none', autoAlpha: 0, xPercent: -100})
+      .to('body', { overflow:'hidden'}, '<')
+      .from('.job-view--overlay', {opacity: 0, display:'none', autoAlpha: 0, xPercent: -100}, '<')
   }, [])
+  let containerHeight = gsap.getProperty('main', 'height')
   return (
     <div className="job-view--overlay" css={css`
     position:absolute;
