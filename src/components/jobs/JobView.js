@@ -502,16 +502,19 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                 </CellBtnContainer>
               </Cell>
               <Cell>
-                <CellLabelValue>
-                  <label htmlFor="notes">Notes:</label>
-                  { !notes ? <h1 className="input-value">{jobView[0].notes}</h1> : (<><textarea defaultValue={jobView[0].notes} id="notes" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setNotes(false)}}>Cancel</button></>) }
-                </CellLabelValue>
-                <button
-                  id='notes'
-                  onClick={(e) => switchDisplayAndInput(e)}
-                >
-                  {!notes ? "Update" : "Confirm"}
-                </button>
+                <NotesCellLabelValue>
+                  <Label htmlFor="notes">Notes:</Label>
+                  { !notes ? <JobNotes className="input-value">{jobView[0].notes}</JobNotes> : (<TextAreaInput defaultValue={jobView[0].notes} id="notes" ref={updateRef} type="text" className="input-box"/>) }
+                </NotesCellLabelValue>
+                <ButtonContainer>
+                  { !notes ? '' : <CancelButton onClick={() => {setError('');setNotes(false)}}>Cancel</CancelButton>}
+                  <UpdateButton
+                    id='notes'
+                    onClick={(e) => switchDisplayAndInput(e)}
+                  >
+                    {!notes ? "Update" : "Confirm"}
+                  </UpdateButton>
+                </ButtonContainer>
               </Cell>
               </Separator>
             </Container>
