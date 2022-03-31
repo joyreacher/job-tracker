@@ -138,7 +138,6 @@ const IconBox = styled.div`
 `
 const JobCardContainer = styled.div`
   justify-self: flex-end;
-  overflow-y:hidden;
   width:200px;
   height:200px;
   background: var(--color-morph-light);
@@ -148,7 +147,6 @@ const JobCardContainer = styled.div`
   &:hover{
     background-color:red;
     color:var(--color-main-light);
-    animation-play-state: running;
   }
   ${mq[4]}{
     justify-self:center;
