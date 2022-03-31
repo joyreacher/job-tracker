@@ -32,8 +32,14 @@ const OverlayFooter = styled.div`
   display:flex;
 `
 const Container = styled.div`
-  font-size: clamp(1rem, 2vw, 3rem);
-  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  div{
+    margin: .5em .5em 0 .5em;
+    ${mq[2]}{
+      margin: .5em;
+    }
+  }
 `
 const InputCell = styled.div`
   display:flex;
@@ -140,6 +146,10 @@ const CellBtnContainer = styled.div`
 const IconAndLabelContainer = styled.div`
   display:flex;
   position:relative;
+`
+const Separator = styled.section`
+  margin:1em 0;
+  padding:0 1.25em;
 `
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
@@ -305,7 +315,8 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       {
         !jobView ? 'no results' : (
           <OverlayMainContent key={jobView[0]._id}>
-            <Container >
+            <Container className="container">
+            <Separator>
             <Cell>
               <IconAndLabelContainer>
               <IconBox id="applied">
@@ -398,6 +409,8 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   </button>
                 </CellBtnContainer>
               </Cell>
+              </Separator>
+              <Separator>
               <Cell>
                 <CellLabelValue>
                 <label htmlFor="company">Company:</label>
@@ -500,6 +513,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                   {!notes ? "Update" : "Confirm"}
                 </button>
               </Cell>
+              </Separator>
             </Container>
         </OverlayMainContent>
         )
