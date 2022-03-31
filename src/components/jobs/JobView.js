@@ -460,7 +460,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                 />
               </IconBox>
                 <CellLabelValue>
-                <Label htmlFor="tha">Take Home Assignment:</Label>
+                <label htmlFor="tha">Take Home Assignment:</label>
                 { !tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>}</JobDetailHeadline> : (<><DateInput id="tha" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
