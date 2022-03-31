@@ -89,6 +89,18 @@ const FormInputTextArea = styled.textarea`
   font-size: clamp(.9rem, 2vw, 1rem);
   width: 90%;
 `
+const AddJobButton = styled.button`
+  display:flex;
+  margin:2em 0;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1.3rem, 1vw, 1.5rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+`
 function ApplicationForm({AddJobModalHandler, handleSubmit}) {
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
@@ -128,7 +140,7 @@ function ApplicationForm({AddJobModalHandler, handleSubmit}) {
             `}
       >
         <LoadingSpinnerComponent position="absolute"/>
-        <FormSubmit onClick={async () => await AddJobModalHandler()} type='submit'>Add Job</FormSubmit>
+        <AddJobButton onClick={async () => await AddJobModalHandler()} type='submit'>Add Job</AddJobButton>
       </SubmitCell>
     </FormInnerContainer>
   </FormContainer>
