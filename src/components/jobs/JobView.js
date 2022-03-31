@@ -56,8 +56,13 @@ const Checkbox = styled.input`
 `
 const Cell = styled.div`
   display:flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin:.9rem 0;
+  ${mq[2]}{
+    justify-content: center
+    flex-wrap:wrap;
+    flex-direction:column;
+  }
 `
 const CloseButton = styled.div`
   padding: 1em;
@@ -87,7 +92,9 @@ const ListItem = styled.li`
 `
 const Label = styled.label`
   position: relative; 
-  cursor: pointer;
+  ${mq[2]}{
+    max-width:30%;
+  }
 `
 const CheckBox = styled.input`
   height:3rem;
@@ -103,7 +110,7 @@ const IconBox = styled.span`
   left:-1.5em;
   width: 20px;
   height: 20px;
-  background: var(--color-main-dark);
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,6 +137,7 @@ const IconInstructions = styled.p`
 `
 const JobDetailHeadline = styled.h1`
   text-align: left;
+  color:var(--color-main-highlight);
 `
 const CellLabelValue = styled.div`
   display:flex;
@@ -156,7 +164,7 @@ const CellBtnContainer = styled.div`
   display:flex;
   justify-content: space-between;
 `
-const IconAndLabelContainer = styled.div`
+const IconAndLabelContainer = styled.span`
   display:flex;
   position:relative;
 `
@@ -166,11 +174,11 @@ const Separator = styled.section`
 `
 const UpdateButton = styled.button`
   width:fit-content;
-  margin:.5em 0;
+  margin:.5em .75em;
 `
 const CancelButton = styled.button`
   width:fit-content;
-  margin:.5em;
+  margin:.5em 0;
 `
 const ButtonContainer = styled.div`
   display:flex;
