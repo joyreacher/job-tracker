@@ -151,6 +151,23 @@ const Separator = styled.section`
   margin:1em 0;
   padding:0 1.25em;
 `
+const UpdateButton = styled.button`
+  width:fit-content;
+  margin:.5em 0;
+`
+const CancelButton = styled.button`
+  width:fit-content;
+  margin:.5em;
+`
+const ButtonContainer = styled.div`
+  display:flex;
+`
+const TextAreaInput = styled.textarea`
+  height:35vw;
+`
+const TextInput = styled.input`
+  width: 50%;
+`
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
   const [display, setDisplay] = useState(false)
