@@ -134,10 +134,23 @@ const JobDetailHeadline = styled.h1`
 const CellLabelValue = styled.div`
   display:flex;
   justify-content:space-between;
-  width:50%;
+  flex-direction:column;
   ${mq[2]}{
-    display:block;
+    width:100%;
+    flex-direction:row;
   }
+`
+const NotesCellLabelValue = styled.div`
+display:flex;
+justify-content:space-between;
+flex-direction:column;
+${mq[2]}{
+  width:100%;
+}
+`
+const JobNotes = styled.h1`
+  color: var(--color-main-highlight);
+  margin:.5em 0;
 `
 const CellBtnContainer = styled.div`
   display:flex;
