@@ -95,7 +95,7 @@ const Overlay = styled.div`
   position:fixed;
   height:100vh;
   width:100vw;
-  z-index:200;
+  z-index:201;
   background-color:var(--color-main-dark);
   top:0;
   left:0;
@@ -123,7 +123,7 @@ const AddJobButtonMobile = styled.button`
     padding:.25em;
     cursor:pointer;
     color:var(--color-main-light);
-    z-index:500;
+    z-index:200;
   }
 `
 const LogoText = styled.h1`
