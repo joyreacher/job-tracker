@@ -151,6 +151,7 @@ const CellLabelValue = styled.div`
   display:flex;
   justify-content:space-between;
   flex-direction:column;
+  height:1.5em;
   ${mq[2]}{
     width:100%;
     flex-direction:row;
@@ -177,8 +178,13 @@ const IconAndLabelContainer = styled.span`
   position:relative;
 `
 const Separator = styled.section`
-  margin:1em 0;
+  margin:1em auto;
   padding:0 1.25em;
+  width: 50vw;
+  ${mq[5]}{
+    max-width:auto;
+    width:90%;
+  }
 `
 const UpdateButton = styled.button`
   width:fit-content;
@@ -192,10 +198,15 @@ const ButtonContainer = styled.div`
   display:flex;
 `
 const TextAreaInput = styled.textarea`
-  height:35vw;
+  height:5vw;
+  ${mq[6]}{
+    height:35vw;
+  }
 `
 const TextInput = styled.input`
   width: 50%;
+const DateInput = styled.input`
+  min-height:100%;
 `
 function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall}) {
   const [state, dispatch] = useContext(DataContext)
