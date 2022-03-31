@@ -378,17 +378,17 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </IconBox>
                 <CellLabelValue>
                 <Label htmlFor="applied">Date Applied:</Label>
-                { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.applied}</Moment>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
+                { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.applied}</Moment>}</JobDetailHeadline> : (<><DateInput id="applied" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !applied ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
-                  <button
+                  { !applied ? '' : <CancelButton onClick={() => {setError(''); setApplied(false)}}>Cancel</CancelButton>}
+                  <UpdateButton
                     id='applied'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!applied ? "Update" : "Confirm"}
-                  </button>
+                  </UpdateButton>
                 </CellBtnContainer>
               </Cell>
               <Cell>
@@ -401,17 +401,17 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </IconBox>
                 <CellLabelValue>
                 <label htmlFor="phoneScreen">Phone Screen:</label>
-                { !phoneScreen ? <JobDetailHeadline className="input-value">{!jobView[0].stage.phoneScreen ? 'No phone screen set' :  <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.phoneScreen}</Moment>}</JobDetailHeadline> : (<><input id="phoneScreen" ref={updateRef} type="date" className="input-box"/></>) }
+                { !phoneScreen ? <JobDetailHeadline className="input-value">{!jobView[0].stage.phoneScreen ? 'No phone screen set' :  <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.phoneScreen}</Moment>}</JobDetailHeadline> : (<><DateInput id="phoneScreen" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !phoneScreen ? '' : <button onClick={() => {setError(''); setPhoneScreen(false)}}>Cancel</button>}
-                  <button
+                  { !phoneScreen ? '' : <CancelButton onClick={() => {setError(''); setPhoneScreen(false)}}>Cancel</CancelButton>}
+                  <UpdateButton
                     id='phoneScreen'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!phoneScreen ? "Update" : "Confirm"}
-                  </button>
+                  </UpdateButton>
                 </CellBtnContainer>
               </Cell>
               <Cell>
@@ -424,17 +424,17 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </IconBox>
                 <CellLabelValue>
                 <label htmlFor="faceToface">Interview:</label>
-                { !faceToface ? <JobDetailHeadline className="input-value">{!jobView[0].stage.faceToface ? 'No interview set up' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.faceToface}</Moment>}</JobDetailHeadline> : (<><input id="faceToface" ref={updateRef} type="date" className="input-box"/></>) }
+                { !faceToface ? <JobDetailHeadline className="input-value">{!jobView[0].stage.faceToface ? 'No interview set up' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.faceToface}</Moment>}</JobDetailHeadline> : (<><DateInput id="faceToface" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !faceToface ? '' : <button onClick={() => {setError(''); setFaceToFace(false)}}>Cancel</button>}
-                  <button
+                  { !faceToface ? '' : <CancelButton onClick={() => {setError(''); setFaceToFace(false)}}>Cancel</CancelButton>}
+                  <UpdateButton
                     id='faceToface'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!faceToface ? "Update" : "Confirm"}
-                  </button>
+                  </UpdateButton>
                 </CellBtnContainer>
               </Cell>
               <Cell>
@@ -447,17 +447,17 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </IconBox>
                 <CellLabelValue>
                 <Label htmlFor="tha">Take Home Assignment:</Label>
-                { !tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>}</JobDetailHeadline> : (<><input id="tha" ref={updateRef} type="date" className="input-box"/></>) }
+                { !tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>}</JobDetailHeadline> : (<><DateInput id="tha" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !tha ? '' : <button onClick={() => {setError(''); setTha(false)}}>Cancel</button>}
-                  <button
+                  { !tha ? '' : <CancelButton onClick={() => {setError(''); setTha(false)}}>Cancel</CancelButton>}
+                  <UpdateButton
                     id='tha'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
                     {!tha ? "Update" : "Confirm"}
-                  </button>
+                  </UpdateButton>
                 </CellBtnContainer>
               </Cell>
               </Separator>
