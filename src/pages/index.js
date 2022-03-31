@@ -115,13 +115,14 @@ const Label = styled.label`
   cursor: pointer;
 `
 const CheckBox = styled.input`
-  height:3rem;
-  width:2rem;
-  left:-1rem;
+  height:3.75rem;
+  width:3.5rem;
+  left:-1.75rem;
   cursor:pointer;
   z-index:5;
   position: absolute;
   opacity: 0;
+  transform-origin: center center;
 `
 const IconBox = styled.div`
   width: 60px;
