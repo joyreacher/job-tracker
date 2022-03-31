@@ -114,7 +114,7 @@ const CheckBox = styled.input`
   opacity: 0;
 `
 const IconBox = styled.span`
-  top:0;
+  top:10px;
   left:-1.5em;
   width: 20px;
   height: 20px;
