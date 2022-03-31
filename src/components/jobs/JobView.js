@@ -187,15 +187,18 @@ const Separator = styled.section`
   }
 `
 const UpdateButton = styled.button`
+  height:fit-content;
   width:fit-content;
-  margin:.5em .75em;
+  margin:.5em 0;
 `
 const CancelButton = styled.button`
+  height:fit-content;
   width:fit-content;
   margin:.5em 0;
 `
 const ButtonContainer = styled.div`
   display:flex;
+  justify-content:space-between;
 `
 const TextAreaInput = styled.textarea`
   height:5vw;
@@ -204,7 +207,11 @@ const TextAreaInput = styled.textarea`
   }
 `
 const TextInput = styled.input`
-  width: 50%;
+width: 100%;
+  ${mq[2]}{
+    width: 50%;
+  }
+`
 const DateInput = styled.input`
   min-height:100%;
 `
