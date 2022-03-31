@@ -1,10 +1,15 @@
 import React, { useRef, useEffect, useContext, useState } from "react"
+import gsap from "gsap";
 import styled from "@emotion/styled"
 import {DataContext} from "../../context/DataContext";
 import { jsx, css } from "@emotion/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
 import Moment from "react-moment";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
+
 const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
