@@ -518,18 +518,18 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </Cell>
               <Cell>
                 <CellLabelValue>
-                  <label htmlFor="link">Link:</label>
-                  { !link ? <h1 className="input-value">{jobView[0].link}</h1> : (<><input defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box"/><button onClick={() => {setError('');setLink(false)}}>Cancel</button></>) }
+                  <Label htmlFor="link">Link:</Label>
+                  { !link ? <JobDetailHeadline className="input-value">{jobView[0].link}</JobDetailHeadline> : <TextInput defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box"/> }
                 </CellLabelValue>
-                <CellBtnContainer>
-                { !link ? '' : <button onClick={() => {setError(''); setLink(false)}}>Cancel</button>}
-                <button
+                <ButtonContainer>
+                { !link ? '' : <CancelButton onClick={() => {setError(''); setLink(false)}}>Cancel</CancelButton>}
+                <UpdateButton
                   id='link'
                   onClick={(e) => switchDisplayAndInput(e)}
                 >
                   {!link ? "Update" : "Confirm"}
-                </button>
-                </CellBtnContainer>
+                </UpdateButton>
+                </ButtonContainer>
               </Cell>
               <Cell>
                 <NotesCellLabelValue>
