@@ -190,11 +190,30 @@ const UpdateButton = styled.button`
   height:fit-content;
   width:fit-content;
   margin:.5em 0;
+  
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
 `
 const CancelButton = styled.button`
   height:fit-content;
   width:fit-content;
   margin:.5em 0;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
 `
 const ButtonContainer = styled.div`
   display:flex;
