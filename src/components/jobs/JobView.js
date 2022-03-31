@@ -275,14 +275,17 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       .from('.job-view--overlay', {opacity: 0, display:'none', autoAlpha: 0, xPercent: -100})
   }, [])
   return (
-    <span className="job-view--overlay" css={css`
-    position:fixed;
+    <div className="job-view--overlay" css={css`
+    position:absolute;
     background-color: var(--color-jobView-overlay);
     left:0;
     top:0;
-    width:100vw;
+    width:100%;
     min-height: 100vh;
+    height:${containerHeight}px;
     z-index: 500;
+    overflow-y: scroll;
+    height:100vh;
     visibility:hidden;
     `}>
     <InnerContainer>
@@ -505,7 +508,7 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
       </OverlayFooter>
       </OverlayBody>
     </InnerContainer>
-    </span>
+    </div>
   )
 }
 
