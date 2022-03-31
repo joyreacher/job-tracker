@@ -810,6 +810,7 @@ export default function Home() {
                             <button
                               id={job._id}
                               onClick={ (e) => {
+                                gsap.to(window, {duration: 1.2, scrollTo: 0, ease:'power3.out'})
                                 filterById(e)
                                 handleJobView(e)
                                 }}
