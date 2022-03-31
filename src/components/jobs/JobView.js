@@ -38,7 +38,10 @@ const OverlayFooter = styled.div`
 `
 const Container = styled.div`
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
+  ${mq[5]}{
+    flex-direction:column;
+  }
   div{
     margin: .5em .5em 0 .5em;
     ${mq[2]}{
