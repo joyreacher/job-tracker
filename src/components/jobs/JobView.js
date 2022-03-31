@@ -24,7 +24,6 @@ const OverlayHeader = styled.header`
 const OverlayBody = styled.section`
   max-width:1020px;
   margin:0 auto;
-  padding:0 2em;
 `
 const OverlayFooter = styled.div`
   font-size: clamp(1rem, 2.5vw, 2rem);
@@ -311,8 +310,8 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                 />
               </IconBox>
                 <CellLabelValue>
-                <label htmlFor="applied">Date Applied:</label>
-                { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment date={jobView[0].stage.applied}/>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
+                <Label htmlFor="applied">Date Applied:</Label>
+                { !applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.applied}</Moment>}</JobDetailHeadline> : (<><input id="applied" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
@@ -335,16 +334,16 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </IconBox>
                 <CellLabelValue>
                 <label htmlFor="phoneScreen">Phone Screen:</label>
-                { !phoneScreen ? <JobDetailHeadline className="input-value">{!jobView[0].stage.phoneScreen ? 'No phone screen set' : <Moment date={jobView[0].stage.phoneScreen}/>}</JobDetailHeadline> : (<><input id="phoneScreen" ref={updateRef} type="date" className="input-box"/></>) }
+                { !phoneScreen ? <JobDetailHeadline className="input-value">{!jobView[0].stage.phoneScreen ? 'No phone screen set' :  <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.phoneScreen}</Moment>}</JobDetailHeadline> : (<><input id="phoneScreen" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !phoneScreen ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  { !phoneScreen ? '' : <button onClick={() => {setError(''); setPhoneScreen(false)}}>Cancel</button>}
                   <button
                     id='phoneScreen'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
-                    {!applied ? "Update" : "Confirm"}
+                    {!phoneScreen ? "Update" : "Confirm"}
                   </button>
                 </CellBtnContainer>
               </Cell>
@@ -358,16 +357,16 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
               </IconBox>
                 <CellLabelValue>
                 <label htmlFor="faceToface">Interview:</label>
-                { !faceToface ? <JobDetailHeadline className="input-value">{!jobView[0].stage.faceToface ? 'No interview set up' : <Moment date={jobView[0].stage.faceToface}/>}</JobDetailHeadline> : (<><input id="faceToface" ref={updateRef} type="date" className="input-box"/></>) }
+                { !faceToface ? <JobDetailHeadline className="input-value">{!jobView[0].stage.faceToface ? 'No interview set up' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.faceToface}</Moment>}</JobDetailHeadline> : (<><input id="faceToface" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !faceToface ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  { !faceToface ? '' : <button onClick={() => {setError(''); setFaceToFace(false)}}>Cancel</button>}
                   <button
                     id='faceToface'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
-                    {!applied ? "Update" : "Confirm"}
+                    {!faceToface ? "Update" : "Confirm"}
                   </button>
                 </CellBtnContainer>
               </Cell>
@@ -380,17 +379,17 @@ function JobView({jobView, jobViewTL, handleJobView, handleStageSelect, refCheck
                 />
               </IconBox>
                 <CellLabelValue>
-                <label htmlFor="tha">Take Home Assignment:</label>
-                { !tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment date={jobView[0].stage.takeHomeAssignment.dateReceived}/>}</JobDetailHeadline> : (<><input id="tha" ref={updateRef} type="date" className="input-box"/></>) }
+                <Label htmlFor="tha">Take Home Assignment:</Label>
+                { !tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>}</JobDetailHeadline> : (<><input id="tha" ref={updateRef} type="date" className="input-box"/></>) }
                 </CellLabelValue>
                 </IconAndLabelContainer>
                 <CellBtnContainer>
-                  { !tha ? '' : <button onClick={() => {setError(''); setApplied(false)}}>Cancel</button>}
+                  { !tha ? '' : <button onClick={() => {setError(''); setTha(false)}}>Cancel</button>}
                   <button
                     id='tha'
                     onClick={(e) => switchDisplayAndInput(e)}
                   >
-                    {!applied ? "Update" : "Confirm"}
+                    {!tha ? "Update" : "Confirm"}
                   </button>
                 </CellBtnContainer>
               </Cell>
