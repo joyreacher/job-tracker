@@ -25,6 +25,7 @@ import { jsx, css, keyframes } from "@emotion/react"
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faCoffee, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
+import Moment from "react-moment";
 gsap.registerPlugin(Flip);
 
 const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
@@ -878,6 +879,22 @@ export default function Home() {
                           <JobCardCopy id={job._id}>
                             {job.role}
                           </JobCardCopy>
+                          <JobCardInfo>
+                            Added: <Moment id={job._id} className="fromNow" fromNow>{jobs[i].dateAdded}</Moment>
+                            {
+                              !jobs[i].stage.applied ? '' : (<div><span>Applied: </span><Moment  fromNow>{jobs[i].stage.applied}</Moment></div>)
+                            }
+                            {
+                              !jobs[i].stage.phoneScreen ? '' : (<div><span>Phone Screen: </span><Moment fromNow>{jobs[i].stage.phoneScreen}</Moment></div>)
+                            }
+                            {
+                              !jobs[i].stage.faceToface ? '' : (<div><span>Interview: </span><Moment fromNow>{jobs[i].stage.faceToface}</Moment></div>)
+                            }
+                            {
+                              !jobs[i].stage.takeHomeAssignment.dateReceived ? '' : (<div><span>Assignment: </span><Moment fromNow>{jobs[i].stage.takeHomeAssignment.dateReceived}</Moment></div>)
+                            }
+                            
+                          </JobCardInfo>
                           <JobCardFooter>
                             <JobCardButton
                               id={job._id}
