@@ -412,17 +412,26 @@ function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refChec
                       <IconAndLabelContainer>
                         <IconBox id="applied">
                           <FontAwesomeIcon
-                <FontAwesomeIcon  
-                          <FontAwesomeIcon
-                            icon={faBriefcase}
-                  icon={faBriefcase} 
                             icon={faBriefcase}
                             color={`${jobView[0].stage.applied ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
                           />
                         </IconBox>
                         <CellLabelValue>
                           <Label htmlFor="applied">Date Applied:</Label>
-                          {!applied ? <JobDetailHeadline className="input-value">{!jobView[0].stage.applied ? 'You have not applied' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.applied}</Moment>}</JobDetailHeadline> : (<><DateInput id="applied" ref={updateRef} type="date" className="input-box" /></>)}
+                          {!applied ?
+                            <JobDetailHeadline className="input-value">
+                            {!jobView[0].stage.applied ? 
+                              'You have not applied' :
+                              (
+                              <>
+                                <Moment add={{ days: 1 }} format="D MMM YYYY" withTitle>{jobView[0].stage.applied}</Moment>
+                                <br/>
+                                <Moment add={{ days: 1 }} fromNow>{jobView[0].stage.applied}</Moment>
+                              </>
+                              )
+                              }
+                            </JobDetailHeadline> :
+                            <DateInput id="applied" ref={updateRef} type="date" className="input-box" />}
                         </CellLabelValue>
                       </IconAndLabelContainer>
                       <CellBtnContainer>
@@ -439,17 +448,24 @@ function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refChec
                       <IconAndLabelContainer>
                         <IconBox id="phoneScreen">
                           <FontAwesomeIcon
-                <FontAwesomeIcon 
-                          <FontAwesomeIcon
-                            icon={faPhone}
-                  icon={faPhone} 
                             icon={faPhone}
                             color={`${jobView[0].stage.phoneScreen ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
                           />
                         </IconBox>
                         <CellLabelValue>
                           <label htmlFor="phoneScreen">Phone Screen:</label>
-                          {!phoneScreen ? <JobDetailHeadline className="input-value">{!jobView[0].stage.phoneScreen ? 'No phone screen set' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.phoneScreen}</Moment>}</JobDetailHeadline> : (<><DateInput id="phoneScreen" ref={updateRef} type="date" className="input-box" /></>)}
+                          {!phoneScreen ? 
+                            <JobDetailHeadline className="input-value">
+                              {
+                                !jobView[0].stage.phoneScreen ?
+                                'No phone screen set' :
+                                (<>
+                                  <Moment add={{ days: 1 }} format="D MMM YYYY" withTitle>{jobView[0].stage.phoneScreen}</Moment>
+                                  <br/>
+                                  <Moment add={{ days: 1 }} fromNow>{jobView[0].stage.phoneScreen}</Moment>
+                                </>)
+                              }
+                            </JobDetailHeadline> : (<><DateInput id="phoneScreen" ref={updateRef} type="date" className="input-box" /></>)}
                         </CellLabelValue>
                       </IconAndLabelContainer>
                       <CellBtnContainer>
@@ -466,17 +482,24 @@ function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refChec
                       <IconAndLabelContainer>
                         <IconBox id="interview">
                           <FontAwesomeIcon
-                <FontAwesomeIcon 
-                          <FontAwesomeIcon
-                            icon={faPeopleArrows}
-                  icon={faPeopleArrows} 
                             icon={faPeopleArrows}
                             color={`${jobView[0].stage.faceToface ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
                           />
                         </IconBox>
                         <CellLabelValue>
                           <label htmlFor="faceToface">Interview:</label>
-                          {!faceToface ? <JobDetailHeadline className="input-value">{!jobView[0].stage.faceToface ? 'No interview set up' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.faceToface}</Moment>}</JobDetailHeadline> : (<><DateInput id="faceToface" ref={updateRef} type="date" className="input-box" /></>)}
+                          {!faceToface ? 
+                          <JobDetailHeadline className="input-value">
+                            {
+                              !jobView[0].stage.faceToface ?
+                              'No interview set up' :
+                              (<>
+                                <Moment add={{ days: 1 }} format="D MMM YYYY" withTitle>{jobView[0].stage.faceToface}</Moment>
+                                <br/>
+                                <Moment add={{ days: 1 }} fromNow>{jobView[0].stage.faceToface}</Moment>
+                              </>)
+                            }
+                            </JobDetailHeadline> : (<><DateInput id="faceToface" ref={updateRef} type="date" className="input-box" /></>)}
                         </CellLabelValue>
                       </IconAndLabelContainer>
                       <CellBtnContainer>
@@ -493,15 +516,24 @@ function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refChec
                       <IconAndLabelContainer>
                         <IconBox id="tha">
                           <FontAwesomeIcon
-                <FontAwesomeIcon 
-                          <FontAwesomeIcon
                             icon={faHouseLaptop}
                             color={`${jobView[0].stage.takeHomeAssignment.dateReceived ? 'var(--color-main-danger)' : 'var(--color-main-light)'} `}
                           />
                         </IconBox>
                         <CellLabelValue>
                           <label htmlFor="tha">Take Home Assignment:</label>
-                          {!tha ? <JobDetailHeadline className="input-value">{!jobView[0].stage.takeHomeAssignment.dateReceived ? 'No take home assignments' : <Moment format="D MMM YYYY" withTitle>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>}</JobDetailHeadline> : (<><DateInput id="tha" ref={updateRef} type="date" className="input-box" /></>)}
+                          {!tha ? 
+                            <JobDetailHeadline className="input-value">
+                            {
+                              !jobView[0].stage.takeHomeAssignment.dateReceived ?
+                              'No take home assignments' :
+                              (<>
+                                <Moment add={{ days: 1 }} format="D MMM YYYY" withTitle>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>
+                                <br/>
+                                <Moment add={{ days: 1 }} fromNow>{jobView[0].stage.takeHomeAssignment.dateReceived}</Moment>
+                              </>)
+                              }
+                            </JobDetailHeadline> : (<><DateInput id="tha" ref={updateRef} type="date" className="input-box" /></>)}
                         </CellLabelValue>
                       </IconAndLabelContainer>
                       <CellBtnContainer>
