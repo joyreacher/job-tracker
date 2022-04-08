@@ -830,6 +830,9 @@ export default function Home() {
           addJobDisplay={addJobDisplay} 
           setAddJobDisplay={setAddJobDisplay}
           />
+        <ApplicationForm 
+          handleSubmit={handleSubmit}
+          />
         
         <Container>
         {/* TODO: Listitems can be put in array/function to render */}
