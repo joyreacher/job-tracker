@@ -14,7 +14,7 @@ import {DataContext} from "../context/DataContext";
 import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
 import AllJobs from "../components/jobs/AllJobs";
-import SEO from "../components/Seo";
+import Seo from "../components/Seo";
 import Navbar from "../components/Navbar";
 import ApplicationForm from "../components/ApplicationForm";
 import Stage from "../components/stages/Stage";
@@ -744,6 +744,11 @@ export default function Home() {
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
+      <Seo
+          title="Home"
+          description="View the latest jobs saved"
+          lang="en"
+        />
       <LoadingMessage> 
         <h1>Loading</h1>
         <LoadingSpinnerComponent />
@@ -753,10 +758,10 @@ export default function Home() {
   }else if(!isLoading && checkForToken()){
     return(
       <Layout>
-        <SEO
+        <Seo
           title="Home"
           description="View the latest jobs saved"
-          lang="US-en"
+          lang="en"
         />
           addJobDisplay={addJobDisplay} 
           setAddJobDisplay={setAddJobDisplay}
