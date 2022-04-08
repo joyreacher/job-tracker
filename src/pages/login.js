@@ -7,25 +7,32 @@ import styled from "@emotion/styled"
 import { css } from "@emotion/react"
 import LoginForm from "../components/LoginForm"
 import Navbar from "../components/Navbar"
+import Seo from "../components/Seo"
 const Container = styled.section`
   height:100%;
   max-width:1020px;
   margin:0 auto;
 `
-function Register() {
+const Headline =styled.h1`
+  text-align:center;
+`
+function Login() {
   return (
     <Layout>
-      <Helmet 
+      <Seo
+          title="Login"
         title="Login" 
-        description="Login to view your saved jobs" 
-        lang="US-en"
-      />
-      <Navbar />
+          title="Login"
+          description="Login to use Jobby"
+          lang="en"
+        />
+        <Navbar/>
       <Container>
+        <Headline>Login</Headline>
         <LoginForm />
       </Container>
     </Layout>
   )
 }
 
-export default Register
+export default Login
