@@ -141,27 +141,31 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
     localStorage.removeItem('jobs')
     localStorage.removeItem('jobView')
   }
-  const checkForToken = () => {
-    if(state.user && jobs){
-      const headers = [
-        { 
-          ' ':'Job Leads',
-          'Name': jobs[0].company,
-          'Role': jobs[0].role,
-          'Contact': jobs[0].contact,
-          '': 'Job Information',
-          'Name': jobs[0].company,
-          'Role': jobs[0].role,
-          'Contact': jobs[0].contact,
-          'Location': jobs[0].location,
-          'Source': jobs[0].source,
-          'Link': jobs[0].link,
-          'Notes': jobs[0].notes
+  const downloadJobs = () =>{
+    if(jobs !== undefined){
+      
+      const result = jobs.map((job, i) => {
+        // const dateAdded = TODO: select the 3 months ago in the dom
+        return {
+          'Name': jobs[i].company,
+          'Role': jobs[i].role,
+          'Contact': jobs[i].contact,
+          'Name': jobs[i].company,
+          'Role': jobs[i].role,
+          'Contact': jobs[i].contact,
+          'Location': jobs[i].location,
+          'Source': jobs[i].source,
+          'Link': jobs[i].link,
+          'Applied': jobs[i].stage.applied,
+          'Face to Face': jobs[i].stage.faceToface,
+          'Phone Screen': jobs[i].stage.phoneScreen,
+          'Take Home Assignment': jobs[i].stage.takeHomeAssignment.dateReceived,
+          'Notes': jobs[i].notes,
         }
-      ]
-      return headers
+      })
+      return result
     }
-    return 
+    return []
   }
   const handleMenuClick = () => {
     if(menuTl.reversed()){
