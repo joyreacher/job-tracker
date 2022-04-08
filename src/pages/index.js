@@ -814,8 +814,6 @@ export default function Home() {
           lang="en"
         />
         <LoadingMessage> 
-      <LoadingMessage> 
-        <LoadingMessage> 
         <LoadingMessageText>Loading</LoadingMessageText>
         <LoadingSpinnerComponent />
       </LoadingMessage>
