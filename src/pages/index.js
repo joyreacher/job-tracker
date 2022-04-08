@@ -54,25 +54,26 @@ const LoadingMessage = styled.div`
   align-items: center;
 `
 const JobContainer = styled.div`
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-column-gap:1vw;
-  grid-row-gap: 1.75em;
-  padding:1em 0 1em 1em;
+  column-count:4;
+  column-gap:1rem;
+  width:100%
   ${mq[6]}{
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
   ${mq[5]}{
     
     grid-template-columns: 1fr 1fr 1fr;
+    column-count:3;
   }
   ${mq[4]}{
     
     grid-template-columns: 1fr 1fr;
+    column-count:2;
   }
   ${mq[2]}{
     padding:1em;
     grid-template-columns: 1fr;
+    column-count:1;
   }
   ${mq[0]}{
     
@@ -139,20 +140,25 @@ const IconBox = styled.div`
   
 `
 const JobCardContainer = styled.div`
-  justify-self: flex-end;
+  break-inside:avoid:
+  margin-bottom:1rem;
+  padding:0 1rem;
   width:200px;
-  height:200px;
   background: var(--color-morph-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
         3px 3px 5px var(--color-morph-dark);
   transition: background-color .25s ease, color .30s ease-in;
   &:hover{
-    background-color:red;
+    background-color:var(--color-main-highlight);
     color:var(--color-main-light);
+  }
+  ${mq[6]}{
+    margin-bottom:1.4rem;
   }
   ${mq[4]}{
     justify-self:center;
     width: 80%;
+    max-height:100%;
   }
   ${mq[2]}{
     justify-self:center;
