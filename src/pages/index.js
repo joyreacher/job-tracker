@@ -821,10 +821,15 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="en"
         />
+        <Navbar 
+          menuTl={menuTl} 
+          jobs={jobs} 
+          timeline={tl} 
+          AddJobModalHandler={AddJobModalHandler} 
+          token={checkForToken()}
           addJobDisplay={addJobDisplay} 
           setAddJobDisplay={setAddJobDisplay}
-          addJobDisplay={addJobDisplay} 
-          setAddJobDisplay={setAddJobDisplay}
+          />
         
         <Container>
         {/* TODO: Listitems can be put in array/function to render */}
