@@ -183,6 +183,7 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
     if(state.user){
       let setEase = 'bounce.out'
       timeline
+      .set('body', {overflow:'hidden'})
       .from('.application-form', {opacity: 0, autoAlpha: 0})
       .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<');
       menuTl
