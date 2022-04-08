@@ -201,18 +201,20 @@ const LoaderContainer = styled.div`
   left:50%;
 `
 const JobCardFooter = styled.div`
-
 `
 const DeleteUIContainer = styled.div`
   color:var(--color-main-light);
   font-family: serenity;
-  background: var(--color-main-danger);
+  background: var(--color-main-highlight);
   height: 25vw;
   width: 50vw;
   display:flex;
-  
   justify-content: center;
   align-items:center;
+  ${mq[4]}{
+    height:50vh;
+    width:80vw;
+  }
 `
 const DeleteUIInner = styled.div`
   display:block;
@@ -220,32 +222,71 @@ const DeleteUIInner = styled.div`
 `
 const DeleteButton = styled.button`
   cursor: pointer;
-  width: 50%;
+  width: 30%;
   transition: background-color .25s ease, color .30s ease-in;
+  height:fit-content;
+  margin:.5em 0;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+
   &:hover{
     background-color:red;
     color:var(--color-main-light);
     animation-play-state: running;
   }
+  ${mq[3]}{
+    margin-top:1em;
+  }
 `
 const DeleteCancelButton = styled.button`
   cursor: pointer;
-  width: 50%;
+  width: 30%;
   transition: background-color .25s ease, color .30s ease-in;
+  
+  height:fit-content;
+  margin:.5em 0;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+
   &:hover{
     background-color:var(--color-main-success);
     color:var(--color-main-light);
     animation-play-state: running;
+  }
+  ${mq[3]}{
+    margin-bottom:1em;
   }
 `
 const Highlight = styled.span`
   text-decoration: underline;
 `
 const DeleteUICopy = styled.div`
+  font-size: clamp(1.2em, 2vw, 1.5em);
   margin: 1em 0;
 `
 const DeleteActionContainer = styled.div`
+  justify-content:space-around;
+  display:flex;
   margin-top:2em;
+  ${mq[3]}{
+    width:100%;
+    align-items:center;
+    flex-direction:column;
+  }
 `
 const JobCardButton = styled.button`
   margin:1em .25em 0 0;
