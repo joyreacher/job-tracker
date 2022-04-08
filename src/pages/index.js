@@ -53,6 +53,11 @@ const LoadingMessage = styled.div`
   justify-content: center;
   align-items: center;
 `
+const LoadingMessageText = styled.h1`
+  color:var(--color-main-highlight);
+  font-family:serenity;
+  font-size:clamp(1.2rem 1vw, 1.5rem);
+`
 const JobContainer = styled.div`
   column-count:4;
   column-gap:1rem;
@@ -802,15 +807,19 @@ export default function Home() {
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
+      <>
       <Seo
           title="Home"
           description="View the latest jobs saved"
           lang="en"
         />
+        <LoadingMessage> 
       <LoadingMessage> 
-        <h1>Loading</h1>
+        <LoadingMessage> 
+        <LoadingMessageText>Loading</LoadingMessageText>
         <LoadingSpinnerComponent />
       </LoadingMessage>
+      </>
     )
     
   }else if(!isLoading && checkForToken()){
