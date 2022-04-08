@@ -19,6 +19,7 @@ import Navbar from "../components/Navbar";
 import ApplicationForm from "../components/ApplicationForm";
 import Stage from "../components/stages/Stage";
 import JobView from '../components/jobs/JobView'
+import Footer from "../components/Footert";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css, keyframes } from "@emotion/react"
@@ -36,7 +37,7 @@ const Container = styled.section`
   display:flex;
   justify-content: space-between;
   max-width:1020px;
-  margin:0 auto;
+  margin:0 auto 10em auto;
   padding: 0 2em;
   ${mq[4]}{
     flex-direction: column;
@@ -964,6 +965,7 @@ export default function Home() {
             }
           </JobContainer>
         </Container>
+        <Footer />
       </Layout>
     )
   }
