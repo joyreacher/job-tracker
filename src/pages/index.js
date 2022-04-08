@@ -166,9 +166,12 @@ const JobCardContainer = styled.div`
   }
 `
 const JobInnerContainer = styled.section`
-  padding:1.2rem;
+  padding:1rem 0;
   position:relative;
   overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
 `
 const JobCardCompanyTitle= styled.h1`
   font-size:clamp(1.2rem, 3vw, 1.8rem);
@@ -184,12 +187,18 @@ const Line = styled.span`
   left:20px;
 `
 const JobCardBody = styled.div`
-  padding:2em 0;
+  padding:.5em 0;
   position:relative;
   z-index:4;
 `
 const JobCardCopy = styled.p`
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: clamp(.9rem, .5vw, 1.1rem);
+`
+const JobCardInfo = styled.div`
+  time{
+    font-weight700;
+    font-style:italic;
+  }
 `
 const Conceal = styled.div`
   position:absolute;
