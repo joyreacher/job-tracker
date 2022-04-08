@@ -251,6 +251,7 @@ function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refChec
   const [error, setError] = useState(null)
   const updateRef = useRef('')
   const switchDisplayAndInput = (e) => {
+    setError('')
     switch (e.target.id) {
       case 'tha':
         if (!tha) {
