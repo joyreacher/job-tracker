@@ -13,14 +13,22 @@ const FooterInnerContainer = styled.div`
 `
 const FlexContainer = styled.section`
   display:flex;
-  justify-content: center;
+  justify-content: space-between;
+`
+const LinkToPortfolio = styled.a`
+  color:var(--colo-main-light);
+  text-decoration:none;
+  &hover{
+    color:var(--color-main-highlight);
+  }
 `
 function Footer() {
   return (
     <FooterContainer>
       <FooterInnerContainer>
         <FlexContainer>
-          This is the footer
+          <LinkToPortfolio href="https://www.brianthomas-develops.com/">To my portfolio</LinkToPortfolio>
+          Jobby, 2022
         </FlexContainer>
       </FooterInnerContainer>
     </FooterContainer>
