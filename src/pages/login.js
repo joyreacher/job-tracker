@@ -21,8 +21,6 @@ function Login() {
     <Layout>
       <Seo
           title="Login"
-        title="Login" 
-          title="Login"
           description="Login to use Jobby"
           lang="en"
         />
