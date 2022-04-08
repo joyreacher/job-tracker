@@ -472,7 +472,7 @@ export default function Home() {
       }
     })
     // Adjust the height of the container to number of elements displayed
-    let endHeight = gsap.getProperty('body', 'height')
+    let endHeight = gsap.getProperty('.job-container', 'height')
     // Create the animation
     let flip = Flip.from(state, {
       duration: 1,
