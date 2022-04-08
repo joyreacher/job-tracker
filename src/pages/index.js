@@ -267,6 +267,8 @@ const thaFilterTl = gsap.timeline({paused:true, reversed: true})
 const menuTl = gsap.timeline({paused: true, reversed:true})
 export default function Home() {
   const isBrowser = () => typeof window !== "undefined"
+  window.addEventListener('online', updateStatus)
+  window.addEventListener('offline', updateStatus)
   let startHeight = isBrowser() ? gsap.getProperty(".job-container", "height") : '';
   const [addJobDisplay, setAddJobDisplay] = useState(false)
   const [jobView, setJobView] = useState()
@@ -274,7 +276,7 @@ export default function Home() {
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
   const [checkboxValues, setCheckboxValues] = useState({})
-  
+  const [offline, setOffline] = useState(false)
   const [filter, setFilter] = useState([]);
   const cardRef = useRef(null)
   const elements = useRef([]);
@@ -290,7 +292,27 @@ export default function Home() {
       return
     }
   }
-
+  
+  const updateStatus = (event) => {
+    if(navigator.onLine){
+      toast.success("Your back online")
+      setOffline(false)
+    }else{
+      toast.error("Your have lost your internet connection")
+      setOffline(true)
+    }
+  }
+  const loadLocalStorage = () => {
+    if(localStorage.getItem('jobs')){
+      const jobs = localStorage.getItem('jobs')
+      setJobs(JSON.parse(jobs))
+      setIsloading(false)
+      filterAnimationsInit()
+      flipInit()
+    }else{
+      return toast.error('Data not stored, please connect to the internet to see jobs.')
+    }
+  }
   const ApiCall = async () => {
     const token = checkForToken()
     await trackPromise(
@@ -304,10 +326,15 @@ export default function Home() {
         },
       })
       .then(response => {
+        localStorage.setItem('jobs', JSON.stringify(response.data))
+        if(offline){
+          updateStatus()
+        }
         return setJobs(response.data)
       })
       .catch((error) => {
-        return toast.error(error.message)
+        updateStatus()
+        return loadLocalStorage()
       })
       .then(() => {
         setIsloading(false)
@@ -319,10 +346,10 @@ export default function Home() {
     )
   }
   const JobUpdateCall = (e) => {
-    console.log(e)
-    console.log(jobView[0])
-    // return e
     const token = localStorage.getItem('token')
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
     trackPromise(
       axios({
         url: `https://job-tracker-api-v1.herokuapp.com/jobs/update`,
@@ -352,6 +379,10 @@ export default function Home() {
     )
   }
   const StageUpdateCall =  (e) => {
+    e.preventDefault()
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
     // checked will be the opposite state from what it was set to; example: if it returns false, it was true.
     const checked = e.target.checked
     const name = e.target.id
@@ -536,7 +567,6 @@ export default function Home() {
     }
   }
   const handleStageSelect = (id, date, value = null) => {
-    console.log(value)
     const token = localStorage.getItem('token')
     trackPromise(
       axios({
@@ -581,9 +611,12 @@ export default function Home() {
       return jobViewTL.reverse()
     }
   }
-
+  // Add job submit
   const handleSubmit = (e) =>{
     e.preventDefault()
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
     const token = localStorage.getItem('token')
     trackPromise(
       axios({
@@ -696,9 +729,14 @@ export default function Home() {
       // window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
       window.location.href = '/login'
     }
-    (async function fetchData(){
-      await ApiCall()
-      })()
+    if(!offline){
+      (async function fetchData(){
+        await ApiCall()
+        })()
+    }else{
+      updateStatus()
+      loadLocalStorage()
+    }
   }, [filter, jobView])
   
   
