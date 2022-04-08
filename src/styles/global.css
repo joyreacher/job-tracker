@@ -6,52 +6,24 @@
 
 :root{
   /* Highlight color */
-  --color-main-highlight: rgb(255, 213, 213);
+  --color-main-highlight: #8A4FFF;
   /* Job View Overlay */
-  --color-morph-light: rgba(247, 244, 243, 1);
-  --color-morph-dark: rgba(26, 24, 27, .1);
-  --color-jobView-overlay:hsla(276, 6%, 19%, 0.9);
+  --color-morph-light: #FFF9F7;
+  --color-morph-dark: rgba(6, 7, 14, .11);
+  --color-jobView-overlay:hsla(233, 40%, 4%, .95);
   /* Menu Overlay*/
-  --color-menu-overlay: hsla(276, 6%, 15%, 0.703);
+  --color-menu-overlay: hsla(233, 40%, 4%, .95);
   /* Navbar*/
   --color-navbar: hsl(280, 6%, 15%);
   /* Main 🎨  */
-  --color-main-dark: #1A181B;
-  --color-main-light: #F7F4F3;
-  --color-main-danger: #D52941;
+  --color-main-dark: #06070E;
+  --color-main-light: #FFF9F7;
+  --color-main-danger: #FF312E;
   --color-main-success: #0CCE6B;
   /* Link colors */
-  --color-main-link: hsl(15, 20%, 76%);
-  --color-main-link-hover: hsl(15, 20%, 100%);
+  --color-main-link: hsla(260, 100%, 60%, 1);
+  --color-main-link-hover: hsla(260, 100%, 63%, 1);
   /* Table colors */
   --color-table-accent: hsl(280, 6%, 15%);
 }
 
-/*
-
-  <link rel="stylesheet" href="https://use.typekit.net/yuf8pbt.css">
-
-  Serenity Light Italic
-
-  font-family: serenity, sans-serif;
-  font-weight: 300;
-  font-style: italic;
-
-  Serenity Bold Italic
-
-  font-family: serenity, sans-serif;
-  font-weight: 700;
-  font-style: italic;
-
-  Serenity Light
-
-  font-family: serenity, sans-serif;
-  font-weight: 300;
-  font-style: normal;
-
-  Serenity Bold
-
-  font-family: serenity, sans-serif;
-  font-weight: 700;
-  font-style: normal; 
-*/
