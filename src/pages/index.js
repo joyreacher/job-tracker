@@ -268,6 +268,7 @@ const menuTl = gsap.timeline({paused: true, reversed:true})
 export default function Home() {
   const isBrowser = () => typeof window !== "undefined"
   let startHeight = isBrowser() ? gsap.getProperty(".job-container", "height") : '';
+  const [addJobDisplay, setAddJobDisplay] = useState(false)
   const [jobView, setJobView] = useState()
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
@@ -608,6 +609,12 @@ export default function Home() {
         .then(response => {
           console.log(response.data.applications)
           toast.success('you added a job')
+          if(!addJobDisplay){
+            setAddJobDisplay(true)
+          }else{
+            setAddJobDisplay(false)
+          }
+          await AddJobModalHandler()
           return ApiCall()
         })
         .catch((error) =>{
@@ -703,8 +710,10 @@ export default function Home() {
           description="View the latest jobs saved"
           lang="US-en"
         />
-        <Navbar menuTl={menuTl} jobs={jobs} timeline={tl} AddJobModalHandler={AddJobModalHandler} token={checkForToken()}/>
-        <ApplicationForm AddJobModalHandler={AddJobModalHandler} handleSubmit={handleSubmit}/>
+          addJobDisplay={addJobDisplay} 
+          setAddJobDisplay={setAddJobDisplay}
+          addJobDisplay={addJobDisplay} 
+          setAddJobDisplay={setAddJobDisplay}
         
         <Container>
         {/* TODO: Listitems can be put in array/function to render */}

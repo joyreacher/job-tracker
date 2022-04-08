@@ -131,8 +131,7 @@ const LogoText = styled.h1`
   position:relative;
   z-index:500;
 `
-const buttonAnimation = gsap.timeline({paused:true})
-function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
+function Navbar({addJobDisplay, setAddJobDisplay, AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
   const [display, setDisplay] = useState(false)
   const logout = () => {
@@ -252,15 +251,15 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
             <Toaster />
             <AddJobButtonMobile
               onClick={async () =>{
-                if(!display){
-                  setDisplay(true)
+                if(!addJobDisplay){
+                  setAddJobDisplay(true)
                 }else{
-                  setDisplay(false)
+                  setAddJobDisplay(false)
                 }
                 await AddJobModalHandler()
                 }}
             >
-              {!display ? 'Add Job' : 'Close'}
+              {!addJobDisplay ? 'Add Job' : 'Close'}
             </AddJobButtonMobile>
             {
               !state.user ? '' : <MenuContainer>
@@ -275,15 +274,15 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
                 </CSVLink>
                 <LogOutLink onClick={() => logout()}>logout</LogOutLink>
                 <Menu onClick={async () => {
-                  if(!display){
-                    setDisplay(true)
+                  if(!addJobDisplay){
+                    setAddJobDisplay(true)
                   }else{
-                    setDisplay(false)
+                    setAddJobDisplay(false)
                   }
                   await AddJobModalHandler()
                   }}>
                   <MenuText >
-                    {!display ? 'Add Job' : 'Close'}
+                    {!addJobDisplay ? 'Add Job' : 'Close'}
                   </MenuText>
                 </Menu>
               </MenuContainer>
