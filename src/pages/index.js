@@ -653,35 +653,45 @@ export default function Home() {
       },
     })
   }
-  const deleteJob = (e) => {
+  const deleteJob = async (e) => {
     e.preventDefault()
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
+    
     const token = localStorage.getItem('token')
-    trackPromise(
-      axios({
-        url: 'https://job-tracker-api-v1.herokuapp.com/jobs/delete',
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json;charset=UTF-8',
-          "Authorization": `Bearer ${token}`
-        },
-        data: {
-          jobId: e.target.id,
-          user: localStorage.getItem('username'),
-        },
+    
+    axios({
+      url: 'https://job-tracker-api-v1.herokuapp.com/jobs/delete',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json;charset=UTF-8',
+        "Authorization": `Bearer ${token}`
+      },
+      data: {
+        jobId: e.target.id,
+        user: localStorage.getItem('username'),
+      },
+    })
+      .then(async (response)=> {
+        toast.success(response.data)
+        elements.current.map((el, i )=> {
+          if(el !== null){
+            if(el.id !== e.target.id){
+              return setRefs(el, i)
+            }
+          }
+        })
+        flipInit()
       })
-        .then(response => {
-          console.log(response)
-          toast.success('You deleted a job')
-        })
-        .catch((error) => {
-          console.log(error)
-          return toast.error('Could not delete job')
-        })
-        .then(() =>{
-          return ApiCall()
-        })
-    )
+      .then(async() =>{
+        return await ApiCall()
+      })
+      .catch((error) => {
+        return toast.error('Could not delete')
+      })
+      
   }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
