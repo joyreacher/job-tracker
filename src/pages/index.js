@@ -606,8 +606,7 @@ export default function Home() {
           dateAdded: e.target[7].value
         },
       })
-        .then(response => {
-          console.log(response.data.applications)
+        .then(async response => {
           toast.success('you added a job')
           if(!addJobDisplay){
             setAddJobDisplay(true)
@@ -618,8 +617,7 @@ export default function Home() {
           return ApiCall()
         })
         .catch((error) =>{
-          console.log(error)
-          return toast.error('Something went wrong')
+          return toast.error(error.response.data)
         })
         
     )
