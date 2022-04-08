@@ -265,7 +265,7 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
             {
               !state.user ? '' : <MenuContainer>
                 <p>Hello {state.user}</p>
-                <CSVLink data={checkForToken()}
+                <CSVLink data={downloadJobs()}
                   css={css`
                       text-decoration: none;
                       color:var(--color-main-dark);
@@ -299,7 +299,7 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
             <Overlay className="modal">
               <MenuContainerOverlay>
                 <p>Hello {state.user}</p>
-                <CSVLink data={checkForToken()}
+                <CSVLink data={downloadJobs()}
                   css={css`
                       text-decoration: none;
                       color:var(--color-main-light);
