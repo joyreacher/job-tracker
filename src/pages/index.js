@@ -447,29 +447,31 @@ export default function Home() {
       })
     )
   }
-
+  const removeFalsy = (arr) => arr.filter(Boolean);
   const flipInit = () => {
-    const state = Flip.getState(elements.current);
-    
+    const state = Flip.getState(removeFalsy(elements.current));
     const matches = filter.map((filter) => {
       if(filter.id !== undefined){
         return filter
       }
     })
     elements.current.forEach((el)=> {
-      if(!matches.length){
-        el.style.display = 'inline-flex'
-      }
-      for(let x = 0; x < matches.length; x++){
-        if(el.getAttribute(`data-${matches[x].id}`)){
+      if(el !== null){
+        if(!matches.length){
           el.style.display = 'inline-flex'
         }
-        else {
-          el.style.display = 'none'
+        for(let x = 0; x < matches.length; x++){
+          if(el.getAttribute(`data-${matches[x].id}`)){
+            el.style.display = 'inline-flex'
+          }
+          else {
+            el.style.display = 'none'
+          }
         }
       }
     })
-    let endHeight = gsap.getProperty('.job-container', 'height')
+    // Adjust the height of the container to number of elements displayed
+    let endHeight = gsap.getProperty('body', 'height')
     // Create the animation
     let flip = Flip.from(state, {
       duration: 1,
