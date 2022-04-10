@@ -8,8 +8,13 @@ import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
 import toast from "react-hot-toast";
 const breakpoints = [376, 411, 576, 768, 845, 978, 1020, 1200]
+// Media queries
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
+)
+
+const landscape = breakpoints.map(
+  bp => `@media (max-width: ${bp}px) and (orientation: landscape)`
 )
 const FormContainer = styled.form`
   background-color: var(--color-menu-overlay);
@@ -19,13 +24,17 @@ const FormContainer = styled.form`
   visibility:hidden;
   z-index:10;
   height:100vh;
-  
+
 `
 const FormInnerContainer = styled.div`
   padding:5em 0;
   height:100%;
   display:grid;
   place-items:center center;
+  ${landscape[6]}{
+    padding: 3em 0;
+    grid-template-columns: 1fr 1fr;
+  }
 `
 const FormCell = styled.span`
   display:flex;
