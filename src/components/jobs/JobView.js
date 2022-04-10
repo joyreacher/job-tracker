@@ -144,8 +144,11 @@ const IconInstructions = styled.p`
   text-align:center;
 `
 const JobDetailHeadline = styled.h1`
-  text-align: left;
+  
   color:var(--color-main-highlight);
+  ${mq[2]}{
+    text-align: right;
+  }
 `
 const CellLabelValue = styled.div`
   display:flex;
@@ -155,6 +158,17 @@ const CellLabelValue = styled.div`
   ${mq[2]}{
     width:100%;
     flex-direction:row;
+  }
+`
+const CellLabelValueLink = styled.div`
+  display:flex;
+  justify-content:space-between;
+  flex-direction:column;
+  height:1.5em;
+  ${mq[1]}{
+    height:100%;
+    width:100%;
+    flex-direction:column;
   }
 `
 const NotesCellLabelValue = styled.div`
@@ -233,6 +247,11 @@ width: 100%;
 `
 const DateInput = styled.input`
   min-height:100%;
+`
+const JobLink = styled.a`
+  margin:.25em 0;
+  color: var(--color-main-highlight);
+  font-size: clamp(1em, 2vw, 1.5em);
 `
 function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refCheckbox, JobUpdateCall }) {
   const [state, dispatch] = useContext(DataContext)
@@ -629,10 +648,11 @@ function JobView({ jobView, jobViewTL, handleJobView, handleStageSelect, refChec
                       </ButtonContainer>
                     </Cell>
                     <Cell>
-                      <CellLabelValue>
+                      {/* TODO:Make link functional on frontend */}
+                      <CellLabelValueLink>
                         <Label htmlFor="link">Link:</Label>
-                        {!link ? <JobDetailHeadline className="input-value">{jobView[0].link}</JobDetailHeadline> : <TextInput defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box" />}
-                      </CellLabelValue>
+                        {!link ? <JobLink target="_blank" href={jobView[0].link} className="input-value">{jobView[0].link}</JobLink> : <TextInput defaultValue={jobView[0].link} id="link" ref={updateRef} type="text" className="input-box" />}
+                      </CellLabelValueLink>
                       <ButtonContainer>
                         {!link ? '' : <CancelButton onClick={() => { setError(''); setLink(false) }}>Cancel</CancelButton>}
                         <UpdateButton

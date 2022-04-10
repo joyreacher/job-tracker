@@ -19,12 +19,25 @@ const FormCell = styled.div`
 const FormLabel = styled.label`
   margin:.75rem 0;
 `
-const FormSubmit = styled.button`
+const FormSubmit = styled.button` 
   align-self: center;
-  background-color: var(--color-main-light);
   font-size: clamp(1.4rem, 1vw, 2rem);
   border-radius: 2px;
   padding:.5rem;
+  text-align:center;
+  font-size: 1rem;
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  cursor:pointer;
+  color:var(--color-morph-light);
+  z-index:500;
+  transition: background-color .25s ease, color .30s ease-in;
+  &:hover{
+    background-color:var(--color-main-success);
+    color:var(--color-main-light);
+    animation-play-state: running;
+  }
+
 `
 const FormInput = styled.input`
   font-size: 2rem;
@@ -64,11 +77,11 @@ function RegisterForm() {
       <LoadingSpinnerComponent />
       <FormCell>  
         <FormLabel htmlFor="username">Username</FormLabel>
-        <FormInput  name="username" type="text" />
+        <FormInput  name="username" type="text" id="username"/>
       </FormCell>
       <FormCell>
-        <FormLabel htmlFor="username">Password</FormLabel>
-        <FormInput  name="password" type="password" />
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <FormInput  name="password" type="password" id="password"/>
       </FormCell> 
       <FormCell>
         <FormSubmit type='submit'>Register</FormSubmit>

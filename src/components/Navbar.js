@@ -133,12 +133,12 @@ const LogoText = styled.h1`
 `
 function Navbar({addJobDisplay, setAddJobDisplay, AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
-  const [display, setDisplay] = useState(false)
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('jobs')
     localStorage.removeItem('jobView')
+    return window.location.href = '/login'
   }
   const downloadJobs = () =>{
     if(jobs !== undefined){
