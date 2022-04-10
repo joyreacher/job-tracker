@@ -100,7 +100,7 @@ const AddJobButton = styled.button`
   cursor:pointer;
   color:var(--color-main-light);
 `
-function ApplicationForm({AddJobModalHandler, handleSubmit}) {
+function ApplicationForm({handleSubmit}) {
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
     <FormInnerContainer className="application-form__inner-container">
@@ -114,7 +114,7 @@ function ApplicationForm({AddJobModalHandler, handleSubmit}) {
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="contact">Contact</FormLabel>
-        <FormInput id="contact" name="contact" pattern="[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9]{4}" type="tel" placeholder="xxx-xxx-xxxx"/>
+        <FormInput id="contact" name="contact" type="tel" placeholder="xxx-xxx-xxxx"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="location">Location</FormLabel>
@@ -139,7 +139,7 @@ function ApplicationForm({AddJobModalHandler, handleSubmit}) {
             `}
       >
         <LoadingSpinnerComponent position="absolute"/>
-        <AddJobButton onClick={async () => await AddJobModalHandler()} type='submit'>Add Job</AddJobButton>
+        <AddJobButton type='submit'>{'Add Job'}</AddJobButton>
       </SubmitCell>
     </FormInnerContainer>
   </FormContainer>
