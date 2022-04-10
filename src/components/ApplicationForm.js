@@ -19,21 +19,13 @@ const FormContainer = styled.form`
   visibility:hidden;
   z-index:10;
   height:100vh;
+  
 `
 const FormInnerContainer = styled.div`
-  margin:0 auto 3em auto;
-  padding-top: 4em;
-  padding-bottom: 1em;
-  // height: 100vh;
-  ${mq[4]}{
-    padding-left:2em;
-    display:flex; 
-    flex-wrap:wrap;
-  }
-  ${mq[2]}{
-    padding-left:0;
-    flex-direction:column;
-  }
+  padding:5em 0;
+  height:100%;
+  display:grid;
+  place-items:center center;
 `
 const FormCell = styled.span`
   display:flex;
@@ -50,7 +42,6 @@ const FormCell = styled.span`
   }
   ${mq[4]}{
     width:50%;
-    font-size: clamp(1.1rem, 1vw, 2rem);
     flex-direction:column;
   }
   ${mq[2]}{
@@ -65,16 +56,11 @@ const SubmitCell = styled.div`
 const FormLabel = styled.label`
   width:fit-content;
   color: var(--color-main-light);
+  font-size:clamp(1rem, 2vw, 1.5rem);
 `
-const FormSubmit = styled.button`
-  align-self: center;
-  background-color: var(--color-main-light);
-  font-size: clamp(1rem, 1vw, 1.2rem);
-  border-radius: 2px;
-  padding:.5rem;
-  margin-top:2em;
-`
+
 const FormInput = styled.input`
+  padding:.05rem;
   text-align:right;
   max-width:50%;
   ${mq[4]}{
@@ -87,7 +73,11 @@ const FormInput = styled.input`
 `
 const FormInputTextArea = styled.textarea`
   font-size: clamp(.9rem, 2vw, 1rem);
-  width: 90%;
+  width:initial;
+  ${mq[4]}{
+    width:90%;
+  }
+  
 `
 const AddJobButton = styled.button`
   display:flex;
