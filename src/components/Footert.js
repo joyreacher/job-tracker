@@ -9,7 +9,9 @@ const FooterContainer = styled.footer`
   font-family: serenity, sans-serif;
 `
 const FooterInnerContainer = styled.div`
+  margin:0 auto;
   padding: 3em;
+  max-width: 1024px;
 `
 const FlexContainer = styled.section`
   display:flex;

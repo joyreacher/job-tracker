@@ -39,6 +39,7 @@ const Container = styled.section`
   max-width:1020px;
   margin:0 auto 10em auto;
   padding: 0 2em;
+  min-height:65vh;
   ${mq[4]}{
     flex-direction: column;
   }
