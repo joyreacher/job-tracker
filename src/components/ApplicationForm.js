@@ -8,8 +8,13 @@ import styled from "@emotion/styled"
 import { css, jsx } from '@emotion/react'
 import toast from "react-hot-toast";
 const breakpoints = [376, 411, 576, 768, 845, 978, 1020, 1200]
+// Media queries
 const mq = breakpoints.map(
   bp => `@media (max-width: ${bp}px)`
+)
+
+const landscape = breakpoints.map(
+  bp => `@media (max-width: ${bp}px) and (orientation: landscape)`
 )
 const FormContainer = styled.form`
   background-color: var(--color-menu-overlay);
@@ -19,20 +24,16 @@ const FormContainer = styled.form`
   visibility:hidden;
   z-index:10;
   height:100vh;
+
 `
 const FormInnerContainer = styled.div`
-  margin:0 auto 3em auto;
-  padding-top: 4em;
-  padding-bottom: 1em;
-  // height: 100vh;
-  ${mq[4]}{
-    padding-left:2em;
-    display:flex; 
-    flex-wrap:wrap;
-  }
-  ${mq[2]}{
-    padding-left:0;
-    flex-direction:column;
+  padding:5em 0;
+  height:100%;
+  display:grid;
+  place-items:center center;
+  ${landscape[6]}{
+    padding: 3em 0;
+    grid-template-columns: 1fr 1fr;
   }
 `
 const FormCell = styled.span`
@@ -50,7 +51,6 @@ const FormCell = styled.span`
   }
   ${mq[4]}{
     width:50%;
-    font-size: clamp(1.1rem, 1vw, 2rem);
     flex-direction:column;
   }
   ${mq[2]}{
@@ -65,16 +65,11 @@ const SubmitCell = styled.div`
 const FormLabel = styled.label`
   width:fit-content;
   color: var(--color-main-light);
+  font-size:clamp(1rem, 2vw, 1.5rem);
 `
-const FormSubmit = styled.button`
-  align-self: center;
-  background-color: var(--color-main-light);
-  font-size: clamp(1rem, 1vw, 1.2rem);
-  border-radius: 2px;
-  padding:.5rem;
-  margin-top:2em;
-`
+
 const FormInput = styled.input`
+  padding:.05rem;
   text-align:right;
   max-width:50%;
   ${mq[4]}{
@@ -87,9 +82,25 @@ const FormInput = styled.input`
 `
 const FormInputTextArea = styled.textarea`
   font-size: clamp(.9rem, 2vw, 1rem);
-  width: 90%;
+  width:initial;
+  ${mq[4]}{
+    width:90%;
+  }
+  
 `
-function ApplicationForm({AddJobModalHandler, handleSubmit}) {
+const AddJobButton = styled.button`
+  display:flex;
+  margin:2em 0;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1.3rem, 1vw, 1.5rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+`
+function ApplicationForm({handleSubmit}) {
   return (
     <FormContainer className="application-form" onSubmit={handleSubmit}>
     <FormInnerContainer className="application-form__inner-container">
@@ -103,7 +114,7 @@ function ApplicationForm({AddJobModalHandler, handleSubmit}) {
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="contact">Contact</FormLabel>
-        <FormInput id="contact" name="contact" pattern="[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9]{4}" type="tel" placeholder="xxx-xxx-xxxx"/>
+        <FormInput id="contact" name="contact" type="tel" placeholder="xxx-xxx-xxxx"/>
       </FormCell>
       <FormCell>
         <FormLabel htmlFor="location">Location</FormLabel>
@@ -128,7 +139,7 @@ function ApplicationForm({AddJobModalHandler, handleSubmit}) {
             `}
       >
         <LoadingSpinnerComponent position="absolute"/>
-        <FormSubmit onClick={async () => await AddJobModalHandler()} type='submit'>Add Job</FormSubmit>
+        <AddJobButton type='submit'>{'Add Job'}</AddJobButton>
       </SubmitCell>
     </FormInnerContainer>
   </FormContainer>

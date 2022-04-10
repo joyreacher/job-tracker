@@ -131,38 +131,40 @@ const LogoText = styled.h1`
   position:relative;
   z-index:500;
 `
-const buttonAnimation = gsap.timeline({paused:true})
-function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
+function Navbar({addJobDisplay, setAddJobDisplay, AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
   const [state, dispatch]= useContext(DataContext)
-  const [display, setDisplay] = useState(false)
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('jobs')
+    localStorage.removeItem('jobView')
     return window.location.href = '/login'
-    // return window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
   }
-  const checkForToken = () => {
-    if(state.user && jobs){
-      const headers = [
-        { 
-          ' ':'Job Leads',
-          'Name': jobs[0].company,
-          'Role': jobs[0].role,
-          'Contact': jobs[0].contact,
-          '': 'Job Information',
-          'Name': jobs[0].company,
-          'Role': jobs[0].role,
-          'Contact': jobs[0].contact,
-          'Location': jobs[0].location,
-          'Source': jobs[0].source,
-          'Link': jobs[0].link,
-          'Notes': jobs[0].notes
+  const downloadJobs = () =>{
+    if(jobs !== undefined){
+      
+      const result = jobs.map((job, i) => {
+        // const dateAdded = TODO: select the 3 months ago in the dom
+        return {
+          'Name': jobs[i].company,
+          'Role': jobs[i].role,
+          'Contact': jobs[i].contact,
+          'Name': jobs[i].company,
+          'Role': jobs[i].role,
+          'Contact': jobs[i].contact,
+          'Location': jobs[i].location,
+          'Source': jobs[i].source,
+          'Link': jobs[i].link,
+          'Applied': jobs[i].stage.applied,
+          'Face to Face': jobs[i].stage.faceToface,
+          'Phone Screen': jobs[i].stage.phoneScreen,
+          'Take Home Assignment': jobs[i].stage.takeHomeAssignment.dateReceived,
+          'Notes': jobs[i].notes,
         }
-      ]
-      return headers
+      })
+      return result
     }
-    return 
+    return []
   }
   const handleMenuClick = () => {
     if(menuTl.reversed()){
@@ -180,6 +182,7 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
     if(state.user){
       let setEase = 'bounce.out'
       timeline
+      .set('body', {overflow:'hidden'})
       .from('.application-form', {opacity: 0, autoAlpha: 0})
       .from('.application-form__inner-container', {opacity: 0, autoAlpha:0 }, '<');
       menuTl
@@ -248,20 +251,20 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
             <Toaster />
             <AddJobButtonMobile
               onClick={async () =>{
-                if(!display){
-                  setDisplay(true)
+                if(!addJobDisplay){
+                  setAddJobDisplay(true)
                 }else{
-                  setDisplay(false)
+                  setAddJobDisplay(false)
                 }
                 await AddJobModalHandler()
                 }}
             >
-              {!display ? 'Add Job' : 'Close'}
+              {!addJobDisplay ? 'Add Job' : 'Close'}
             </AddJobButtonMobile>
             {
               !state.user ? '' : <MenuContainer>
                 <p>Hello {state.user}</p>
-                <CSVLink data={checkForToken()}
+                <CSVLink data={downloadJobs()}
                   css={css`
                       text-decoration: none;
                       color:var(--color-main-dark);
@@ -271,15 +274,15 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
                 </CSVLink>
                 <LogOutLink onClick={() => logout()}>logout</LogOutLink>
                 <Menu onClick={async () => {
-                  if(!display){
-                    setDisplay(true)
+                  if(!addJobDisplay){
+                    setAddJobDisplay(true)
                   }else{
-                    setDisplay(false)
+                    setAddJobDisplay(false)
                   }
                   await AddJobModalHandler()
                   }}>
                   <MenuText >
-                    {!display ? 'Add Job' : 'Close'}
+                    {!addJobDisplay ? 'Add Job' : 'Close'}
                   </MenuText>
                 </Menu>
               </MenuContainer>
@@ -295,7 +298,7 @@ function Navbar({AddJobModalHandler, timeline, jobs, jobView, menuTl}) {
             <Overlay className="modal">
               <MenuContainerOverlay>
                 <p>Hello {state.user}</p>
-                <CSVLink data={checkForToken()}
+                <CSVLink data={downloadJobs()}
                   css={css`
                       text-decoration: none;
                       color:var(--color-main-light);

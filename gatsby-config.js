@@ -11,6 +11,13 @@ module.exports = {
     `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/images/`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Job Tracker`,
@@ -19,7 +26,7 @@ module.exports = {
         background_color: `#1A181B`,
         theme_color: `#F7F4F3`,
         display: `standalone`,
-        icon:`src/images/icon.png`,
+        icon:`src/images/favicon.png`,
         caches_busting_mode: `none`
       },
     },

@@ -26,6 +26,7 @@
     "gatsby-plugin-nprogress": "^4.8.0",
     "gatsby-plugin-offline": "^5.8.0",
     "gatsby-plugin-react-helmet": "^5.8.0",
+    "gatsby-source-filesystem": "^4.11.1",
     "gsap": "^3.9.1",
     "react": "^17.0.1",
     "react-confirm-alert": "^2.8.0",

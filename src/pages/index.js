@@ -14,17 +14,19 @@ import {DataContext} from "../context/DataContext";
 import { LoadingSpinnerComponent } from "../components/Spinner";
 import Layout from "../components/Layout"
 import AllJobs from "../components/jobs/AllJobs";
-import SEO from "../components/Seo";
+import Seo from "../components/Seo";
 import Navbar from "../components/Navbar";
 import ApplicationForm from "../components/ApplicationForm";
 import Stage from "../components/stages/Stage";
 import JobView from '../components/jobs/JobView'
+import Footer from "../components/Footert";
 // styles
 import styled from "@emotion/styled"
 import { jsx, css, keyframes } from "@emotion/react"
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBriefcase, faCoffee, faHouseLaptop, faPeopleArrows, faPhone } from '@fortawesome/free-solid-svg-icons'
+import Moment from "react-moment";
 gsap.registerPlugin(Flip);
 
 const breakpoints = [376, 411, 576, 768, 845, 1057, 1200]
@@ -35,8 +37,9 @@ const Container = styled.section`
   display:flex;
   justify-content: space-between;
   max-width:1020px;
-  margin:0 auto;
+  margin:0 auto 10em auto;
   padding: 0 2em;
+  min-height:65vh;
   ${mq[4]}{
     flex-direction: column;
   }
@@ -51,26 +54,32 @@ const LoadingMessage = styled.div`
   justify-content: center;
   align-items: center;
 `
+const LoadingMessageText = styled.h1`
+  color:var(--color-main-highlight);
+  font-family:serenity;
+  font-size:clamp(1.2rem 1vw, 1.5rem);
+`
 const JobContainer = styled.div`
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-column-gap:1vw;
-  grid-row-gap: 1.75em;
-  padding:1em 0 1em 1em;
+  column-count:4;
+  column-gap:1rem;
+  width:100%
   ${mq[6]}{
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
   ${mq[5]}{
     
     grid-template-columns: 1fr 1fr 1fr;
+    column-count:3;
   }
   ${mq[4]}{
     
     grid-template-columns: 1fr 1fr;
+    column-count:2;
   }
   ${mq[2]}{
     padding:1em;
     grid-template-columns: 1fr;
+    column-count:1;
   }
   ${mq[0]}{
     
@@ -115,13 +124,14 @@ const Label = styled.label`
   cursor: pointer;
 `
 const CheckBox = styled.input`
-  height:3rem;
-  width:2rem;
-  left:-1rem;
+  height:3.75rem;
+  width:3.5rem;
+  left:-1.75rem;
   cursor:pointer;
   z-index:5;
   position: absolute;
   opacity: 0;
+  transform-origin: center center;
 `
 const IconBox = styled.div`
   width: 60px;
@@ -136,22 +146,25 @@ const IconBox = styled.div`
   
 `
 const JobCardContainer = styled.div`
-  justify-self: flex-end;
-  overflow-y:hidden;
+  break-inside:avoid:
+  margin-bottom:1rem;
+  padding:0 1rem;
   width:200px;
-  height:200px;
   background: var(--color-morph-light);
   box-shadow: -2px -2px 5px var(--color-morph-light),
         3px 3px 5px var(--color-morph-dark);
   transition: background-color .25s ease, color .30s ease-in;
   &:hover{
-    background-color:red;
+    background-color:var(--color-main-highlight);
     color:var(--color-main-light);
-    animation-play-state: running;
+  }
+  ${mq[6]}{
+    margin-bottom:1.4rem;
   }
   ${mq[4]}{
     justify-self:center;
     width: 80%;
+    max-height:100%;
   }
   ${mq[2]}{
     justify-self:center;
@@ -159,9 +172,12 @@ const JobCardContainer = styled.div`
   }
 `
 const JobInnerContainer = styled.section`
-  padding:1.2rem;
+  padding:1rem 0;
   position:relative;
   overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
 `
 const JobCardCompanyTitle= styled.h1`
   font-size:clamp(1.2rem, 3vw, 1.8rem);
@@ -177,12 +193,18 @@ const Line = styled.span`
   left:20px;
 `
 const JobCardBody = styled.div`
-  padding:2em 0;
+  padding:.5em 0;
   position:relative;
   z-index:4;
 `
 const JobCardCopy = styled.p`
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: clamp(.9rem, .5vw, 1.1rem);
+`
+const JobCardInfo = styled.div`
+  time{
+    font-weight700;
+    font-style:italic;
+  }
 `
 const Conceal = styled.div`
   position:absolute;
@@ -201,18 +223,20 @@ const LoaderContainer = styled.div`
   left:50%;
 `
 const JobCardFooter = styled.div`
-
 `
 const DeleteUIContainer = styled.div`
   color:var(--color-main-light);
   font-family: serenity;
-  background: var(--color-main-danger);
+  background: var(--color-main-highlight);
   height: 25vw;
   width: 50vw;
   display:flex;
-  
   justify-content: center;
   align-items:center;
+  ${mq[4]}{
+    height:50vh;
+    width:80vw;
+  }
 `
 const DeleteUIInner = styled.div`
   display:block;
@@ -220,32 +244,82 @@ const DeleteUIInner = styled.div`
 `
 const DeleteButton = styled.button`
   cursor: pointer;
-  width: 50%;
+  width: 30%;
   transition: background-color .25s ease, color .30s ease-in;
+  height:fit-content;
+  margin:.5em 0;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+
   &:hover{
     background-color:red;
     color:var(--color-main-light);
     animation-play-state: running;
   }
+  ${mq[3]}{
+    margin-top:1em;
+  }
 `
 const DeleteCancelButton = styled.button`
   cursor: pointer;
-  width: 50%;
+  width: 30%;
   transition: background-color .25s ease, color .30s ease-in;
+  
+  height:fit-content;
+  margin:.5em 0;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
+
   &:hover{
     background-color:var(--color-main-success);
     color:var(--color-main-light);
     animation-play-state: running;
+  }
+  ${mq[3]}{
+    margin-bottom:1em;
   }
 `
 const Highlight = styled.span`
   text-decoration: underline;
 `
 const DeleteUICopy = styled.div`
+  font-size: clamp(1.2em, 2vw, 1.5em);
   margin: 1em 0;
 `
 const DeleteActionContainer = styled.div`
+  justify-content:space-around;
+  display:flex;
   margin-top:2em;
+  ${mq[3]}{
+    width:100%;
+    align-items:center;
+    flex-direction:column;
+  }
+`
+const JobCardButton = styled.button`
+  margin:1em .25em 0 0;
+  justify-content:center;
+  text-align:center;
+  font-size: clamp(1rem, 1vw, 1.5rem);
+  background-color: var(--color-main-dark);
+  border-radius: 7px;
+  padding:.25em;
+  cursor:pointer;
+  color:var(--color-main-light);
 `
 const tl = gsap.timeline({ reversed: true, paused:true})
 const jobViewTL = gsap.timeline({ reversed: true, paused: true})
@@ -257,13 +331,16 @@ const thaFilterTl = gsap.timeline({paused:true, reversed: true})
 const menuTl = gsap.timeline({paused: true, reversed:true})
 export default function Home() {
   const isBrowser = () => typeof window !== "undefined"
+  window.addEventListener('online', updateStatus)
+  window.addEventListener('offline', updateStatus)
   let startHeight = isBrowser() ? gsap.getProperty(".job-container", "height") : '';
+  const [addJobDisplay, setAddJobDisplay] = useState(false)
   const [jobView, setJobView] = useState()
   const {state, dispatch} = useContext(DataContext)
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsloading] = useState(true)
   const [checkboxValues, setCheckboxValues] = useState({})
-  
+  const [offline, setOffline] = useState(false)
   const [filter, setFilter] = useState([]);
   const cardRef = useRef(null)
   const elements = useRef([]);
@@ -279,7 +356,27 @@ export default function Home() {
       return
     }
   }
-
+  
+  const updateStatus = (event) => {
+    if(navigator.onLine){
+      toast.success("Your back online")
+      setOffline(false)
+    }else{
+      toast.error("Your have lost your internet connection")
+      setOffline(true)
+    }
+  }
+  const loadLocalStorage = () => {
+    if(localStorage.getItem('jobs')){
+      const jobs = localStorage.getItem('jobs')
+      setJobs(JSON.parse(jobs))
+      setIsloading(false)
+      filterAnimationsInit()
+      flipInit()
+    }else{
+      return toast.error('Data not stored, please connect to the internet to see jobs.')
+    }
+  }
   const ApiCall = async () => {
     const token = checkForToken()
     await trackPromise(
@@ -293,10 +390,15 @@ export default function Home() {
         },
       })
       .then(response => {
+        localStorage.setItem('jobs', JSON.stringify(response.data))
+        if(offline){
+          updateStatus()
+        }
         return setJobs(response.data)
       })
       .catch((error) => {
-        return toast.error(error.message)
+        updateStatus()
+        return loadLocalStorage()
       })
       .then(() => {
         setIsloading(false)
@@ -308,10 +410,10 @@ export default function Home() {
     )
   }
   const JobUpdateCall = (e) => {
-    console.log(e)
-    console.log(jobView[0])
-    // return e
     const token = localStorage.getItem('token')
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
     trackPromise(
       axios({
         url: `https://job-tracker-api-v1.herokuapp.com/jobs/update`,
@@ -341,6 +443,10 @@ export default function Home() {
     )
   }
   const StageUpdateCall =  (e) => {
+    e.preventDefault()
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
     // checked will be the opposite state from what it was set to; example: if it returns false, it was true.
     const checked = e.target.checked
     const name = e.target.id
@@ -405,28 +511,30 @@ export default function Home() {
       })
     )
   }
-
+  const removeFalsy = (arr) => arr.filter(Boolean);
   const flipInit = () => {
-    const state = Flip.getState(elements.current);
-    
+    const state = Flip.getState(removeFalsy(elements.current));
     const matches = filter.map((filter) => {
       if(filter.id !== undefined){
         return filter
       }
     })
     elements.current.forEach((el)=> {
-      if(!matches.length){
-        el.style.display = 'inline-flex'
-      }
-      for(let x = 0; x < matches.length; x++){
-        if(el.getAttribute(`data-${matches[x].id}`)){
+      if(el !== null){
+        if(!matches.length){
           el.style.display = 'inline-flex'
         }
-        else {
-          el.style.display = 'none'
+        for(let x = 0; x < matches.length; x++){
+          if(el.getAttribute(`data-${matches[x].id}`)){
+            el.style.display = 'inline-flex'
+          }
+          else {
+            el.style.display = 'none'
+          }
         }
       }
     })
+    // Adjust the height of the container to number of elements displayed
     let endHeight = gsap.getProperty('.job-container', 'height')
     // Create the animation
     let flip = Flip.from(state, {
@@ -525,7 +633,6 @@ export default function Home() {
     }
   }
   const handleStageSelect = (id, date, value = null) => {
-    console.log(value)
     const token = localStorage.getItem('token')
     trackPromise(
       axios({
@@ -570,9 +677,12 @@ export default function Home() {
       return jobViewTL.reverse()
     }
   }
-
+  // Add job submit
   const handleSubmit = (e) =>{
     e.preventDefault()
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
     const token = localStorage.getItem('token')
     trackPromise(
       axios({
@@ -595,14 +705,18 @@ export default function Home() {
           dateAdded: e.target[7].value
         },
       })
-        .then(response => {
-          console.log(response.data.applications)
+        .then(async response => {
           toast.success('you added a job')
+          if(!addJobDisplay){
+            setAddJobDisplay(true)
+          }else{
+            setAddJobDisplay(false)
+          }
+          await AddJobModalHandler()
           return ApiCall()
         })
         .catch((error) =>{
-          console.log(error)
-          return toast.error('Something went wrong')
+          return toast.error(error.response.data)
         })
         
     )
@@ -636,65 +750,97 @@ export default function Home() {
       },
     })
   }
-  const deleteJob = (e) => {
+  const deleteJob = async (e) => {
     e.preventDefault()
+    if(offline){
+      return toast.error('Please reconnect to the internet')
+    }
+    
     const token = localStorage.getItem('token')
-    trackPromise(
-      axios({
-        url: 'https://job-tracker-api-v1.herokuapp.com/jobs/delete',
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json;charset=UTF-8',
-          "Authorization": `Bearer ${token}`
-        },
-        data: {
-          jobId: e.target.id,
-          user: localStorage.getItem('username'),
-        },
+    
+    axios({
+      url: 'https://job-tracker-api-v1.herokuapp.com/jobs/delete',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json;charset=UTF-8',
+        "Authorization": `Bearer ${token}`
+      },
+      data: {
+        jobId: e.target.id,
+        user: localStorage.getItem('username'),
+      },
+    })
+      .then(async (response)=> {
+        toast.success(response.data)
+        elements.current.map((el, i )=> {
+          if(el !== null){
+            if(el.id !== e.target.id){
+              return setRefs(el, i)
+            }
+          }
+        })
+        flipInit()
       })
-        .then(response => {
-          console.log(response)
-          toast.success('You deleted a job')
-        })
-        .catch((error) => {
-          console.log(error)
-          return toast.error('Could not delete job')
-        })
-        .then(() =>{
-          return ApiCall()
-        })
-    )
+      .then(async() =>{
+        return await ApiCall()
+      })
+      .catch((error) => {
+        return toast.error('Could not delete')
+      })
+      
   }
   useEffect(() =>{
     if(!checkForToken() || !checkForToken() === undefined){
       // window.location.href = 'https://www.brianthomas-develops.com/projects/jobby/login'
       window.location.href = '/login'
     }
-    (async function fetchData(){
-      await ApiCall()
-      })()
+    if(!offline){
+      (async function fetchData(){
+        await ApiCall()
+        })()
+    }else{
+      updateStatus()
+      loadLocalStorage()
+    }
   }, [filter, jobView])
   
   
   if(isLoading === true || !checkForToken() || checkForToken() === undefined){
     return(
-      <LoadingMessage> 
-        <h1>Loading</h1>
+      <>
+      <Seo
+          title="Home"
+          description="View the latest jobs saved"
+          lang="en"
+        />
+        <LoadingMessage> 
+        <LoadingMessageText>Loading</LoadingMessageText>
         <LoadingSpinnerComponent />
       </LoadingMessage>
+      </>
     )
     
   }else if(!isLoading && checkForToken()){
     return(
       <Layout>
-        <SEO
+        <Seo
           title="Home"
           description="View the latest jobs saved"
-          lang="US-en"
+          lang="en"
         />
-        <Navbar menuTl={menuTl} jobs={jobs} timeline={tl} AddJobModalHandler={AddJobModalHandler} token={checkForToken()}/>
-        <ApplicationForm AddJobModalHandler={AddJobModalHandler} handleSubmit={handleSubmit}/>
+        <Navbar 
+          menuTl={menuTl} 
+          jobs={jobs} 
+          timeline={tl} 
+          AddJobModalHandler={AddJobModalHandler} 
+          token={checkForToken()}
+          addJobDisplay={addJobDisplay} 
+          setAddJobDisplay={setAddJobDisplay}
+          />
+        <ApplicationForm 
+          handleSubmit={handleSubmit}
+          />
         
         <Container>
         {/* TODO: Listitems can be put in array/function to render */}
@@ -806,8 +952,24 @@ export default function Home() {
                           <JobCardCopy id={job._id}>
                             {job.role}
                           </JobCardCopy>
+                          <JobCardInfo>
+                            Added: <Moment id={job._id} className="fromNow" fromNow>{jobs[i].dateAdded}</Moment>
+                            {
+                              !jobs[i].stage.applied ? '' : (<div><span>Applied: </span><Moment  fromNow>{jobs[i].stage.applied}</Moment></div>)
+                            }
+                            {
+                              !jobs[i].stage.phoneScreen ? '' : (<div><span>Phone Screen: </span><Moment fromNow>{jobs[i].stage.phoneScreen}</Moment></div>)
+                            }
+                            {
+                              !jobs[i].stage.faceToface ? '' : (<div><span>Interview: </span><Moment fromNow>{jobs[i].stage.faceToface}</Moment></div>)
+                            }
+                            {
+                              !jobs[i].stage.takeHomeAssignment.dateReceived ? '' : (<div><span>Assignment: </span><Moment fromNow>{jobs[i].stage.takeHomeAssignment.dateReceived}</Moment></div>)
+                            }
+                            
+                          </JobCardInfo>
                           <JobCardFooter>
-                            <button
+                            <JobCardButton
                               id={job._id}
                               onClick={ (e) => {
                                 gsap.to(window, {duration: 1.2, scrollTo: 0, ease:'power3.out'})
@@ -816,15 +978,15 @@ export default function Home() {
                                 }}
                             >
                               Info
-                            </button>
-                            <button
+                            </JobCardButton>
+                            <JobCardButton
                             id={job._id}
                               onClick={ (e) => {
                                 submit(e)
                                 }}
                             >
                               Delete
-                            </button>
+                            </JobCardButton>
                           </JobCardFooter>
                         </JobCardBody>
                       </JobInnerContainer>
@@ -834,6 +996,7 @@ export default function Home() {
             }
           </JobContainer>
         </Container>
+        <Footer />
       </Layout>
     )
   }
